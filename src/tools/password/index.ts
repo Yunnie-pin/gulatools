@@ -7,7 +7,7 @@ export const password: Tool = {
   name: "Password Generator",
   short: "Acak · Kuat",
   description: "Buat password acak yang kuat dengan crypto.getRandomValues, lengkap dengan estimasi entropi.",
-  category: "crypto",
+  category: "generator",
   keywords: ["password", "kata sandi", "generator", "random", "secure", "entropy"],
   sensitive: true,
   icon: Asterisk,

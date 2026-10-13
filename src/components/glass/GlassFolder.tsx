@@ -14,6 +14,8 @@ export type FolderFile = {
 
 type GlassFolderProps = {
   label: string
+  icon?: LucideIcon
+  accent?: "amber"
   meta?: string
   files: FolderFile[]
   width?: number
@@ -96,7 +98,7 @@ function usePointerParallax(ref: RefObject<HTMLDivElement | null>) {
   }, [ref])
 }
 
-export function GlassFolder({ label, meta, files, width = W, appearDelay = 0 }: GlassFolderProps) {
+export function GlassFolder({ label, icon: Icon, accent, meta, files, width = W, appearDelay = 0 }: GlassFolderProps) {
   const uid = useId().replace(/:/g, "")
   const { ref: rootRef, entered } = useEntrance(appearDelay)
   const filesRef = useRef<HTMLUListElement>(null)
@@ -151,6 +153,7 @@ export function GlassFolder({ label, meta, files, width = W, appearDelay = 0 }: 
       className="gf-root"
       data-open={open || undefined}
       data-entered={entered || undefined}
+      data-accent={accent}
       style={{ width, height: (H + HEADROOM) * scale }}
     >
       <div className="gf-stage" style={{ transform: `translateY(${HEADROOM * scale}px) scale(${scale})` }}>
@@ -186,7 +189,10 @@ export function GlassFolder({ label, meta, files, width = W, appearDelay = 0 }: 
               onClick={() => setOpen(!open)}
             />
             <div className="gf-label">
-              <span className="gf-title">{label}</span>
+              <span className="gf-title">
+                {Icon && <Icon aria-hidden="true" className="gf-title-icon" />}
+                {label}
+              </span>
               <span className="gf-meta">{metaLine}</span>
             </div>
           </div>

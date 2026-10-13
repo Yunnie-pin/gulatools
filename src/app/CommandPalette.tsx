@@ -5,7 +5,8 @@ import { useNavigate } from "react-router"
 import { cx } from "@/lib/cx"
 import { onOpenPalette } from "@/lib/palette"
 import { CATEGORIES, type Tool } from "@/lib/tool"
-import { tools } from "@/tools/registry"
+import { useUsage } from "@/lib/usage"
+import { resolveTools, tools } from "@/tools/registry"
 
 const fuse = new Fuse(tools, { keys: ["name", "keywords", "description"], threshold: 0.4 })
 
@@ -16,7 +17,12 @@ export function CommandPalette() {
   const [query, setQuery] = useState("")
   const [active, setActive] = useState(0)
 
-  const results = useMemo(() => (query.trim() ? fuse.search(query).map((r) => r.item) : tools), [query])
+  const { recent } = useUsage()
+  const results = useMemo(() => {
+    if (query.trim()) return fuse.search(query).map((r) => r.item)
+    const first = resolveTools(recent.map((entry) => entry.id))
+    return [...first, ...tools.filter((tool) => !first.includes(tool))]
+  }, [query, recent])
 
   const select = (tool: Tool | undefined) => {
     if (!tool) return

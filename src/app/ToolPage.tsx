@@ -1,11 +1,19 @@
-import { ChevronRight, Lock } from "lucide-react"
-import { Suspense } from "react"
+import { ChevronRight, Lock, Star } from "lucide-react"
+import { Suspense, useEffect } from "react"
 import { Link } from "react-router"
 import { Badge } from "@/components/Badge"
+import { glassButtonClass } from "@/components/glass/GlassButton"
 import { GlassPanel } from "@/components/glass/GlassPanel"
+import { cx } from "@/lib/cx"
 import { CATEGORIES, type Tool } from "@/lib/tool"
+import { recordVisit, toggleFavorite, useUsage } from "@/lib/usage"
 
 export function ToolPage({ tool }: { tool: Tool }) {
+  const { favorites } = useUsage()
+  const favorite = favorites.includes(tool.id)
+
+  useEffect(() => recordVisit(tool.id), [tool.id])
+
   return (
     <div className="flex flex-1 flex-col gap-4">
       <GlassPanel className="flex flex-wrap items-center gap-4 px-6 py-5">
@@ -28,6 +36,16 @@ export function ToolPage({ tool }: { tool: Tool }) {
             Diproses lokal
           </Badge>
         )}
+        <button
+          type="button"
+          aria-pressed={favorite}
+          aria-label={favorite ? "Hapus dari favorit" : "Tambah ke favorit"}
+          title={favorite ? "Hapus dari favorit" : "Tambah ke favorit"}
+          onClick={() => toggleFavorite(tool.id)}
+          className={glassButtonClass("frost", "w-9 px-0")}
+        >
+          <Star aria-hidden="true" className={cx("size-4", favorite && "fill-amber-400 text-amber-400")} />
+        </button>
       </GlassPanel>
       <Suspense fallback={<GlassPanel className="flex-1 animate-pulse" />}>
         <tool.Component />

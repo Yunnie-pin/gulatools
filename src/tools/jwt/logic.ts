@@ -78,6 +78,7 @@ export const SIGN_ALGORITHMS = [
   "PS256",
   "ES256",
   "ES384",
+  "ES512",
   "EdDSA",
 ] as const
 

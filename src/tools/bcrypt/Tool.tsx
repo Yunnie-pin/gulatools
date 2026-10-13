@@ -7,6 +7,7 @@ import { Field } from "@/components/Field"
 import { GlassButton } from "@/components/glass/GlassButton"
 import { GlassInput } from "@/components/glass/GlassInput"
 import { GlassPanel } from "@/components/glass/GlassPanel"
+import { RangeField } from "@/components/RangeField"
 import { ValueRow } from "@/components/ValueRow"
 import { attempt } from "@/lib/result"
 import { useAsync } from "@/lib/use-async"
@@ -54,19 +55,14 @@ function HashPanel() {
             />
           )}
         </Field>
-        <Field label={`Cost factor: ${cost}`} hint="Setiap +1 membuat hashing dua kali lebih lama. 10–12 umum dipakai.">
-          {(id) => (
-            <input
-              id={id}
-              type="range"
-              min={MIN_COST}
-              max={MAX_COST}
-              value={cost}
-              onChange={(e) => setCost(Number(e.target.value))}
-              className="accent-focus"
-            />
-          )}
-        </Field>
+        <RangeField
+          label="Cost factor"
+          value={cost}
+          min={MIN_COST}
+          max={MAX_COST}
+          hint="Setiap +1 membuat hashing dua kali lebih lama. 10–12 umum dipakai."
+          onChange={setCost}
+        />
         <GlassButton type="submit" variant="key" disabled={task.pending} className="self-start">
           {task.pending ? "Menghitung…" : "Generate hash"}
         </GlassButton>

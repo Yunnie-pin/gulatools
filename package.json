@@ -33,9 +33,12 @@
     "fuse.js": "^7.5.0",
     "hash-wasm": "^4.12.0",
     "jose": "^6.2.12",
+    "jsonpath-plus": "^11.2.1",
+    "jsqr": "^1.4.0",
     "lucide-react": "^1.56.0",
     "papaparse": "^5.7.0",
     "prettier": "^3.9.10",
+    "qrcode": "^1.5.4",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "react-router": "^8.4.0",
@@ -52,12 +55,14 @@
     "@types/culori": "^4.0.1",
     "@types/node": "^26.6.5",
     "@types/papaparse": "^5.5.2",
+    "@types/qrcode": "^1.5.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2",
     "vite": "^8.3.4",
+    "vite-plugin-pwa": "^2.0.0",
     "vitest": "^5.0.4"
   }
 }

@@ -3,9 +3,9 @@ import { RegenerateButton } from "@/components/ActionButtons"
 import { Badge } from "@/components/Badge"
 import { CopyButton } from "@/components/CopyButton"
 import { ErrorText } from "@/components/ErrorText"
-import { Field } from "@/components/Field"
 import { Checkbox } from "@/components/glass/Checkbox"
 import { GlassPanel } from "@/components/glass/GlassPanel"
+import { RangeField } from "@/components/RangeField"
 import { attempt } from "@/lib/result"
 import {
   CHARSET_IDS,
@@ -54,19 +54,14 @@ export default function PasswordTool() {
       </GlassPanel>
 
       <GlassPanel variant="solid" className="flex flex-col gap-4 p-5">
-        <Field label={`Panjang: ${options.length} karakter`}>
-          {(id) => (
-            <input
-              id={id}
-              type="range"
-              min={MIN_LENGTH}
-              max={MAX_LENGTH}
-              value={options.length}
-              onChange={(e) => update({ length: Number(e.target.value) })}
-              className="accent-focus"
-            />
-          )}
-        </Field>
+        <RangeField
+          label="Panjang"
+          value={options.length}
+          min={MIN_LENGTH}
+          max={MAX_LENGTH}
+          format={(length) => `${length} karakter`}
+          onChange={(length) => update({ length })}
+        />
         <div className="grid gap-3 sm:grid-cols-2">
           {CHARSET_IDS.map((id) => (
             <Checkbox

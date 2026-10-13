@@ -7,7 +7,7 @@ export const uuid: Tool = {
   name: "UUID / ULID",
   short: "v4 · v7 · ULID",
   description: "Generate UUID v4, UUID v7 yang terurut waktu, atau ULID secara massal.",
-  category: "crypto",
+  category: "generator",
   keywords: ["uuid", "guid", "ulid", "v4", "v7", "id", "random", "generate"],
   icon: Dices,
   Component: lazy(() => import("./Tool")),

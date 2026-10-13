@@ -1,8 +1,9 @@
 import type { Extension } from "@uiw/react-codemirror"
-import { Download, Upload } from "lucide-react"
+import { Download, Share2, Upload } from "lucide-react"
 import { type ReactNode, useEffect, useState } from "react"
 import { downloadText, pickFile } from "@/lib/file"
-import { type Result, settle } from "@/lib/result"
+import { errorMessage, type Result, settle } from "@/lib/result"
+import { buildShareUrl, decodeShare, sharedFromHash } from "@/lib/share"
 import { toast } from "@/lib/toast"
 import { ClearButton, SampleButton } from "./ActionButtons"
 import { CopyButton } from "./CopyButton"
@@ -38,6 +39,19 @@ export function TransformTool({
   const [result, setResult] = useState<Result<string>>({ ok: true, value: "" })
 
   useEffect(() => {
+    const shared = sharedFromHash(window.location.hash)
+    if (!shared) return
+    history.replaceState(null, "", window.location.pathname)
+    decodeShare(shared).then(
+      (text) => {
+        setInput(text)
+        toast("Input dari tautan dimuat")
+      },
+      (error) => toast(errorMessage(error), "error"),
+    )
+  }, [])
+
+  useEffect(() => {
     let live = true
     settle(() => (input.trim() ? transform(input) : "")).then((next) => live && setResult(next))
     return () => {
@@ -52,6 +66,16 @@ export function TransformTool({
     toast(`${file.name} dimuat`)
   }
 
+  const copyShareLink = async () => {
+    if (!input) return toast("Input masih kosong", "error")
+    try {
+      await navigator.clipboard.writeText(await buildShareUrl(input, window.location))
+      toast("Tautan berbagi tersalin")
+    } catch (error) {
+      toast(errorMessage(error), "error")
+    }
+  }
+
   const menuItems = [
     { label: "Buka file…", icon: Upload, onSelect: async () => loadFile(await pickFile(accept)) },
     {
@@ -59,6 +83,7 @@ export function TransformTool({
       icon: Download,
       onSelect: () => (output ? downloadText(output, outputFileName) : toast("Output masih kosong", "error")),
     },
+    { label: "Salin tautan berbagi", icon: Share2, onSelect: copyShareLink },
   ]
 
   return (

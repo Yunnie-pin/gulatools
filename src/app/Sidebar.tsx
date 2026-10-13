@@ -7,8 +7,9 @@ import { Logo } from "@/components/Logo"
 import { cx } from "@/lib/cx"
 import { openPalette, PALETTE_SHORTCUT } from "@/lib/palette"
 import { setSidebarPinned, useSidebarPinned } from "@/lib/sidebar"
-import { CATEGORIES, CATEGORY_IDS } from "@/lib/tool"
-import { toolsByCategory } from "@/tools/registry"
+import { CATEGORIES, CATEGORY_IDS, type Tool } from "@/lib/tool"
+import { useUsage } from "@/lib/usage"
+import { resolveTools, toolsByCategory } from "@/tools/registry"
 import { ActiveModeIcon, BackgroundPicker, ThemeSwitcher } from "./ThemeControls"
 
 const REVEAL = "opacity-0 transition-opacity duration-200 group-data-[expanded]/sidebar:opacity-100"
@@ -24,8 +25,51 @@ type SidebarContentProps = {
   onNavigate?: () => void
 }
 
+type NavSectionProps = {
+  title: string
+  tools: Tool[]
+  reveal?: string
+  onNavigate?: () => void
+}
+
+function NavSection({ title, tools, reveal, onNavigate }: NavSectionProps) {
+  return (
+    <section className="mb-4">
+      <h2
+        className={cx(
+          "mb-1 px-[13px] text-xs font-medium tracking-wide whitespace-nowrap text-ink-soft uppercase",
+          reveal,
+        )}
+      >
+        {title}
+      </h2>
+      <ul>
+        {tools.map((tool) => (
+          <li key={tool.id}>
+            <NavLink
+              to={`/${tool.id}`}
+              title={tool.name}
+              onClick={onNavigate}
+              className={({ isActive }) =>
+                cx(
+                  "flex items-center gap-3 rounded-glass-sm px-[13px] py-2 text-sm transition duration-200 ease-glass",
+                  isActive ? "bg-glass-hover font-medium" : "text-ink-soft hover:bg-glass-hover hover:text-ink",
+                )
+              }
+            >
+              <tool.icon aria-hidden="true" className="size-[18px] shrink-0" />
+              <span className={cx("whitespace-nowrap", reveal)}>{tool.name}</span>
+            </NavLink>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
 function SidebarContent({ collapsible = false, onNavigate }: SidebarContentProps) {
   const reveal = collapsible ? REVEAL : undefined
+  const favorites = resolveTools(useUsage().favorites)
 
   return (
     <>
@@ -48,37 +92,17 @@ function SidebarContent({ collapsible = false, onNavigate }: SidebarContentProps
         aria-label="Tools"
         className={cx("-mx-1 min-h-0 flex-1 overflow-x-hidden overflow-y-auto px-1", collapsible && HIDE_SCROLLBAR)}
       >
+        {favorites.length > 0 && (
+          <NavSection title="Favorit" tools={favorites} reveal={reveal} onNavigate={onNavigate} />
+        )}
         {CATEGORY_IDS.filter((id) => toolsByCategory[id].length).map((id) => (
-          <section key={id} className="mb-4">
-            <h2
-              className={cx(
-                "mb-1 px-[13px] text-xs font-medium tracking-wide whitespace-nowrap text-ink-soft uppercase",
-                reveal,
-              )}
-            >
-              {CATEGORIES[id].name}
-            </h2>
-            <ul>
-              {toolsByCategory[id].map((tool) => (
-                <li key={tool.id}>
-                  <NavLink
-                    to={`/${tool.id}`}
-                    title={tool.name}
-                    onClick={onNavigate}
-                    className={({ isActive }) =>
-                      cx(
-                        "flex items-center gap-3 rounded-glass-sm px-[13px] py-2 text-sm transition duration-200 ease-glass",
-                        isActive ? "bg-glass-hover font-medium" : "text-ink-soft hover:bg-glass-hover hover:text-ink",
-                      )
-                    }
-                  >
-                    <tool.icon aria-hidden="true" className="size-[18px] shrink-0" />
-                    <span className={cx("whitespace-nowrap", reveal)}>{tool.name}</span>
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </section>
+          <NavSection
+            key={id}
+            title={CATEGORIES[id].name}
+            tools={toolsByCategory[id]}
+            reveal={reveal}
+            onNavigate={onNavigate}
+          />
         ))}
       </nav>
 
