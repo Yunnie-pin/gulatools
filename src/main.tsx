@@ -10,6 +10,7 @@ import { ToolPage } from "./app/ToolPage"
 import { ThemeProvider } from "./lib/theme"
 import { tools } from "./tools/registry"
 import "./styles/index.css"
+import { registerSW } from "virtual:pwa-register"
 
 const router = createBrowserRouter([
   {
@@ -36,3 +37,6 @@ createRoot(document.getElementById("root")!).render(
     </LucideProvider>
   </StrictMode>,
 )
+
+// autoUpdate: reload otomatis begitu service worker versi baru aktif
+registerSW({ immediate: true })

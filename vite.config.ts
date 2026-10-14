@@ -10,7 +10,7 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: "autoUpdate",
-      injectRegister: "script-defer",
+      injectRegister: false,
       includeAssets: ["gula-white.svg", "apple-touch-icon.png"],
       manifest: {
         name: "GulaTools",
