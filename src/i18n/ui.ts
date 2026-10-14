@@ -58,6 +58,12 @@ export const ui = defineMessages(
       background: "Latar",
       backgroundN: (n: number) => `Latar ${n}`,
       language: "Bahasa",
+      about: "Tentang GulaTools",
+      aboutTitle: "Open source",
+      aboutBody:
+        "GulaTools adalah proyek open source berlisensi MIT. Kode sumbernya tersedia di GitHub, silakan lihat, laporkan masalah, atau ikut berkontribusi.",
+      viewOnGithub: "Lihat di GitHub",
+      close: "Tutup",
     },
     home: {
       title: "Developer tools, langsung di browser.",
@@ -144,6 +150,12 @@ export const ui = defineMessages(
       background: "Background",
       backgroundN: (n: number) => `Background ${n}`,
       language: "Language",
+      about: "About GulaTools",
+      aboutTitle: "Open source",
+      aboutBody:
+        "GulaTools is an open source project under the MIT license. The source code is on GitHub, where you can browse it, report issues, or contribute.",
+      viewOnGithub: "View on GitHub",
+      close: "Close",
     },
     home: {
       title: "Developer tools, right in your browser.",

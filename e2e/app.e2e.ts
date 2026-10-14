@@ -33,6 +33,20 @@ test("command palette searches and navigates", async ({ page }) => {
   await expect(page.locator("dialog[open]")).toHaveCount(0)
 })
 
+test("about dialog points visitors to the open source repository", async ({ page }) => {
+  await page.goto("/")
+  await page.locator("aside").getByRole("button", { name: "Tentang GulaTools" }).click()
+  const dialog = page.getByRole("dialog", { name: "Open source" })
+  await expect(dialog).toBeVisible()
+  await expect(dialog.getByRole("link", { name: "Lihat di GitHub" })).toHaveAttribute(
+    "href",
+    "https://github.com/Yunnie-pin/gulatools",
+  )
+  await expectAccessible(page)
+  await page.keyboard.press("Escape")
+  await expect(dialog).toBeHidden()
+})
+
 test("sidebar expands on hover, not after a mouse click, and can be pinned", async ({ page }) => {
   await page.goto("/jwt")
   await expect(page.getByRole("heading", { level: 1, name: "JWT" })).toBeVisible()

@@ -1,4 +1,4 @@
-import { Menu, Pin, PinOff, Search, X } from "lucide-react"
+import { Info, Menu, Pin, PinOff, Search, X } from "lucide-react"
 import { type FocusEvent, type PointerEvent, useEffect, useRef, useState } from "react"
 import { NavLink } from "react-router"
 import { glassButtonClass } from "@/components/glass/GlassButton"
@@ -12,6 +12,7 @@ import { setSidebarPinned, useSidebarPinned } from "@/lib/sidebar"
 import { CATEGORIES, CATEGORY_IDS, type Tool } from "@/lib/tool"
 import { useUsage } from "@/lib/usage"
 import { resolveTools, toolsByCategory } from "@/tools/registry"
+import { openAbout } from "./AboutDialog"
 import { ActiveModeIcon, BackgroundPicker, LanguageSwitcher, ThemeSwitcher } from "./ThemeControls"
 
 const REVEAL = "opacity-0 transition-opacity duration-200 group-data-[expanded]/sidebar:opacity-100"
@@ -110,6 +111,18 @@ function SidebarContent({ collapsible = false, onNavigate }: SidebarContentProps
       </nav>
 
       <div className="flex shrink-0 flex-col gap-3">
+        <button
+          type="button"
+          title={t.about}
+          onClick={() => {
+            onNavigate?.()
+            openAbout()
+          }}
+          className="flex cursor-pointer items-center gap-3 rounded-glass-sm px-[13px] py-2 text-sm text-ink-soft transition duration-200 ease-glass hover:bg-glass-hover hover:text-ink"
+        >
+          <Info aria-hidden="true" className="size-[18px] shrink-0" />
+          <span className={cx("whitespace-nowrap", reveal)}>{t.about}</span>
+        </button>
         <div className="relative">
           {collapsible && (
             <ActiveModeIcon className="transition-opacity duration-200 group-data-[expanded]/sidebar:opacity-0" />

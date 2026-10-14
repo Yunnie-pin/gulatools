@@ -6,6 +6,7 @@ import { useMessages } from "@/i18n/locale"
 import { ui } from "@/i18n/ui"
 import { cx } from "@/lib/cx"
 import { useSidebarPinned } from "@/lib/sidebar"
+import { AboutDialog } from "./AboutDialog"
 import { CommandPalette } from "./CommandPalette"
 import { Sidebar } from "./Sidebar"
 
@@ -50,6 +51,7 @@ export function Layout() {
         </main>
       </div>
       <CommandPalette />
+      <AboutDialog />
       <Toaster />
     </>
   )
