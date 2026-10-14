@@ -6,4 +6,6 @@ export const isBackgroundId = (value: unknown): value is BackgroundId => BACKGRO
 
 export const backgroundUrl = (id: BackgroundId) => `/background/${id}.webp`
 
+export const backgroundSrcSet = (id: BackgroundId) => `/background/${id}-sm.webp 828w, /background/${id}.webp 1920w`
+
 export const backgroundThumbUrl = (id: BackgroundId) => `/background/thumb/${id}.webp`

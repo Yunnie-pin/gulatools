@@ -2,6 +2,7 @@ import { LayoutGrid, Star, UserRound } from "lucide-react"
 import { GlassFolder } from "@/components/glass/GlassFolder"
 import { GlassPanel } from "@/components/glass/GlassPanel"
 import { SectionHeading } from "@/components/SectionHeading"
+import { usePageMeta } from "@/lib/meta"
 import { CATEGORIES, CATEGORY_IDS, type Tool } from "@/lib/tool"
 import { useUsage } from "@/lib/usage"
 import { resolveTools, toolsByCategory } from "@/tools/registry"
@@ -17,6 +18,7 @@ export function Home() {
   const { favorites, recent } = useUsage()
   const favoriteTools = resolveTools(favorites)
   const hasPersonal = favoriteTools.length > 0 || recent.length > 0
+  usePageMeta()
 
   return (
     <div className="flex flex-col gap-10">

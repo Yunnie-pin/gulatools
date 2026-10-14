@@ -1,4 +1,4 @@
-import { backgroundUrl } from "@/lib/backgrounds"
+import { backgroundSrcSet, backgroundUrl } from "@/lib/backgrounds"
 import { useTheme } from "@/lib/theme"
 
 export function Backdrop() {
@@ -9,6 +9,8 @@ export function Backdrop() {
       <img
         key={background}
         src={backgroundUrl(background)}
+        srcSet={backgroundSrcSet(background)}
+        sizes="100vw"
         alt=""
         decoding="async"
         className="size-full animate-[fade-in_.8s_var(--ease)] object-cover"
