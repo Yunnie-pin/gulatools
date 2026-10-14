@@ -32,6 +32,7 @@ export default defineConfig({
         globIgnores: ["background/*.png", "background/*.jpg", "gula-white.png"],
         maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
         navigateFallback: "index.html",
+        navigateFallbackDenylist: [/\/[^/]+\.[^/]+$/],
       },
     }),
   ],
