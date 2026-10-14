@@ -42,6 +42,10 @@ const catalogs = defineMessages(
     invalidPercentEscape: () => "Input berisi escape sequence (%XX) yang tidak valid",
     emptyNumber: () => "Masukkan bilangan",
     invalidDigits: (base: number) => `Digit tidak valid untuk basis ${base}`,
+    invalidChmod: () => "Mode tidak valid. Contoh: 755, 4755, rwxr-xr-x",
+    invalidCidr: () => "Format tidak valid. Contoh: 192.168.1.0/24 atau 10.0.0.1 255.0.0.0",
+    invalidNetmask: () => "Netmask harus berupa bit 1 yang berurutan, misalnya 255.255.255.0",
+    invalidJsonString: () => "Bukan isi string JSON yang valid. Periksa escape sequence dan tanda kutip",
   },
   {
     invalidBase64: () => "Input is not valid Base64",
@@ -84,6 +88,10 @@ const catalogs = defineMessages(
     invalidPercentEscape: () => "Input contains an invalid escape sequence (%XX)",
     emptyNumber: () => "Enter a number",
     invalidDigits: (base) => `Invalid digits for base ${base}`,
+    invalidChmod: () => "Invalid mode. Examples: 755, 4755, rwxr-xr-x",
+    invalidCidr: () => "Invalid format. Examples: 192.168.1.0/24 or 10.0.0.1 255.0.0.0",
+    invalidNetmask: () => "The netmask must be contiguous 1 bits, for example 255.255.255.0",
+    invalidJsonString: () => "Not a valid JSON string body. Check escape sequences and quotes",
   },
 )
 

@@ -4,8 +4,11 @@ import { argon2 } from "./argon2"
 import { base64 } from "./base64"
 import { bcrypt } from "./bcrypt"
 import { caseConverter } from "./case-converter"
+import { chmod } from "./chmod"
+import { cidr } from "./cidr"
 import { codeFormatter } from "./code-formatter"
 import { color } from "./color"
+import { contrast } from "./contrast"
 import { cron } from "./cron"
 import { dataConverter } from "./data-converter"
 import { diff } from "./diff"
@@ -18,11 +21,14 @@ import { jsonToTs } from "./json-to-ts"
 import { jsonPath } from "./jsonpath"
 import { jwt } from "./jwt"
 import { keygen } from "./keygen"
+import { lorem } from "./lorem"
+import { markdownPreview } from "./markdown"
 import { numberBase } from "./number-base"
 import { password } from "./password"
 import { qr } from "./qr"
 import { regex } from "./regex"
 import { sqlFormatter } from "./sql-formatter"
+import { textEscape } from "./text-escape"
 import { textStats } from "./text-stats"
 import { timestamp } from "./timestamp"
 import { urlEncoder } from "./url-encoder"
@@ -32,16 +38,21 @@ export const tools: Tool[] = [
   jsonFormatter,
   codeFormatter,
   sqlFormatter,
+  markdownPreview,
   dataConverter,
   jsonToTs,
   jsonPath,
   timestamp,
   numberBase,
+  chmod,
+  cidr,
   cron,
   color,
+  contrast,
   base64,
   urlEncoder,
   htmlEntity,
+  textEscape,
   imageBase64,
   qr,
   jwt,
@@ -53,6 +64,7 @@ export const tools: Tool[] = [
   keygen,
   password,
   uuid,
+  lorem,
   regex,
   diff,
   caseConverter,

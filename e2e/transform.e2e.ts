@@ -80,3 +80,32 @@ test("TransformTool menu opens with keyboard and offers download", async ({ page
   await page.keyboard.press("Enter")
   expect((await download).suggestedFilename()).toBe("output.json")
 })
+
+test("text escape quotes for SQL and round-trips JSON", async ({ page }) => {
+  await openWithSample(page, "/text-escape")
+  await expect(editorOutput(page)).toHaveText('Gula \\"manis\\"\\nkopi\\tpahit')
+  await page.getByText("SQL", { exact: true }).click()
+  await page.getByRole("button", { name: "Contoh" }).click()
+  await expect(editorOutput(page)).toHaveText("'Jum''at'")
+  await page.getByText("Unescape JSON", { exact: true }).click()
+  await page.getByRole("button", { name: "Contoh" }).click()
+  await expect(editorOutput(page)).toContainText('Gula "manis"')
+})
+
+test("markdown preview renders GFM and strips scripts and remote resources", async ({ page }) => {
+  await openWithSample(page, "/markdown")
+  const preview = page.locator(".markdown-body")
+  await expect(preview.getByRole("heading", { level: 1 })).toHaveText("GulaTools")
+  await expect(preview.getByRole("table")).toBeVisible()
+  await expect(preview.getByRole("link", { name: "GitHub" })).toHaveAttribute("target", "_blank")
+
+  await page
+    .locator(".cm-content")
+    .first()
+    .fill(
+      '<img src=x onerror="window.pwned=1"><script>window.pwned=2</script>\n\n![logo](https://example.com/logo.png)\n\n<p style="background:url(https://example.com/bg.png)">teks</p>',
+    )
+  await expect(preview).toContainText("teks")
+  expect(await page.evaluate(() => "pwned" in window)).toBe(false)
+  await expect(preview.locator("img[onerror], script, [style], img[src^='https']")).toHaveCount(0)
+})

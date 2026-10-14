@@ -65,3 +65,44 @@ test("text stats counts graphemes and lists hidden characters from the sample", 
   await expect(page.getByText("NO-BREAK SPACE", { exact: true })).toBeVisible()
   await expect(page.getByText("ZERO WIDTH JOINER")).toHaveCount(0)
 })
+
+test("chmod checkboxes and the mode input stay in sync", async ({ page }) => {
+  await page.goto("/chmod")
+  const mode = page.getByLabel("Mode", { exact: true })
+  await mode.fill("644")
+  await page.getByRole("group", { name: "Pemilik" }).getByLabel("Eksekusi").check()
+  await expect(mode).toHaveValue("744")
+  await mode.fill("rwsr-xr-x")
+  await expect(page.getByLabel("setuid")).toBeChecked()
+  await expect(page.locator("main code").first()).toHaveText("4755")
+})
+
+test("subnet calculator derives the host range", async ({ page }) => {
+  await page.goto("/cidr")
+  await page.getByLabel("Alamat IPv4 dan prefix").fill("10.0.5.77/22")
+  await expect(page.locator("main code").first()).toHaveText("10.0.4.0/22")
+  await expect(page.getByText("10.0.7.254")).toBeVisible()
+})
+
+test("contrast checker grades AA/AAA and swaps colors", async ({ page }) => {
+  await page.goto("/contrast")
+  await page.getByLabel("Warna teks", { exact: true }).fill("#777777")
+  await expect(page.getByText("4.48:1")).toBeVisible()
+  await expect(page.getByRole("listitem").filter({ hasText: /^AATeks normal/ })).toContainText("Gagal")
+  await expect(page.getByRole("listitem").filter({ hasText: /^AATeks besar/ })).toContainText("Lulus")
+  await page.getByRole("button", { name: "Tukar warna" }).click()
+  await expect(page.getByLabel("Warna latar", { exact: true })).toHaveValue("#777777")
+  await expect(page.getByText("4.48:1")).toBeVisible()
+})
+
+test("lorem ipsum follows the chosen unit and count", async ({ page }) => {
+  await page.goto("/lorem")
+  await expect(page.locator("main .cm-content")).toContainText(
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  )
+  await page.getByText("Kata", { exact: true }).click()
+  await page.getByLabel("Jumlah").fill("5")
+  await expect(page.locator("main .cm-content")).toHaveText("Lorem ipsum dolor sit amet")
+  await page.getByLabel("Mulai dengan Lorem ipsum").uncheck()
+  await expect(page.locator("main .cm-content")).not.toHaveText("Lorem ipsum dolor sit amet")
+})
