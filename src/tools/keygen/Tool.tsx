@@ -1,5 +1,5 @@
 import { KeyRound } from "lucide-react"
-import { useState } from "react"
+
 import { CopyButton } from "@/components/CopyButton"
 import { ErrorText } from "@/components/ErrorText"
 import { Dropdown } from "@/components/glass/Dropdown"
@@ -7,7 +7,7 @@ import { GlassButton } from "@/components/glass/GlassButton"
 import { GlassPanel } from "@/components/glass/GlassPanel"
 import { Pane } from "@/components/Pane"
 import { useMessages } from "@/i18n/locale"
-
+import { isOption, usePersistentState } from "@/lib/persist"
 import { useAsync } from "@/lib/use-async"
 import { generateKeys, KEY_TYPES, type KeyPairExport, type KeyType } from "./logic"
 import { messages } from "./messages"
@@ -21,7 +21,7 @@ const OUTPUTS = [
 
 export default function KeygenTool() {
   const t = useMessages(messages)
-  const [type, setType] = useState<KeyType>("p256")
+  const [type, setType] = usePersistentState<KeyType>("type", "p256", isOption(KEY_TYPES))
   const task = useAsync(generateKeys)
   const keys = task.result?.ok ? task.result.value : null
 

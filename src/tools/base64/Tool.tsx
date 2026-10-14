@@ -1,9 +1,9 @@
-import { useCallback, useState } from "react"
+import { useCallback } from "react"
 import { Segmented } from "@/components/glass/Segmented"
 import { TransformTool } from "@/components/TransformTool"
 import { useMessages } from "@/i18n/locale"
 import { labeled } from "@/lib/options"
-
+import { isOption, oneOf, usePersistentState } from "@/lib/persist"
 import { decodeBase64, encodeBase64 } from "./logic"
 import { messages } from "./messages"
 
@@ -19,8 +19,8 @@ const VARIANTS = ["standard", "url"] as const satisfies readonly Variant[]
 
 export default function Base64Tool() {
   const t = useMessages(messages)
-  const [mode, setMode] = useState<Mode>("encode")
-  const [variant, setVariant] = useState<Variant>("standard")
+  const [mode, setMode] = usePersistentState<Mode>("mode", "encode", isOption(MODES))
+  const [variant, setVariant] = usePersistentState<Variant>("variant", "standard", oneOf(VARIANTS))
 
   const transform = useCallback(
     (input: string) => (mode === "encode" ? encodeBase64(input, variant === "url") : decodeBase64(input)),

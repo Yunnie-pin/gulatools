@@ -6,6 +6,7 @@ import { GlassPanel } from "@/components/glass/GlassPanel"
 import { Segmented } from "@/components/glass/Segmented"
 import { ValueRow } from "@/components/ValueRow"
 import { useMessages } from "@/i18n/locale"
+import { isOption, usePersistentState } from "@/lib/persist"
 import { type Result, settle } from "@/lib/result"
 import { HMAC_ALGORITHMS, type HmacAlgorithm, type HmacDigest, hmac } from "./logic"
 import { messages } from "./messages"
@@ -14,7 +15,7 @@ export default function HmacTool() {
   const t = useMessages(messages)
   const [message, setMessage] = useState("")
   const [key, setKey] = useState("")
-  const [algorithm, setAlgorithm] = useState<HmacAlgorithm>("SHA-256")
+  const [algorithm, setAlgorithm] = usePersistentState<HmacAlgorithm>("algorithm", "SHA-256", isOption(HMAC_ALGORITHMS))
   const [digest, setDigest] = useState<Result<HmacDigest> | null>(null)
 
   useEffect(() => {

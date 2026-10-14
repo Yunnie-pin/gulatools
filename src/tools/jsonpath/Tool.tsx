@@ -1,9 +1,9 @@
 import { json } from "@codemirror/lang-json"
-import { useCallback, useState } from "react"
+import { useCallback } from "react"
 import { GlassInput } from "@/components/glass/GlassInput"
 import { TransformTool } from "@/components/TransformTool"
 import { useMessages } from "@/i18n/locale"
-
+import { usePersistentState } from "@/lib/persist"
 import { queryJson } from "./logic"
 import { messages } from "./messages"
 
@@ -22,7 +22,7 @@ const SAMPLE = JSON.stringify({
 
 export default function JsonPathTool() {
   const t = useMessages(messages)
-  const [path, setPath] = useState("$.store.book[?(@.price > 100000)].title")
+  const [path, setPath] = usePersistentState("path", "$.store.book[?(@.price > 100000)].title")
   const transform = useCallback((input: string) => queryJson(input, path), [path])
 
   return (

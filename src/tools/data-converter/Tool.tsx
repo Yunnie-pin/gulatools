@@ -3,12 +3,12 @@ import { xml } from "@codemirror/lang-xml"
 import { yaml } from "@codemirror/lang-yaml"
 import type { Extension } from "@uiw/react-codemirror"
 import { ArrowLeftRight } from "lucide-react"
-import { useCallback, useState } from "react"
+import { useCallback } from "react"
 import { Dropdown } from "@/components/glass/Dropdown"
 import { GlassButton } from "@/components/glass/GlassButton"
 import { TransformTool } from "@/components/TransformTool"
 import { useMessages } from "@/i18n/locale"
-
+import { isOption, usePersistentState } from "@/lib/persist"
 import { convert, FORMATS, type Format } from "./logic"
 import { messages } from "./messages"
 
@@ -28,8 +28,8 @@ const FORMAT_OPTIONS = (Object.keys(FORMATS) as Format[]).map((value) => ({ valu
 
 export default function DataConverter() {
   const t = useMessages(messages)
-  const [from, setFrom] = useState<Format>("json")
-  const [to, setTo] = useState<Format>("yaml")
+  const [from, setFrom] = usePersistentState<Format>("from", "json", isOption(FORMAT_OPTIONS))
+  const [to, setTo] = usePersistentState<Format>("to", "yaml", isOption(FORMAT_OPTIONS))
   const transform = useCallback((input: string) => convert(input, from, to), [from, to])
 
   return (

@@ -10,6 +10,7 @@ import { GlassPanel } from "@/components/glass/GlassPanel"
 import { RangeField } from "@/components/RangeField"
 import { ValueRow } from "@/components/ValueRow"
 import { useMessages } from "@/i18n/locale"
+import { inRange, usePersistentState } from "@/lib/persist"
 import { attempt } from "@/lib/result"
 import { useAsync } from "@/lib/use-async"
 import { MAX_COST, MAX_PASSWORD_BYTES, MIN_COST, parseBcryptHash, passwordBytes } from "./logic"
@@ -35,7 +36,7 @@ function TooLongHint({ password }: { password: string }) {
 
 function HashPanel() {
   const [password, setPassword] = useState("")
-  const [cost, setCost] = useState(10)
+  const [cost, setCost] = usePersistentState<number>("cost", 10, inRange(MIN_COST, MAX_COST))
   const t = useMessages(messages)
   const task = useAsync(bcrypt.hash)
 

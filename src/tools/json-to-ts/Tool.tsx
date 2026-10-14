@@ -1,11 +1,11 @@
 import { javascript } from "@codemirror/lang-javascript"
 import { json } from "@codemirror/lang-json"
-import { useCallback, useState } from "react"
+import { useCallback } from "react"
 import { GlassInput } from "@/components/glass/GlassInput"
 import { Segmented, type SegmentedOption } from "@/components/glass/Segmented"
 import { TransformTool } from "@/components/TransformTool"
 import { useMessages } from "@/i18n/locale"
-
+import { isOption, usePersistentState } from "@/lib/persist"
 import { toTypeScript, toZod } from "./logic"
 import { messages } from "./messages"
 
@@ -33,8 +33,8 @@ const SAMPLE = JSON.stringify({
 
 export default function JsonToTs() {
   const t = useMessages(messages)
-  const [target, setTarget] = useState<Target>("typescript")
-  const [rootName, setRootName] = useState("Root")
+  const [target, setTarget] = usePersistentState<Target>("target", "typescript", isOption(TARGETS))
+  const [rootName, setRootName] = usePersistentState("rootName", "Root")
 
   const transform = useCallback(
     (input: string) => {

@@ -11,6 +11,7 @@ import { useMessages } from "@/i18n/locale"
 import { pickFile } from "@/lib/file"
 import { formatBytes } from "@/lib/format"
 import { labeled } from "@/lib/options"
+import { isOption, oneOf, usePersistentState } from "@/lib/persist"
 import { useAsync } from "@/lib/use-async"
 import { ALGORITHMS, type Digests, hashFile, hashText } from "./logic"
 import { messages } from "./messages"
@@ -27,9 +28,9 @@ const CASES = [
 
 export default function HashTool() {
   const t = useMessages(messages)
-  const [source, setSource] = useState<Source>("text")
-  const [letterCase, setLetterCase] = useState<Case>("lower")
-  const [text, setText] = useState("")
+  const [source, setSource] = usePersistentState<Source>("source", "text", oneOf(SOURCES))
+  const [letterCase, setLetterCase] = usePersistentState<Case>("letterCase", "lower", isOption(CASES))
+  const [text, setText] = usePersistentState("text", "")
   const [digests, setDigests] = useState<Digests | null>(null)
 
   useEffect(() => {

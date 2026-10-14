@@ -7,7 +7,7 @@ import { GlassPanel } from "@/components/glass/GlassPanel"
 import { Segmented } from "@/components/glass/Segmented"
 import { Pane } from "@/components/Pane"
 import { useMessages } from "@/i18n/locale"
-
+import { inRange, isOption, usePersistentState } from "@/lib/persist"
 import { generateIds, ID_KINDS, type IdKind, type IdOptions, MAX_COUNT } from "./logic"
 import { messages } from "./messages"
 
@@ -18,10 +18,12 @@ const CASES = [
 
 const INITIAL: IdOptions = { kind: "uuid-v4", count: 10, uppercase: false }
 
+const isIdOptions = (options: IdOptions) => isOption(ID_KINDS)(options.kind) && inRange(1, MAX_COUNT)(options.count)
+
 export default function UuidTool() {
   const t = useMessages(messages)
-  const [options, setOptions] = useState(INITIAL)
-  const [ids, setIds] = useState(() => generateIds(INITIAL))
+  const [options, setOptions] = usePersistentState("options", INITIAL, isIdOptions)
+  const [ids, setIds] = useState(() => generateIds(options))
   const output = ids.join("\n")
 
   const update = (next: Partial<IdOptions>) => {

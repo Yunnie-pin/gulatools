@@ -1,9 +1,9 @@
 import { json } from "@codemirror/lang-json"
-import { useCallback, useState } from "react"
+import { useCallback } from "react"
 import { Segmented } from "@/components/glass/Segmented"
 import { TransformTool } from "@/components/TransformTool"
 import { useMessages } from "@/i18n/locale"
-
+import { isOption, usePersistentState } from "@/lib/persist"
 import { formatJson, type Indent, minifyJson } from "./logic"
 import { messages } from "./messages"
 
@@ -25,8 +25,8 @@ export default function JsonFormatter() {
     { value: 4, label: t.spaces(4) },
     { value: "\t", label: "Tab" },
   ] as const satisfies readonly { value: Indent; label: string }[]
-  const [mode, setMode] = useState<Mode>("format")
-  const [indent, setIndent] = useState<Indent>(2)
+  const [mode, setMode] = usePersistentState<Mode>("mode", "format", isOption(MODES))
+  const [indent, setIndent] = usePersistentState<Indent>("indent", 2, isOption(indents))
 
   const transform = useCallback(
     (input: string) => (mode === "format" ? formatJson(input, indent) : minifyJson(input)),

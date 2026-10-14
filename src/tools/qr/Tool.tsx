@@ -10,6 +10,7 @@ import { GlassPanel } from "@/components/glass/GlassPanel"
 import { Segmented, type SegmentedOption } from "@/components/glass/Segmented"
 import { useMessages } from "@/i18n/locale"
 import { downloadText, downloadUrl, pickFile } from "@/lib/file"
+import { isOption, usePersistentState } from "@/lib/persist"
 import { attempt } from "@/lib/result"
 import { useAsync } from "@/lib/use-async"
 import { createQrMatrix, createQrPng, createQrSvg, type ErrorLevel, scanQr } from "./logic"
@@ -31,7 +32,7 @@ const LEVELS = [
 
 export default function QrTool() {
   const t = useMessages(messages)
-  const [mode, setMode] = useState<Mode>("create")
+  const [mode, setMode] = usePersistentState<Mode>("mode", "create", isOption(MODES))
 
   return (
     <div className="flex flex-col gap-4">
@@ -50,8 +51,8 @@ export default function QrTool() {
 
 function CreatePanel() {
   const t = useMessages(messages)
-  const [text, setText] = useState("https://gulatools.dev")
-  const [level, setLevel] = useState<ErrorLevel>("M")
+  const [text, setText] = usePersistentState("text", "https://gulatools.dev")
+  const [level, setLevel] = usePersistentState<ErrorLevel>("level", "M", isOption(LEVELS))
   const matrix = useMemo(() => attempt(() => createQrMatrix(text, level)), [text, level])
 
   const downloadPng = async () => downloadUrl(await createQrPng(text, level), "qrcode.png")

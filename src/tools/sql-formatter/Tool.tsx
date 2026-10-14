@@ -1,12 +1,12 @@
 import { sql } from "@codemirror/lang-sql"
-import { useCallback, useState } from "react"
+import { useCallback } from "react"
 import type { KeywordCase, SqlLanguage } from "sql-formatter"
 import { Dropdown } from "@/components/glass/Dropdown"
 import { Segmented } from "@/components/glass/Segmented"
 import { TransformTool } from "@/components/TransformTool"
 import { useMessages } from "@/i18n/locale"
 import { labeled } from "@/lib/options"
-
+import { isOption, oneOf, usePersistentState } from "@/lib/persist"
 import { formatSql, type SqlOptions } from "./logic"
 import { messages } from "./messages"
 
@@ -33,9 +33,9 @@ const INDENTS = [2, 4] as const satisfies readonly SqlOptions["indent"][]
 
 export default function SqlFormatter() {
   const t = useMessages(messages)
-  const [dialect, setDialect] = useState<SqlLanguage>("sql")
-  const [keywordCase, setKeywordCase] = useState<KeywordCase>("upper")
-  const [indent, setIndent] = useState<SqlOptions["indent"]>(2)
+  const [dialect, setDialect] = usePersistentState<SqlLanguage>("dialect", "sql", isOption(DIALECTS))
+  const [keywordCase, setKeywordCase] = usePersistentState<KeywordCase>("keywordCase", "upper", oneOf(CASES))
+  const [indent, setIndent] = usePersistentState<SqlOptions["indent"]>("indent", 2, oneOf(INDENTS))
 
   const transform = useCallback(
     (input: string) => formatSql(input, { dialect, keywordCase, indent }),

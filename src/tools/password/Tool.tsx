@@ -7,6 +7,7 @@ import { Checkbox } from "@/components/glass/Checkbox"
 import { GlassPanel } from "@/components/glass/GlassPanel"
 import { RangeField } from "@/components/RangeField"
 import { useMessages } from "@/i18n/locale"
+import { inRange, usePersistentState } from "@/lib/persist"
 import { attempt } from "@/lib/result"
 import {
   CHARSET_IDS,
@@ -25,10 +26,12 @@ const INITIAL: PasswordOptions = {
   excludeAmbiguous: false,
 }
 
+const isPasswordOptions = (options: PasswordOptions) => inRange(MIN_LENGTH, MAX_LENGTH)(options.length)
+
 export default function PasswordTool() {
   const t = useMessages(messages)
-  const [options, setOptions] = useState(INITIAL)
-  const [password, setPassword] = useState(() => attempt(() => generatePassword(INITIAL)))
+  const [options, setOptions] = usePersistentState("options", INITIAL, isPasswordOptions)
+  const [password, setPassword] = useState(() => attempt(() => generatePassword(options)))
 
   const update = (next: Partial<PasswordOptions>) => {
     const merged = { ...options, ...next }

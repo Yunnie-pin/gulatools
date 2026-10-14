@@ -9,6 +9,7 @@ import { GlassPanel } from "@/components/glass/GlassPanel"
 import { Segmented } from "@/components/glass/Segmented"
 import { Pane } from "@/components/Pane"
 import { useLocale } from "@/i18n/locale"
+import { oneOf, usePersistentState } from "@/lib/persist"
 import { useAsync } from "@/lib/use-async"
 import { decryptText, encryptText, PBKDF2_ITERATIONS } from "./logic"
 import { messages } from "./messages"
@@ -22,7 +23,7 @@ const MODE_ICONS = { encrypt: LockKeyhole, decrypt: LockKeyholeOpen } as const
 export default function AesTool() {
   const locale = useLocale()
   const t = messages[locale]
-  const [mode, setMode] = useState<Mode>("encrypt")
+  const [mode, setMode] = usePersistentState<Mode>("mode", "encrypt", oneOf(MODES))
   const [input, setInput] = useState("")
   const [password, setPassword] = useState("")
   const task = useAsync((text: string, key: string) =>

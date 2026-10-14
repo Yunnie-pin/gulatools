@@ -20,6 +20,12 @@
       "preset": "recommended",
       "style": {
         "noNonNullAssertion": "off"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": {
+          "level": "error",
+          "options": { "hooks": [{ "name": "usePersistentState", "stableResult": [1] }] }
+        }
       }
     }
   },

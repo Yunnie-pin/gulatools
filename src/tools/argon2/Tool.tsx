@@ -11,6 +11,7 @@ import { Segmented, type SegmentedOption } from "@/components/glass/Segmented"
 import { RangeField } from "@/components/RangeField"
 import { ValueRow } from "@/components/ValueRow"
 import { useLocale, useMessages } from "@/i18n/locale"
+import { inRange, isOption, usePersistentState } from "@/lib/persist"
 import { attempt } from "@/lib/result"
 import { useAsync } from "@/lib/use-async"
 import { type Argon2Params, type Argon2Variant, parseArgon2, type ScryptParams } from "./logic"
@@ -28,6 +29,13 @@ const ALGORITHMS = [
   { value: "scrypt", label: "scrypt" },
 ] as const satisfies readonly SegmentedOption<Algorithm>[]
 
+// Batas sama dengan RangeField di bawah, supaya nilai tersimpan tidak memicu hash yang terlalu berat.
+const isArgon2Params = ({ iterations, memoryMiB, parallelism }: Argon2Params) =>
+  inRange(1, 10)(iterations) && inRange(8, 256)(memoryMiB) && inRange(1, 4)(parallelism)
+
+const isScryptParams = ({ costLog2, blockSize, parallelism }: ScryptParams) =>
+  inRange(10, 20)(costLog2) && blockSize === 8 && parallelism === 1
+
 type HashResult = { lines: { label: string; value: string }[]; ms: number }
 
 export default function KdfTool() {
@@ -42,10 +50,18 @@ export default function KdfTool() {
 function HashPanel() {
   const locale = useLocale()
   const t = messages[locale]
-  const [algorithm, setAlgorithm] = useState<Algorithm>("argon2id")
+  const [algorithm, setAlgorithm] = usePersistentState<Algorithm>("algorithm", "argon2id", isOption(ALGORITHMS))
   const [password, setPassword] = useState("")
-  const [argon, setArgon] = useState<Argon2Params>({ iterations: 3, memoryMiB: 64, parallelism: 1 })
-  const [scrypt, setScrypt] = useState<ScryptParams>({ costLog2: 15, blockSize: 8, parallelism: 1 })
+  const [argon, setArgon] = usePersistentState<Argon2Params>(
+    "argon2",
+    { iterations: 3, memoryMiB: 64, parallelism: 1 },
+    isArgon2Params,
+  )
+  const [scrypt, setScrypt] = usePersistentState<ScryptParams>(
+    "scrypt",
+    { costLog2: 15, blockSize: 8, parallelism: 1 },
+    isScryptParams,
+  )
 
   const task = useAsync(async (): Promise<HashResult> => {
     if (algorithm === "scrypt") {

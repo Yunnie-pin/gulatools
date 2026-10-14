@@ -4,6 +4,7 @@ import { type ReactNode, useEffect, useState } from "react"
 import { currentMessages, useMessages } from "@/i18n/locale"
 import { ui } from "@/i18n/ui"
 import { downloadText, pickFile } from "@/lib/file"
+import { usePersistentState } from "@/lib/persist"
 import { errorMessage, type Result, settle } from "@/lib/result"
 import { buildShareUrl, decodeShare, sharedFromHash } from "@/lib/share"
 import { toast } from "@/lib/toast"
@@ -38,7 +39,7 @@ export function TransformTool({
   outputFileName = "output.txt",
 }: TransformToolProps) {
   const t = useMessages(ui).transform
-  const [input, setInput] = useState("")
+  const [input, setInput] = usePersistentState("input", "")
   const [result, setResult] = useState<Result<string>>({ ok: true, value: "" })
 
   useEffect(() => {

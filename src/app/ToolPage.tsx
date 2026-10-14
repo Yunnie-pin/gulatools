@@ -8,6 +8,7 @@ import { useLocale } from "@/i18n/locale"
 import { ui } from "@/i18n/ui"
 import { cx } from "@/lib/cx"
 import { usePageMeta } from "@/lib/meta"
+import { ToolStateProvider } from "@/lib/persist"
 import { CATEGORIES, type Tool } from "@/lib/tool"
 import { recordVisit, toggleFavorite, useUsage } from "@/lib/usage"
 import { useAfterFirstPaint } from "@/lib/use-after-paint"
@@ -69,7 +70,9 @@ export function ToolPage({ tool }: { tool: Tool }) {
           </span>
         )}
       </GlassPanel>
-      <Suspense fallback={<ToolSkeleton />}>{painted ? <tool.Component /> : <ToolSkeleton />}</Suspense>
+      <ToolStateProvider value={tool.id}>
+        <Suspense fallback={<ToolSkeleton />}>{painted ? <tool.Component /> : <ToolSkeleton />}</Suspense>
+      </ToolStateProvider>
     </div>
   )
 }

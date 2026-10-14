@@ -7,6 +7,7 @@ import { GlassInput, GlassTextarea } from "@/components/glass/GlassInput"
 import { GlassPanel } from "@/components/glass/GlassPanel"
 import { Pane } from "@/components/Pane"
 import { useMessages } from "@/i18n/locale"
+import { usePersistentState } from "@/lib/persist"
 import type { Result } from "@/lib/result"
 import { FLAGS, type RegexMatch, type RegexResult } from "./logic"
 import { messages } from "./messages"
@@ -16,12 +17,14 @@ const DEBOUNCE_MS = 150
 
 const SAMPLE_TEXT = "Hubungi gula@manis.id atau tim@gulatools.dev\nnomor lama: admin@contoh.co.id"
 
+const isNullableString = (value: unknown) => value === null || typeof value === "string"
+
 export default function RegexTool() {
   const t = useMessages(messages)
-  const [pattern, setPattern] = useState("(?<user>[\\w.]+)@(?<domain>[\\w.]+)")
-  const [flags, setFlags] = useState("g")
-  const [text, setText] = useState(SAMPLE_TEXT)
-  const [replacement, setReplacement] = useState<string | null>(null)
+  const [pattern, setPattern] = usePersistentState("pattern", "(?<user>[\\w.]+)@(?<domain>[\\w.]+)")
+  const [flags, setFlags] = usePersistentState("flags", "g")
+  const [text, setText] = usePersistentState("text", SAMPLE_TEXT)
+  const [replacement, setReplacement] = usePersistentState<string | null>("replacement", null, isNullableString)
   const [result, setResult] = useState<Result<RegexResult> | null>(null)
 
   useEffect(() => {

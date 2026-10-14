@@ -47,6 +47,38 @@ test("about dialog points visitors to the open source repository", async ({ page
   await expect(dialog).toBeHidden()
 })
 
+test("tool input and options survive leaving the route and closing the tab", async ({ page }) => {
+  await openWithSample(page, "/json-formatter")
+  await page.getByText("Minify", { exact: true }).click()
+  const minified = '{"name":"GulaTools","private":true'
+  await expect(editorOutput(page)).toContainText(minified)
+
+  await page.locator("aside").getByRole("link", { name: "Base64", exact: true }).click()
+  await page.locator("aside").getByRole("link", { name: "JSON Formatter", exact: true }).click()
+  await expect(editorOutput(page)).toContainText(minified)
+
+  await page.reload()
+  await expect(editorOutput(page)).toContainText(minified)
+})
+
+test("sensitive tools remember options but never store secrets", async ({ page }) => {
+  await page.goto("/hmac")
+  await page.getByLabel("Pesan").fill("pesan-sangat-rahasia")
+  await page.getByLabel("Kunci rahasia").fill("kunci-sangat-rahasia")
+  await page.goto("/aes")
+  await page.getByLabel("Teks").fill("teks-sangat-rahasia")
+  await page.getByLabel("Password").fill("password-sangat-rahasia")
+  await page.getByText("Dekripsi", { exact: true }).first().click()
+
+  const stored = await page.evaluate(() => JSON.stringify({ ...localStorage }))
+  expect(stored).not.toContain("sangat-rahasia")
+  expect(stored).toContain("gulatools:tool:aes:mode")
+
+  await page.reload()
+  await expect(page.getByLabel("Data terenkripsi (Base64)")).toHaveValue("")
+  await expect(page.getByLabel("Password")).toHaveValue("")
+})
+
 test("sidebar expands on hover, not after a mouse click, and can be pinned", async ({ page }) => {
   await page.goto("/jwt")
   await expect(page.getByRole("heading", { level: 1, name: "JWT" })).toBeVisible()

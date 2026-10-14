@@ -1,5 +1,5 @@
 import type { Change } from "diff"
-import { useDeferredValue, useMemo, useState } from "react"
+import { useDeferredValue, useMemo } from "react"
 import { ClearButton, SampleButton } from "@/components/ActionButtons"
 import { Badge } from "@/components/Badge"
 import { CopyButton } from "@/components/CopyButton"
@@ -11,6 +11,7 @@ import { Pane } from "@/components/Pane"
 import { useMessages } from "@/i18n/locale"
 import { cx } from "@/lib/cx"
 import { labeled } from "@/lib/options"
+import { oneOf, usePersistentState } from "@/lib/persist"
 import { type DiffMode, diffTexts, summarize, toPatch } from "./logic"
 import { messages } from "./messages"
 
@@ -21,10 +22,10 @@ const SAMPLE_MODIFIED = "nama: gulatools\nversi: 1.1.0\nfitur:\n  - json\n  - jw
 
 export default function DiffTool() {
   const t = useMessages(messages)
-  const [original, setOriginal] = useState("")
-  const [modified, setModified] = useState("")
-  const [mode, setMode] = useState<DiffMode>("lines")
-  const [ignoreWhitespace, setIgnoreWhitespace] = useState(false)
+  const [original, setOriginal] = usePersistentState("original", "")
+  const [modified, setModified] = usePersistentState("modified", "")
+  const [mode, setMode] = usePersistentState<DiffMode>("mode", "lines", oneOf(MODES))
+  const [ignoreWhitespace, setIgnoreWhitespace] = usePersistentState("ignoreWhitespace", false)
 
   const deferredOriginal = useDeferredValue(original)
   const deferredModified = useDeferredValue(modified)

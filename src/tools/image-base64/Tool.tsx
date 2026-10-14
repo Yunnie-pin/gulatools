@@ -12,6 +12,7 @@ import { ValueRow } from "@/components/ValueRow"
 import { useMessages } from "@/i18n/locale"
 import { downloadUrl, pickFile, readAsDataUrl } from "@/lib/file"
 import { formatBytes } from "@/lib/format"
+import { isOption, usePersistentState } from "@/lib/persist"
 import { attempt } from "@/lib/result"
 import { useAsync } from "@/lib/use-async"
 import { extensionFor, IMAGE_TYPES, type ImageType, snippets, toDataUrl, typeOf } from "./logic"
@@ -28,7 +29,7 @@ const PREVIEW_CHARS = 160
 
 export default function ImageBase64Tool() {
   const t = useMessages(messages)
-  const [mode, setMode] = useState<Mode>("encode")
+  const [mode, setMode] = usePersistentState<Mode>("mode", "encode", isOption(MODES))
 
   return (
     <div className="flex flex-col gap-4">
@@ -116,8 +117,12 @@ function EncodePanel() {
 
 function DecodePanel() {
   const t = useMessages(messages)
-  const [input, setInput] = useState("")
-  const [fallbackType, setFallbackType] = useState<ImageType>("image/png")
+  const [input, setInput] = usePersistentState("decodeInput", "")
+  const [fallbackType, setFallbackType] = usePersistentState<ImageType>(
+    "fallbackType",
+    "image/png",
+    isOption(IMAGE_TYPES),
+  )
   const [broken, setBroken] = useState(false)
   const dataUrl = useMemo(
     () => (input.trim() ? attempt(() => toDataUrl(input, fallbackType)) : null),

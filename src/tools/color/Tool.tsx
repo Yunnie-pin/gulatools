@@ -1,18 +1,19 @@
 import { CircleCheck, CircleX } from "lucide-react"
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 import { Badge } from "@/components/Badge"
 import { ErrorText } from "@/components/ErrorText"
 import { GlassInput } from "@/components/glass/GlassInput"
 import { GlassPanel } from "@/components/glass/GlassPanel"
 import { ValueRow } from "@/components/ValueRow"
 import { useMessages } from "@/i18n/locale"
+import { usePersistentState } from "@/lib/persist"
 import { attempt } from "@/lib/result"
 import { convertColor, WCAG_AA } from "./logic"
 import { messages } from "./messages"
 
 export default function ColorTool() {
   const t = useMessages(messages)
-  const [input, setInput] = useState("#ff6b5e")
+  const [input, setInput] = usePersistentState("input", "#ff6b5e")
   const color = useMemo(() => attempt(() => convertColor(input)), [input])
 
   return (

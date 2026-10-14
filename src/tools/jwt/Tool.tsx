@@ -1,6 +1,6 @@
-import { useState } from "react"
 import { GlassPanel } from "@/components/glass/GlassPanel"
 import { Segmented } from "@/components/glass/Segmented"
+import { isOption, usePersistentState } from "@/lib/persist"
 import { JwtDecode } from "./Decode"
 import { JwtSign } from "./Sign"
 
@@ -12,7 +12,7 @@ const MODES = [
 ] as const satisfies readonly { value: Mode; label: string }[]
 
 export default function JwtTool() {
-  const [mode, setMode] = useState<Mode>("decode")
+  const [mode, setMode] = usePersistentState<Mode>("mode", "decode", isOption(MODES))
 
   return (
     <div className="flex flex-col gap-4">

@@ -5,7 +5,7 @@ import { Dropdown } from "@/components/glass/Dropdown"
 import { Segmented } from "@/components/glass/Segmented"
 import { TransformTool } from "@/components/TransformTool"
 import { useMessages } from "@/i18n/locale"
-
+import { isOption, oneOf, usePersistentState } from "@/lib/persist"
 import { type CodeOptions, formatCode, LANGUAGES, type LanguageId } from "./logic"
 import { messages } from "./messages"
 
@@ -59,17 +59,24 @@ const INDENTS = [2, 4] as const satisfies readonly CodeOptions["tabWidth"][]
 
 const WIDTHS = [80, 100, 120] as const satisfies readonly CodeOptions["printWidth"][]
 
+const isCodeOptions = (options: CodeOptions) =>
+  isOption(LANGUAGE_OPTIONS)(options.language) && oneOf(INDENTS)(options.tabWidth) && oneOf(WIDTHS)(options.printWidth)
+
 const isScript = (language: LanguageId) => language === "javascript" || language === "typescript"
 
 export default function CodeFormatter() {
   const t = useMessages(messages)
-  const [options, setOptions] = useState<CodeOptions>({
-    language: "javascript",
-    tabWidth: 2,
-    printWidth: 80,
-    semi: true,
-    singleQuote: false,
-  })
+  const [options, setOptions] = usePersistentState<CodeOptions>(
+    "options",
+    {
+      language: "javascript",
+      tabWidth: 2,
+      printWidth: 80,
+      semi: true,
+      singleQuote: false,
+    },
+    isCodeOptions,
+  )
   const set = (next: Partial<CodeOptions>) => setOptions((current) => ({ ...current, ...next }))
   const editorLanguage = useEditorLanguage(options.language)
 

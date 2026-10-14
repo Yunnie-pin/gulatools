@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 import { Badge } from "@/components/Badge"
 import { ErrorText } from "@/components/ErrorText"
 import { GlassButton } from "@/components/glass/GlassButton"
@@ -6,6 +6,7 @@ import { GlassInput } from "@/components/glass/GlassInput"
 import { GlassPanel } from "@/components/glass/GlassPanel"
 import { ValueRow } from "@/components/ValueRow"
 import { useLocale } from "@/i18n/locale"
+import { usePersistentState } from "@/lib/persist"
 import { attempt } from "@/lib/result"
 import { formatDateTime, relativeTime } from "@/lib/time"
 import { parseTimestamp } from "./logic"
@@ -18,7 +19,7 @@ const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
 export default function TimestampTool() {
   const locale = useLocale()
   const t = messages[locale]
-  const [input, setInput] = useState(nowInSeconds)
+  const [input, setInput] = usePersistentState("input", nowInSeconds)
   const parsed = useMemo(() => attempt(() => parseTimestamp(input)), [input])
 
   return (

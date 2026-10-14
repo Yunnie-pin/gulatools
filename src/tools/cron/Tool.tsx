@@ -1,16 +1,17 @@
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 import { ErrorText } from "@/components/ErrorText"
 import { GlassButton } from "@/components/glass/GlassButton"
 import { GlassInput } from "@/components/glass/GlassInput"
 import { GlassPanel } from "@/components/glass/GlassPanel"
 import { useLocale } from "@/i18n/locale"
+import { usePersistentState } from "@/lib/persist"
 import { attempt } from "@/lib/result"
 import { formatDateTime, relativeTime } from "@/lib/time"
 import { explainCron, PRESETS } from "./logic"
 import { messages } from "./messages"
 
 export default function CronTool() {
-  const [expression, setExpression] = useState("0 9 * * 1-5")
+  const [expression, setExpression] = usePersistentState("expression", "0 9 * * 1-5")
   const locale = useLocale()
   const t = messages[locale]
   const info = useMemo(() => attempt(() => explainCron(expression, { locale })), [expression, locale])

@@ -1,5 +1,5 @@
 import { json } from "@codemirror/lang-json"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { CopyButton } from "@/components/CopyButton"
 import { Editor } from "@/components/Editor"
 import { ErrorText } from "@/components/ErrorText"
@@ -10,6 +10,7 @@ import { GlassInput, GlassTextarea } from "@/components/glass/GlassInput"
 import { GlassPanel } from "@/components/glass/GlassPanel"
 import { Pane } from "@/components/Pane"
 import { useMessages } from "@/i18n/locale"
+import { oneOf, usePersistentState } from "@/lib/persist"
 import { type Result, settle } from "@/lib/result"
 import { isHmac, SIGN_ALGORITHMS, type SignAlgorithm, type SignOptions, signToken } from "./logic"
 import { messages } from "./messages"
@@ -18,19 +19,32 @@ const language = json()
 
 const ALGORITHM_OPTIONS = SIGN_ALGORITHMS.map((value) => ({ value, label: value }))
 
-const INITIAL: SignOptions = {
-  alg: "HS256",
+type Settings = Pick<SignOptions, "alg" | "expiresIn" | "issuedAt">
+
+type Secrets = Pick<SignOptions, "payload" | "key">
+
+const INITIAL_SETTINGS: Settings = { alg: "HS256", expiresIn: "1h", issuedAt: true }
+
+const INITIAL_SECRETS: Secrets = {
   payload: JSON.stringify({ sub: "1234567890", name: "Gula Manis", role: "admin" }, null, 2),
   key: "",
-  expiresIn: "1h",
-  issuedAt: true,
 }
+
+const isSettings = (settings: Settings) => oneOf(SIGN_ALGORITHMS)(settings.alg)
 
 export function JwtSign() {
   const t = useMessages(messages)
-  const [options, setOptions] = useState(INITIAL)
+  // Hanya pengaturan yang disimpan; payload dan key tidak pernah ditulis ke localStorage.
+  const [settings, setSettings] = usePersistentState("signSettings", INITIAL_SETTINGS, isSettings)
+  const [secrets, setSecrets] = useState(INITIAL_SECRETS)
+  const options = useMemo<SignOptions>(() => ({ ...settings, ...secrets }), [settings, secrets])
   const [token, setToken] = useState<Result<string> | null>(null)
-  const set = (next: Partial<SignOptions>) => setOptions((current) => ({ ...current, ...next }))
+  const set = ({ payload, key, ...rest }: Partial<SignOptions>) => {
+    if (payload !== undefined || key !== undefined) {
+      setSecrets((current) => ({ payload: payload ?? current.payload, key: key ?? current.key }))
+    }
+    if (Object.keys(rest).length) setSettings((current) => ({ ...current, ...rest }))
+  }
   const hmac = isHmac(options.alg)
 
   useEffect(() => {
