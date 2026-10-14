@@ -7,7 +7,10 @@ import { useCallback, useState } from "react"
 import { Dropdown } from "@/components/glass/Dropdown"
 import { GlassButton } from "@/components/glass/GlassButton"
 import { TransformTool } from "@/components/TransformTool"
+import { useMessages } from "@/i18n/locale"
+
 import { convert, FORMATS, type Format } from "./logic"
+import { messages } from "./messages"
 
 const EDITOR_LANGUAGES: Partial<Record<Format, Extension>> = { json: json(), yaml: yaml(), xml: xml() }
 
@@ -24,6 +27,7 @@ const SAMPLES: Record<Format, string> = {
 const FORMAT_OPTIONS = (Object.keys(FORMATS) as Format[]).map((value) => ({ value, label: FORMATS[value] }))
 
 export default function DataConverter() {
+  const t = useMessages(messages)
   const [from, setFrom] = useState<Format>("json")
   const [to, setTo] = useState<Format>("yaml")
   const transform = useCallback((input: string) => convert(input, from, to), [from, to])
@@ -38,9 +42,9 @@ export default function DataConverter() {
       outputFileName={`output.${EXTENSIONS[to]}`}
       options={
         <>
-          <Dropdown<Format> label="Dari" value={from} options={FORMAT_OPTIONS} onChange={setFrom} />
+          <Dropdown<Format> label={t.from} value={from} options={FORMAT_OPTIONS} onChange={setFrom} />
           <GlassButton
-            aria-label="Tukar format"
+            aria-label={t.swap}
             onClick={() => {
               setFrom(to)
               setTo(from)
@@ -49,7 +53,7 @@ export default function DataConverter() {
           >
             <ArrowLeftRight aria-hidden="true" className="size-4" />
           </GlassButton>
-          <Dropdown<Format> label="Ke" value={to} options={FORMAT_OPTIONS} onChange={setTo} />
+          <Dropdown<Format> label={t.to} value={to} options={FORMAT_OPTIONS} onChange={setTo} />
         </>
       }
     />

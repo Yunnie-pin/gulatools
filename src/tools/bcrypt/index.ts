@@ -6,7 +6,10 @@ export const bcrypt: Tool = {
   id: "bcrypt",
   name: "Bcrypt",
   short: "Hash · Verify",
-  description: "Buat hash bcrypt dengan cost yang bisa diatur, lalu cocokkan password dengan hash.",
+  description: {
+    id: "Buat hash bcrypt dengan cost yang bisa diatur, lalu cocokkan password dengan hash.",
+    en: "Create bcrypt hashes with an adjustable cost, then check passwords against a hash.",
+  },
   category: "crypto",
   keywords: ["bcrypt", "password", "hash", "salt", "verify", "compare"],
   sensitive: true,

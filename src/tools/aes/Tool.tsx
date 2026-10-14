@@ -6,19 +6,22 @@ import { Field } from "@/components/Field"
 import { GlassButton } from "@/components/glass/GlassButton"
 import { GlassInput, GlassTextarea } from "@/components/glass/GlassInput"
 import { GlassPanel } from "@/components/glass/GlassPanel"
-import { Segmented, type SegmentedOption } from "@/components/glass/Segmented"
+import { Segmented } from "@/components/glass/Segmented"
 import { Pane } from "@/components/Pane"
+import { useLocale } from "@/i18n/locale"
 import { useAsync } from "@/lib/use-async"
 import { decryptText, encryptText, PBKDF2_ITERATIONS } from "./logic"
+import { messages } from "./messages"
 
 type Mode = "encrypt" | "decrypt"
 
-const MODES = [
-  { value: "encrypt", label: "Enkripsi", icon: LockKeyhole },
-  { value: "decrypt", label: "Dekripsi", icon: LockKeyholeOpen },
-] as const satisfies readonly SegmentedOption<Mode>[]
+const MODES = ["encrypt", "decrypt"] as const satisfies readonly Mode[]
+
+const MODE_ICONS = { encrypt: LockKeyhole, decrypt: LockKeyholeOpen } as const
 
 export default function AesTool() {
+  const locale = useLocale()
+  const t = messages[locale]
   const [mode, setMode] = useState<Mode>("encrypt")
   const [input, setInput] = useState("")
   const [password, setPassword] = useState("")
@@ -38,13 +41,13 @@ export default function AesTool() {
           <Segmented<Mode>
             label="Mode"
             value={mode}
-            options={MODES}
+            options={MODES.map((value) => ({ value, label: t.modes[value], icon: MODE_ICONS[value] }))}
             onChange={(next) => {
               setMode(next)
               task.reset()
             }}
           />
-          <Field label={mode === "encrypt" ? "Teks" : "Data terenkripsi (Base64)"}>
+          <Field label={mode === "encrypt" ? t.text : t.ciphertext}>
             {(id) => (
               <GlassTextarea
                 id={id}
@@ -55,10 +58,7 @@ export default function AesTool() {
               />
             )}
           </Field>
-          <Field
-            label="Password"
-            hint={`Kunci AES-256 diturunkan dengan PBKDF2-SHA256, ${PBKDF2_ITERATIONS.toLocaleString("id")} iterasi.`}
-          >
+          <Field label="Password" hint={t.keyHint(PBKDF2_ITERATIONS.toLocaleString(locale))}>
             {(id) => (
               <GlassInput
                 id={id}
@@ -70,22 +70,18 @@ export default function AesTool() {
             )}
           </Field>
           <GlassButton type="submit" variant="key" disabled={task.pending || !input} className="self-start">
-            {task.pending ? "Memproses…" : mode === "encrypt" ? "Enkripsi" : "Dekripsi"}
+            {task.pending ? t.processing : t.modes[mode]}
           </GlassButton>
         </form>
       </GlassPanel>
 
       <Pane
-        title={mode === "encrypt" ? "Hasil enkripsi" : "Hasil dekripsi"}
+        title={t.results[mode]}
         className="min-h-60"
         action={task.result?.ok && <CopyButton text={task.result.value} />}
       >
         <div className="p-4">
-          {!task.result && (
-            <p className="text-sm text-ink-soft">
-              Format hasil: Base64 dari salt (16 byte) + IV (12 byte) + ciphertext AES-GCM.
-            </p>
-          )}
+          {!task.result && <p className="text-sm text-ink-soft">{t.formatHint}</p>}
           {task.result &&
             (task.result.ok ? (
               <p className="font-mono text-sm break-all whitespace-pre-wrap">{task.result.value}</p>

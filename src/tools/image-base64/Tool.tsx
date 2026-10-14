@@ -9,28 +9,36 @@ import { GlassTextarea } from "@/components/glass/GlassInput"
 import { GlassPanel } from "@/components/glass/GlassPanel"
 import { Segmented, type SegmentedOption } from "@/components/glass/Segmented"
 import { ValueRow } from "@/components/ValueRow"
+import { useMessages } from "@/i18n/locale"
 import { downloadUrl, pickFile, readAsDataUrl } from "@/lib/file"
 import { formatBytes } from "@/lib/format"
 import { attempt } from "@/lib/result"
 import { useAsync } from "@/lib/use-async"
 import { extensionFor, IMAGE_TYPES, type ImageType, snippets, toDataUrl, typeOf } from "./logic"
+import { messages } from "./messages"
 
 type Mode = "encode" | "decode"
 
 const MODES = [
-  { value: "encode", label: "Gambar ke Base64", icon: ImageUp },
-  { value: "decode", label: "Base64 ke gambar", icon: ImageDown },
-] as const satisfies readonly SegmentedOption<Mode>[]
+  { value: "encode", icon: ImageUp },
+  { value: "decode", icon: ImageDown },
+] as const satisfies readonly Omit<SegmentedOption<Mode>, "label">[]
 
 const PREVIEW_CHARS = 160
 
 export default function ImageBase64Tool() {
+  const t = useMessages(messages)
   const [mode, setMode] = useState<Mode>("encode")
 
   return (
     <div className="flex flex-col gap-4">
       <GlassPanel className="px-4 py-3">
-        <Segmented<Mode> label="Mode" value={mode} options={MODES} onChange={setMode} />
+        <Segmented<Mode>
+          label="Mode"
+          value={mode}
+          options={MODES.map((option) => ({ ...option, label: t.modes[option.value] }))}
+          onChange={setMode}
+        />
       </GlassPanel>
       {mode === "encode" ? <EncodePanel /> : <DecodePanel />}
     </div>
@@ -40,11 +48,12 @@ export default function ImageBase64Tool() {
 type PreviewProps = { src: string; onSize?: (size: string) => void; onError?: () => void }
 
 function Preview({ src, onSize, onError }: PreviewProps) {
+  const t = useMessages(messages)
   return (
     <div className="grid min-h-48 place-items-center rounded-glass-sm bg-[repeating-conic-gradient(#0001_0_25%,transparent_0_50%)] bg-[length:16px_16px] p-3">
       <img
         src={src}
-        alt="Pratinjau"
+        alt={t.preview}
         onLoad={(e) => onSize?.(`${e.currentTarget.naturalWidth} × ${e.currentTarget.naturalHeight} px`)}
         onError={onError}
         className="max-h-72 max-w-full object-contain"
@@ -54,6 +63,7 @@ function Preview({ src, onSize, onError }: PreviewProps) {
 }
 
 function EncodePanel() {
+  const t = useMessages(messages)
   const [file, setFile] = useState<File | null>(null)
   const [dimensions, setDimensions] = useState("")
   const task = useAsync(readAsDataUrl)
@@ -73,7 +83,7 @@ function EncodePanel() {
 
   return (
     <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
-      <FileDrop label="Gambar" onFile={load}>
+      <FileDrop label={t.image} onFile={load}>
         <GlassPanel variant="solid" className="flex flex-col gap-3 p-5">
           {output ? (
             <Preview src={output.dataUrl} onSize={setDimensions} />
@@ -83,12 +93,10 @@ function EncodePanel() {
             </div>
           )}
           <p className="text-center text-sm text-ink-soft">
-            {file
-              ? [file.name, formatBytes(file.size), dimensions].filter(Boolean).join(" · ")
-              : "Seret gambar ke sini"}
+            {file ? [file.name, formatBytes(file.size), dimensions].filter(Boolean).join(" · ") : t.dropHint}
           </p>
           <GlassButton className="self-center" onClick={async () => load(await pickFile("image/*"))}>
-            Pilih gambar
+            {t.pickImage}
           </GlassButton>
           {task.result && !task.result.ok && <ErrorText>{task.result.error}</ErrorText>}
         </GlassPanel>
@@ -107,6 +115,7 @@ function EncodePanel() {
 }
 
 function DecodePanel() {
+  const t = useMessages(messages)
   const [input, setInput] = useState("")
   const [fallbackType, setFallbackType] = useState<ImageType>("image/png")
   const [broken, setBroken] = useState(false)
@@ -118,7 +127,7 @@ function DecodePanel() {
   return (
     <div className="grid gap-4 lg:grid-cols-2">
       <GlassPanel variant="solid" className="flex flex-col gap-4 p-5">
-        <Field label="Data URI atau Base64">
+        <Field label={t.dataInput}>
           {(id) => (
             <GlassTextarea
               id={id}
@@ -133,9 +142,9 @@ function DecodePanel() {
           )}
         </Field>
         <div className="flex items-center gap-3 text-sm text-ink-soft">
-          Tipe untuk Base64 mentah
+          {t.rawType}
           <Dropdown<ImageType>
-            label="Tipe gambar"
+            label={t.imageType}
             value={fallbackType}
             options={IMAGE_TYPES}
             onChange={setFallbackType}
@@ -144,20 +153,20 @@ function DecodePanel() {
       </GlassPanel>
 
       <GlassPanel variant="solid" className="flex flex-col gap-3 p-5">
-        {!dataUrl && <p className="text-sm text-ink-soft">Pratinjau akan tampil di sini.</p>}
+        {!dataUrl && <p className="text-sm text-ink-soft">{t.previewHint}</p>}
         {dataUrl && !dataUrl.ok && <ErrorText>{dataUrl.error}</ErrorText>}
         {dataUrl?.ok &&
           (broken ? (
-            <ErrorText>Data tidak bisa ditampilkan sebagai gambar</ErrorText>
+            <ErrorText>{t.broken}</ErrorText>
           ) : (
             <>
               <Preview src={dataUrl.value} onError={() => setBroken(true)} />
               <GlassButton
                 className="self-start"
-                onClick={() => downloadUrl(dataUrl.value, `gambar.${extensionFor(typeOf(dataUrl.value))}`)}
+                onClick={() => downloadUrl(dataUrl.value, `${t.fileName}.${extensionFor(typeOf(dataUrl.value))}`)}
               >
                 <Download aria-hidden="true" className="size-4" />
-                Unduh gambar
+                {t.downloadImage}
               </GlassButton>
             </>
           ))}

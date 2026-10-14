@@ -8,17 +8,19 @@ import { GlassButton } from "@/components/glass/GlassButton"
 import { GlassTextarea } from "@/components/glass/GlassInput"
 import { GlassPanel } from "@/components/glass/GlassPanel"
 import { Segmented, type SegmentedOption } from "@/components/glass/Segmented"
+import { useMessages } from "@/i18n/locale"
 import { downloadText, downloadUrl, pickFile } from "@/lib/file"
 import { attempt } from "@/lib/result"
 import { useAsync } from "@/lib/use-async"
 import { createQrMatrix, createQrPng, createQrSvg, type ErrorLevel, scanQr } from "./logic"
+import { messages } from "./messages"
 
 type Mode = "create" | "scan"
 
 const MODES = [
-  { value: "create", label: "Buat", icon: QrCode },
-  { value: "scan", label: "Pindai", icon: ScanLine },
-] as const satisfies readonly SegmentedOption<Mode>[]
+  { value: "create", icon: QrCode },
+  { value: "scan", icon: ScanLine },
+] as const satisfies readonly Omit<SegmentedOption<Mode>, "label">[]
 
 const LEVELS = [
   { value: "L", label: "L · 7%" },
@@ -28,12 +30,18 @@ const LEVELS = [
 ] as const satisfies readonly SegmentedOption<ErrorLevel>[]
 
 export default function QrTool() {
+  const t = useMessages(messages)
   const [mode, setMode] = useState<Mode>("create")
 
   return (
     <div className="flex flex-col gap-4">
       <GlassPanel className="px-4 py-3">
-        <Segmented<Mode> label="Mode" value={mode} options={MODES} onChange={setMode} />
+        <Segmented<Mode>
+          label="Mode"
+          value={mode}
+          options={MODES.map((option) => ({ ...option, label: t.modes[option.value] }))}
+          onChange={setMode}
+        />
       </GlassPanel>
       {mode === "create" ? <CreatePanel /> : <ScanPanel />}
     </div>
@@ -41,6 +49,7 @@ export default function QrTool() {
 }
 
 function CreatePanel() {
+  const t = useMessages(messages)
   const [text, setText] = useState("https://gulatools.dev")
   const [level, setLevel] = useState<ErrorLevel>("M")
   const matrix = useMemo(() => attempt(() => createQrMatrix(text, level)), [text, level])
@@ -51,7 +60,7 @@ function CreatePanel() {
   return (
     <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]">
       <GlassPanel variant="solid" className="flex flex-col gap-4 p-5">
-        <Field label="Teks atau URL">
+        <Field label={t.textOrUrl}>
           {(id) => (
             <GlassTextarea
               id={id}
@@ -63,9 +72,9 @@ function CreatePanel() {
           )}
         </Field>
         <div className="flex flex-col gap-1.5">
-          <span className="text-sm font-medium text-ink-soft">Koreksi error</span>
-          <Segmented<ErrorLevel> label="Koreksi error" value={level} options={LEVELS} onChange={setLevel} />
-          <span className="text-xs text-ink-soft">Level lebih tinggi lebih tahan rusak, tapi kodenya lebih padat.</span>
+          <span className="text-sm font-medium text-ink-soft">{t.errorCorrection}</span>
+          <Segmented<ErrorLevel> label={t.errorCorrection} value={level} options={LEVELS} onChange={setLevel} />
+          <span className="text-xs text-ink-soft">{t.levelHint}</span>
         </div>
       </GlassPanel>
 
@@ -74,7 +83,7 @@ function CreatePanel() {
           <>
             <svg
               role="img"
-              aria-label={`QR code untuk ${text}`}
+              aria-label={t.qrFor(text)}
               viewBox={`-2 -2 ${matrix.value.size + 4} ${matrix.value.size + 4}`}
               shapeRendering="crispEdges"
               className="aspect-square w-full max-w-72 rounded-glass-sm bg-white"
@@ -101,6 +110,7 @@ function CreatePanel() {
 }
 
 function ScanPanel() {
+  const t = useMessages(messages)
   const [preview, setPreview] = useState<string | null>(null)
   const task = useAsync(scanQr)
 
@@ -115,29 +125,29 @@ function ScanPanel() {
 
   return (
     <div className="grid gap-4 lg:grid-cols-2">
-      <FileDrop label="Gambar QR code" onFile={load}>
+      <FileDrop label={t.qrImage} onFile={load}>
         <GlassPanel
           variant="solid"
           className="flex min-h-64 flex-col items-center justify-center gap-3 p-6 text-center"
         >
           {preview ? (
-            <img src={preview} alt="Gambar yang dipindai" className="max-h-56 rounded-glass-sm object-contain" />
+            <img src={preview} alt={t.scannedImage} className="max-h-56 rounded-glass-sm object-contain" />
           ) : (
             <FileUp aria-hidden="true" className="size-8 text-ink-soft" />
           )}
-          <p className="text-sm text-ink-soft">Seret gambar berisi QR code ke sini</p>
+          <p className="text-sm text-ink-soft">{t.dropHint}</p>
           <GlassButton onClick={async () => load(await pickFile("image/*"))} disabled={task.pending}>
-            {task.pending ? "Membaca…" : "Pilih gambar"}
+            {task.pending ? t.reading : t.pickImage}
           </GlassButton>
         </GlassPanel>
       </FileDrop>
 
       <GlassPanel variant="solid" className="flex flex-col gap-3 p-5">
         <div className="flex items-center justify-between">
-          <h2 className="text-sm font-medium text-ink-soft">Isi QR code</h2>
+          <h2 className="text-sm font-medium text-ink-soft">{t.contents}</h2>
           {task.result?.ok && <CopyButton text={task.result.value} />}
         </div>
-        {!task.result && <p className="text-sm text-ink-soft">Belum ada gambar yang dipindai.</p>}
+        {!task.result && <p className="text-sm text-ink-soft">{t.nothingScanned}</p>}
         {task.result &&
           (task.result.ok ? (
             <p className="font-mono text-sm break-all whitespace-pre-wrap">{task.result.value}</p>

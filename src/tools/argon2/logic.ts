@@ -1,4 +1,5 @@
 import { argon2d, argon2i, argon2id, argon2Verify, scrypt } from "hash-wasm"
+import { LocalizedError } from "@/i18n/errors"
 import { bytesToHex } from "@/lib/bytes"
 
 export const ARGON2_VARIANTS = { argon2id, argon2i, argon2d } as const
@@ -54,7 +55,7 @@ const ARGON2_PATTERN = /^\$(argon2id|argon2i|argon2d)\$v=19\$m=(\d+),t=(\d+),p=(
 
 export function parseArgon2(hash: string): Argon2Info {
   const match = ARGON2_PATTERN.exec(hash.trim())
-  if (!match) throw new Error("Bukan hash Argon2 yang valid (format: $argon2id$v=19$m=…,t=…,p=…$salt$hash)")
+  if (!match) throw new LocalizedError("invalidArgon2")
   const [, variant, memory = "0", iterations = "0", parallelism = "0"] = match
   return {
     variant: variant as Argon2Variant,

@@ -1,4 +1,6 @@
 import { type DragEvent, type ReactNode, useState } from "react"
+import { useMessages } from "@/i18n/locale"
+import { ui } from "@/i18n/ui"
 import { cx } from "@/lib/cx"
 
 type FileDropProps = {
@@ -12,6 +14,7 @@ const hasFiles = (e: DragEvent) => e.dataTransfer.types.includes("Files")
 
 export function FileDrop({ label, onFile, children, className }: FileDropProps) {
   const [over, setOver] = useState(false)
+  const t = useMessages(ui).common
 
   return (
     <section
@@ -36,7 +39,7 @@ export function FileDrop({ label, onFile, children, className }: FileDropProps) 
       {children}
       {over && (
         <div className="pointer-events-none absolute inset-2 z-10 grid place-items-center rounded-glass-md border-2 border-dashed border-focus bg-focus/10 text-sm font-medium">
-          Lepaskan file di sini
+          {t.dropFile}
         </div>
       )}
     </section>

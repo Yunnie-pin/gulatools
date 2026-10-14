@@ -1,3 +1,4 @@
+import { LocalizedError } from "@/i18n/errors"
 import { base64ToBytes, bytesToBase64 } from "./bytes"
 
 const PREFIX = "#s="
@@ -18,7 +19,7 @@ export async function decodeShare(encoded: string): Promise<string> {
     const bytes = new Uint8Array(base64ToBytes(encoded))
     return new TextDecoder().decode(await pipe(bytes, new DecompressionStream("deflate-raw")))
   } catch {
-    throw new Error("Tautan yang dibagikan rusak atau tidak lengkap")
+    throw new LocalizedError("brokenShareLink")
   }
 }
 
@@ -26,6 +27,6 @@ export const sharedFromHash = (hash: string) => (hash.startsWith(PREFIX) ? hash.
 
 export async function buildShareUrl(text: string, location: Pick<Location, "origin" | "pathname">) {
   const url = `${location.origin}${location.pathname}${PREFIX}${await encodeShare(text)}`
-  if (url.length > MAX_SHARE_URL_LENGTH) throw new Error("Input terlalu besar untuk dibagikan lewat tautan")
+  if (url.length > MAX_SHARE_URL_LENGTH) throw new LocalizedError("shareTooLarge")
   return url
 }

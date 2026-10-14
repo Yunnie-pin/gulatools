@@ -4,7 +4,10 @@ import { useCallback, useState } from "react"
 import { GlassInput } from "@/components/glass/GlassInput"
 import { Segmented, type SegmentedOption } from "@/components/glass/Segmented"
 import { TransformTool } from "@/components/TransformTool"
+import { useMessages } from "@/i18n/locale"
+
 import { toTypeScript, toZod } from "./logic"
+import { messages } from "./messages"
 
 const jsonLanguage = json()
 const tsLanguage = javascript({ typescript: true })
@@ -29,6 +32,7 @@ const SAMPLE = JSON.stringify({
 })
 
 export default function JsonToTs() {
+  const t = useMessages(messages)
   const [target, setTarget] = useState<Target>("typescript")
   const [rootName, setRootName] = useState("Root")
 
@@ -52,8 +56,8 @@ export default function JsonToTs() {
         <>
           <Segmented<Target> label="Target" value={target} options={TARGETS} onChange={setTarget} />
           <GlassInput
-            aria-label="Nama tipe root"
-            title="Nama tipe root"
+            aria-label={t.rootName}
+            title={t.rootName}
             value={rootName}
             onChange={(e) => setRootName(e.target.value)}
             spellCheck={false}

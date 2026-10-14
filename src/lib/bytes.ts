@@ -1,3 +1,5 @@
+import { LocalizedError } from "@/i18n/errors"
+
 const CHUNK = 0x8000
 
 export function bytesToBase64(bytes: Uint8Array, urlSafe = false): string {
@@ -13,7 +15,7 @@ export function base64ToBytes(input: string): Uint8Array {
   try {
     return Uint8Array.from(atob(padded), (c) => c.charCodeAt(0))
   } catch {
-    throw new Error("Input bukan Base64 yang valid")
+    throw new LocalizedError("invalidBase64")
   }
 }
 

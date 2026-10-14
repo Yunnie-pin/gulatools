@@ -1,3 +1,4 @@
+import { LocalizedError } from "@/i18n/errors"
 import { bytesToBase64, bytesToHex } from "@/lib/bytes"
 
 export const HMAC_ALGORITHMS = [
@@ -12,7 +13,7 @@ export type HmacAlgorithm = (typeof HMAC_ALGORITHMS)[number]["value"]
 export type HmacDigest = { hex: string; base64: string }
 
 export async function hmac(message: string, key: string, algorithm: HmacAlgorithm): Promise<HmacDigest> {
-  if (!key) throw new Error("Kunci tidak boleh kosong")
+  if (!key) throw new LocalizedError("emptyKey")
   const encoder = new TextEncoder()
   const cryptoKey = await crypto.subtle.importKey(
     "raw",

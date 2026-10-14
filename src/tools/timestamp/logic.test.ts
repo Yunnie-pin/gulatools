@@ -5,21 +5,21 @@ const iso = (input: string) => parseTimestamp(input).date.toISOString()
 
 describe("parseTimestamp", () => {
   it("reads seconds", () => {
-    expect(parseTimestamp("1760000000")).toEqual({ date: new Date("2025-10-09T08:53:20Z"), unit: "detik" })
+    expect(parseTimestamp("1760000000")).toEqual({ date: new Date("2025-10-09T08:53:20Z"), unit: "seconds" })
   })
 
   it("reads milliseconds", () => {
-    expect(parseTimestamp("1760000000123").unit).toBe("milidetik")
+    expect(parseTimestamp("1760000000123").unit).toBe("milliseconds")
     expect(iso("1760000000123")).toBe("2025-10-09T08:53:20.123Z")
   })
 
   it("reads micro and nanoseconds", () => {
     expect(iso("1760000000123456")).toBe("2025-10-09T08:53:20.123Z")
-    expect(parseTimestamp("1760000000123456789").unit).toBe("nanodetik")
+    expect(parseTimestamp("1760000000123456789").unit).toBe("nanoseconds")
   })
 
   it("reads ISO dates", () => {
-    expect(parseTimestamp("2026-10-13T08:00:00Z")).toEqual({ date: new Date("2026-10-13T08:00:00Z"), unit: "tanggal" })
+    expect(parseTimestamp("2026-10-13T08:00:00Z")).toEqual({ date: new Date("2026-10-13T08:00:00Z"), unit: "date" })
   })
 
   it("handles negative epochs", () => {

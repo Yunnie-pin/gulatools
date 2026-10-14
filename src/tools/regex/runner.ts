@@ -1,4 +1,5 @@
-import type { Result } from "@/lib/result"
+import { LocalizedError } from "@/i18n/errors"
+import { errorMessage, type Result } from "@/lib/result"
 import type { RegexInput, RegexResult } from "./logic"
 
 const TIMEOUT_MS = 1000
@@ -12,7 +13,7 @@ export function runInWorker(input: RegexInput) {
       worker.terminate()
       resolve({
         ok: false,
-        error: "Regex berjalan lebih dari 1 detik dan dihentikan (kemungkinan catastrophic backtracking)",
+        error: errorMessage(new LocalizedError("regexTimeout")),
       })
     }, TIMEOUT_MS)
     worker.onmessage = (event: MessageEvent<Result<RegexResult>>) => {

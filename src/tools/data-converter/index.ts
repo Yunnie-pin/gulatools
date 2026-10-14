@@ -6,7 +6,10 @@ export const dataConverter: Tool = {
   id: "data-converter",
   name: "Data Converter",
   short: "JSON · YAML · TOML · XML · CSV",
-  description: "Konversi data antar JSON, YAML, TOML, XML, dan CSV ke segala arah.",
+  description: {
+    id: "Konversi data antar JSON, YAML, TOML, XML, dan CSV ke segala arah.",
+    en: "Convert data between JSON, YAML, TOML, XML, and CSV in any direction.",
+  },
   category: "converter",
   keywords: ["json", "yaml", "yml", "toml", "xml", "csv", "convert", "config"],
   icon: ArrowLeftRight,

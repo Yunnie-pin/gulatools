@@ -4,6 +4,8 @@ import { Link } from "react-router"
 import { Badge } from "@/components/Badge"
 import { glassButtonClass } from "@/components/glass/GlassButton"
 import { GlassPanel } from "@/components/glass/GlassPanel"
+import { useLocale } from "@/i18n/locale"
+import { ui } from "@/i18n/ui"
 import { cx } from "@/lib/cx"
 import { usePageMeta } from "@/lib/meta"
 import { CATEGORIES, type Tool } from "@/lib/tool"
@@ -13,6 +15,9 @@ import { useAfterFirstPaint } from "@/lib/use-after-paint"
 export function ToolPage({ tool }: { tool: Tool }) {
   const { favorites } = useUsage()
   const favorite = favorites.includes(tool.id)
+  const locale = useLocale()
+  const t = ui[locale].tool
+  const favoriteLabel = favorite ? t.removeFavorite : t.addFavorite
 
   useEffect(() => recordVisit(tool.id), [tool.id])
   usePageMeta(tool.name, tool.description)
@@ -28,7 +33,7 @@ export function ToolPage({ tool }: { tool: Tool }) {
           <div className="min-w-0 flex-1">
             <nav aria-label="Breadcrumb" className="mb-0.5 flex items-center gap-1 text-xs text-ink-soft">
               <Link to="/" className="rounded-sm hover:text-ink">
-                Beranda
+                {t.home}
               </Link>
               <ChevronRight aria-hidden="true" className="size-3.5" />
               <span>{CATEGORIES[tool.category].name}</span>
@@ -39,15 +44,15 @@ export function ToolPage({ tool }: { tool: Tool }) {
             {tool.sensitive && (
               <span className="hidden sm:inline-flex">
                 <Badge tone="success" icon={Lock}>
-                  Diproses lokal
+                  {t.local}
                 </Badge>
               </span>
             )}
             <button
               type="button"
               aria-pressed={favorite}
-              aria-label={favorite ? "Hapus dari favorit" : "Tambah ke favorit"}
-              title={favorite ? "Hapus dari favorit" : "Tambah ke favorit"}
+              aria-label={favoriteLabel}
+              title={favoriteLabel}
               onClick={() => toggleFavorite(tool.id)}
               className={glassButtonClass("frost", "w-9 px-0")}
             >
@@ -55,11 +60,11 @@ export function ToolPage({ tool }: { tool: Tool }) {
             </button>
           </div>
         </div>
-        <p className="text-sm text-ink-soft sm:pl-15">{tool.description}</p>
+        <p className="text-sm text-ink-soft sm:pl-15">{tool.description[locale]}</p>
         {tool.sensitive && (
           <span className="sm:hidden">
             <Badge tone="success" icon={Lock}>
-              Diproses lokal
+              {t.local}
             </Badge>
           </span>
         )}

@@ -1,3 +1,4 @@
+import { LocalizedError } from "@/i18n/errors"
 import { base64ToBytes, bytesToBase64 } from "@/lib/bytes"
 
 export function encodeBase64(text: string, urlSafe = false): string {
@@ -9,6 +10,6 @@ export function decodeBase64(input: string): string {
   try {
     return new TextDecoder("utf-8", { fatal: true }).decode(bytes)
   } catch {
-    throw new Error("Hasil decode bukan teks UTF-8 (kemungkinan data biner)")
+    throw new LocalizedError("notUtf8")
   }
 }

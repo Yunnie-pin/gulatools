@@ -1,3 +1,4 @@
+import { LocalizedError } from "@/i18n/errors"
 import { base64ToBytes, bytesToBase64 } from "@/lib/bytes"
 
 export const PBKDF2_ITERATIONS = 600_000
@@ -19,7 +20,7 @@ async function deriveKey(password: string, salt: Uint8Array<ArrayBuffer>) {
 }
 
 function requirePassword(password: string) {
-  if (!password) throw new Error("Password tidak boleh kosong")
+  if (!password) throw new LocalizedError("emptyPassword")
 }
 
 export async function encryptText(plaintext: string, password: string): Promise<string> {
@@ -40,8 +41,7 @@ export async function encryptText(plaintext: string, password: string): Promise<
 export async function decryptText(payload: string, password: string): Promise<string> {
   requirePassword(password)
   const bytes = base64ToBytes(payload)
-  if (bytes.length < SALT_BYTES + IV_BYTES + TAG_BYTES)
-    throw new Error("Data terenkripsi terlalu pendek atau terpotong")
+  if (bytes.length < SALT_BYTES + IV_BYTES + TAG_BYTES) throw new LocalizedError("ciphertextTooShort")
   const salt = bytes.slice(0, SALT_BYTES)
   const iv = bytes.slice(SALT_BYTES, SALT_BYTES + IV_BYTES)
   const key = await deriveKey(password, salt)
@@ -49,6 +49,6 @@ export async function decryptText(payload: string, password: string): Promise<st
     const plaintext = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, bytes.slice(SALT_BYTES + IV_BYTES))
     return new TextDecoder().decode(plaintext)
   } catch {
-    throw new Error("Password salah atau data sudah diubah")
+    throw new LocalizedError("wrongPasswordOrTampered")
   }
 }

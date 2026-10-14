@@ -5,10 +5,13 @@ import { ErrorText } from "@/components/ErrorText"
 import { GlassInput } from "@/components/glass/GlassInput"
 import { GlassPanel } from "@/components/glass/GlassPanel"
 import { ValueRow } from "@/components/ValueRow"
+import { useMessages } from "@/i18n/locale"
 import { attempt } from "@/lib/result"
 import { convertColor, WCAG_AA } from "./logic"
+import { messages } from "./messages"
 
 export default function ColorTool() {
+  const t = useMessages(messages)
   const [input, setInput] = useState("#ff6b5e")
   const color = useMemo(() => attempt(() => convertColor(input)), [input])
 
@@ -17,7 +20,7 @@ export default function ColorTool() {
       <GlassPanel variant="solid" className="flex flex-col gap-3 p-4">
         <div className="flex gap-2">
           <GlassInput
-            aria-label="Warna"
+            aria-label={t.color}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             spellCheck={false}
@@ -25,7 +28,7 @@ export default function ColorTool() {
           />
           <input
             type="color"
-            aria-label="Pilih warna"
+            aria-label={t.pick}
             value={color.ok ? color.value.hex : "#000000"}
             onChange={(e) => setInput(e.target.value)}
             className="h-10 w-12 shrink-0 cursor-pointer rounded-glass-sm bg-transparent"
@@ -51,9 +54,9 @@ export default function ColorTool() {
             <ValueRow label="HSL" value={color.value.hsl} />
             <ValueRow label="OKLCH" value={color.value.oklch} />
             <div className="flex flex-wrap items-center gap-2 py-3">
-              <span className="w-32 text-sm text-ink-soft">Kontras WCAG</span>
-              <ContrastBadge on="putih" ratio={color.value.contrast.white} />
-              <ContrastBadge on="hitam" ratio={color.value.contrast.black} />
+              <span className="w-32 text-sm text-ink-soft">{t.contrast}</span>
+              <ContrastBadge on={t.white} ratio={color.value.contrast.white} />
+              <ContrastBadge on={t.black} ratio={color.value.contrast.black} />
             </div>
           </>
         ) : (

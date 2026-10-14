@@ -6,8 +6,11 @@ import { Dropdown } from "@/components/glass/Dropdown"
 import { GlassButton } from "@/components/glass/GlassButton"
 import { GlassPanel } from "@/components/glass/GlassPanel"
 import { Pane } from "@/components/Pane"
+import { useMessages } from "@/i18n/locale"
+
 import { useAsync } from "@/lib/use-async"
 import { generateKeys, KEY_TYPES, type KeyPairExport, type KeyType } from "./logic"
+import { messages } from "./messages"
 
 const OUTPUTS = [
   { key: "publicPem", title: "Public key (PEM)" },
@@ -17,6 +20,7 @@ const OUTPUTS = [
 ] as const satisfies readonly { key: keyof KeyPairExport; title: string }[]
 
 export default function KeygenTool() {
+  const t = useMessages(messages)
   const [type, setType] = useState<KeyType>("p256")
   const task = useAsync(generateKeys)
   const keys = task.result?.ok ? task.result.value : null
@@ -24,12 +28,12 @@ export default function KeygenTool() {
   return (
     <div className="flex flex-col gap-4">
       <GlassPanel className="flex flex-wrap items-center gap-3 px-4 py-3">
-        <Dropdown<KeyType> label="Jenis kunci" value={type} options={KEY_TYPES} onChange={setType} />
+        <Dropdown<KeyType> label={t.keyType} value={type} options={KEY_TYPES} onChange={setType} />
         <GlassButton variant="key" onClick={() => task.run(type)} disabled={task.pending}>
           <KeyRound aria-hidden="true" className="size-4" />
-          {task.pending ? "Membuat…" : "Generate key pair"}
+          {task.pending ? t.generating : t.generate}
         </GlassButton>
-        {keys && <span className="text-sm text-ink-soft">Algoritma JWT: {keys.alg}</span>}
+        {keys && <span className="text-sm text-ink-soft">{t.jwtAlg(keys.alg)}</span>}
       </GlassPanel>
 
       {task.result && !task.result.ok && <ErrorText>{task.result.error}</ErrorText>}

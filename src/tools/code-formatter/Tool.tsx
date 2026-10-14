@@ -4,7 +4,10 @@ import { Checkbox } from "@/components/glass/Checkbox"
 import { Dropdown } from "@/components/glass/Dropdown"
 import { Segmented } from "@/components/glass/Segmented"
 import { TransformTool } from "@/components/TransformTool"
+import { useMessages } from "@/i18n/locale"
+
 import { type CodeOptions, formatCode, LANGUAGES, type LanguageId } from "./logic"
+import { messages } from "./messages"
 
 const loadCss = async () => (await import("@codemirror/lang-css")).css()
 
@@ -52,20 +55,14 @@ const LANGUAGE_OPTIONS = (Object.keys(LANGUAGES) as LanguageId[]).map((value) =>
   label: LANGUAGES[value].label,
 }))
 
-const INDENTS = [
-  { value: 2, label: "2 spasi" },
-  { value: 4, label: "4 spasi" },
-] as const satisfies readonly { value: CodeOptions["tabWidth"]; label: string }[]
+const INDENTS = [2, 4] as const satisfies readonly CodeOptions["tabWidth"][]
 
-const WIDTHS = [
-  { value: 80, label: "80 kol" },
-  { value: 100, label: "100 kol" },
-  { value: 120, label: "120 kol" },
-] as const satisfies readonly { value: CodeOptions["printWidth"]; label: string }[]
+const WIDTHS = [80, 100, 120] as const satisfies readonly CodeOptions["printWidth"][]
 
 const isScript = (language: LanguageId) => language === "javascript" || language === "typescript"
 
 export default function CodeFormatter() {
+  const t = useMessages(messages)
   const [options, setOptions] = useState<CodeOptions>({
     language: "javascript",
     tabWidth: 2,
@@ -86,28 +83,28 @@ export default function CodeFormatter() {
       options={
         <>
           <Dropdown<LanguageId>
-            label="Bahasa"
+            label={t.language}
             value={options.language}
             options={LANGUAGE_OPTIONS}
             onChange={(language) => set({ language })}
           />
           <Segmented<CodeOptions["tabWidth"]>
-            label="Indentasi"
+            label={t.indent}
             value={options.tabWidth}
-            options={INDENTS}
+            options={INDENTS.map((value) => ({ value, label: t.spaces(value) }))}
             onChange={(tabWidth) => set({ tabWidth })}
           />
           <Segmented<CodeOptions["printWidth"]>
-            label="Lebar baris"
+            label={t.printWidth}
             value={options.printWidth}
-            options={WIDTHS}
+            options={WIDTHS.map((value) => ({ value, label: t.columns(value) }))}
             onChange={(printWidth) => set({ printWidth })}
           />
           {isScript(options.language) && (
             <>
-              <Checkbox label="Titik koma" checked={options.semi} onChange={(semi) => set({ semi })} />
+              <Checkbox label={t.semi} checked={options.semi} onChange={(semi) => set({ semi })} />
               <Checkbox
-                label="Kutip tunggal"
+                label={t.singleQuote}
                 checked={options.singleQuote}
                 onChange={(singleQuote) => set({ singleQuote })}
               />

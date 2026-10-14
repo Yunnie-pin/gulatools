@@ -1,10 +1,6 @@
-export const FLAGS = [
-  { flag: "g", label: "global" },
-  { flag: "i", label: "abaikan huruf besar" },
-  { flag: "m", label: "multiline" },
-  { flag: "s", label: "dotAll" },
-  { flag: "u", label: "unicode" },
-] as const
+export const FLAGS = ["g", "i", "m", "s", "u"] as const
+
+export type RegexFlag = (typeof FLAGS)[number]
 
 export const MAX_MATCHES = 1000
 

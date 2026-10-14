@@ -2,6 +2,8 @@ import { History, Trash2 } from "lucide-react"
 import { Link } from "react-router"
 import { glassButtonClass } from "@/components/glass/GlassButton"
 import { SectionHeading } from "@/components/SectionHeading"
+import { type Locale, useLocale } from "@/i18n/locale"
+import { ui } from "@/i18n/ui"
 import { relativeTime } from "@/lib/time"
 import { toast } from "@/lib/toast"
 import { clearRecent, useUsage } from "@/lib/usage"
@@ -9,10 +11,13 @@ import { findTool } from "@/tools/registry"
 
 const JUST_NOW_MS = 60_000
 
-const visitedLabel = (at: number) => (Date.now() - at < JUST_NOW_MS ? "Baru saja" : relativeTime(new Date(at)))
+const visitedLabel = (at: number, locale: Locale) =>
+  Date.now() - at < JUST_NOW_MS ? ui[locale].home.justNow : relativeTime(new Date(at), locale)
 
 export function ContinueStrip() {
   const { recent } = useUsage()
+  const locale = useLocale()
+  const t = ui[locale].home
   const entries = recent.flatMap(({ id, at }) => {
     const tool = findTool(id)
     return tool ? [{ tool, at }] : []
@@ -24,18 +29,18 @@ export function ContinueStrip() {
     <section aria-labelledby="continue-heading" className="flex flex-col gap-3">
       <div className="flex items-center justify-between gap-3">
         <SectionHeading id="continue-heading" icon={History} as="h3">
-          Lanjutkan
+          {t.continue}
         </SectionHeading>
         <button
           type="button"
           onClick={() => {
             clearRecent()
-            toast("Riwayat dihapus")
+            toast(t.historyCleared)
           }}
           className={glassButtonClass("frost", "h-8 gap-1.5 px-3 text-xs text-ink-soft")}
         >
           <Trash2 aria-hidden="true" className="size-3.5" />
-          Hapus riwayat
+          {t.clearHistory}
         </button>
       </div>
       <ul className="-mx-1 flex gap-3 overflow-x-auto px-1 pt-1 pb-3 [scrollbar-width:thin]">
@@ -50,7 +55,7 @@ export function ContinueStrip() {
               </span>
               <span className="flex flex-col leading-tight">
                 <span className="text-sm font-medium whitespace-nowrap">{tool.name}</span>
-                <span className="text-xs whitespace-nowrap text-ink-soft">{visitedLabel(at)}</span>
+                <span className="text-xs whitespace-nowrap text-ink-soft">{visitedLabel(at, locale)}</span>
               </span>
             </Link>
           </li>

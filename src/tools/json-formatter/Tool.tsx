@@ -2,7 +2,10 @@ import { json } from "@codemirror/lang-json"
 import { useCallback, useState } from "react"
 import { Segmented } from "@/components/glass/Segmented"
 import { TransformTool } from "@/components/TransformTool"
+import { useMessages } from "@/i18n/locale"
+
 import { formatJson, type Indent, minifyJson } from "./logic"
+import { messages } from "./messages"
 
 const language = json()
 
@@ -15,13 +18,13 @@ const MODES = [
   { value: "minify", label: "Minify" },
 ] as const satisfies readonly { value: Mode; label: string }[]
 
-const INDENTS = [
-  { value: 2, label: "2 spasi" },
-  { value: 4, label: "4 spasi" },
-  { value: "\t", label: "Tab" },
-] as const satisfies readonly { value: Indent; label: string }[]
-
 export default function JsonFormatter() {
+  const t = useMessages(messages)
+  const indents = [
+    { value: 2, label: t.spaces(2) },
+    { value: 4, label: t.spaces(4) },
+    { value: "\t", label: "Tab" },
+  ] as const satisfies readonly { value: Indent; label: string }[]
   const [mode, setMode] = useState<Mode>("format")
   const [indent, setIndent] = useState<Indent>(2)
 
@@ -41,7 +44,7 @@ export default function JsonFormatter() {
         <>
           <Segmented<Mode> label="Mode" value={mode} options={MODES} onChange={setMode} />
           {mode === "format" && (
-            <Segmented<Indent> label="Indentasi" value={indent} options={INDENTS} onChange={setIndent} />
+            <Segmented<Indent> label={t.indent} value={indent} options={indents} onChange={setIndent} />
           )}
         </>
       }

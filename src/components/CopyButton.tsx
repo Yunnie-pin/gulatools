@@ -1,10 +1,13 @@
 import { Check, Copy } from "lucide-react"
 import { useEffect, useState } from "react"
+import { useMessages } from "@/i18n/locale"
+import { ui } from "@/i18n/ui"
 import { toast } from "@/lib/toast"
 import { GlassButton } from "./glass/GlassButton"
 
 export function CopyButton({ text }: { text: string }) {
   const [copied, setCopied] = useState(false)
+  const t = useMessages(ui).common
 
   useEffect(() => {
     if (!copied) return
@@ -16,9 +19,9 @@ export function CopyButton({ text }: { text: string }) {
     try {
       await navigator.clipboard.writeText(text)
       setCopied(true)
-      toast("Tersalin ke clipboard")
+      toast(t.copied)
     } catch {
-      toast("Gagal menyalin", "error")
+      toast(t.copyFailed, "error")
     }
   }
 
@@ -27,7 +30,7 @@ export function CopyButton({ text }: { text: string }) {
   return (
     <GlassButton onClick={copy} disabled={!text}>
       <Icon aria-hidden="true" className="size-4" />
-      Copy
+      {t.copy}
     </GlassButton>
   )
 }

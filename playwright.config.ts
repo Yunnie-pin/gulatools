@@ -12,6 +12,7 @@ export default defineConfig({
   use: {
     baseURL: `http://localhost:${PORT}`,
     trace: "retain-on-failure",
+    locale: "id-ID",
   },
   projects: [
     {

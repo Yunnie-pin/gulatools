@@ -4,13 +4,15 @@ import { NavLink } from "react-router"
 import { glassButtonClass } from "@/components/glass/GlassButton"
 import { GlassPanel } from "@/components/glass/GlassPanel"
 import { Logo } from "@/components/Logo"
+import { useMessages } from "@/i18n/locale"
+import { ui } from "@/i18n/ui"
 import { cx } from "@/lib/cx"
 import { openPalette, PALETTE_SHORTCUT } from "@/lib/palette"
 import { setSidebarPinned, useSidebarPinned } from "@/lib/sidebar"
 import { CATEGORIES, CATEGORY_IDS, type Tool } from "@/lib/tool"
 import { useUsage } from "@/lib/usage"
 import { resolveTools, toolsByCategory } from "@/tools/registry"
-import { ActiveModeIcon, BackgroundPicker, ThemeSwitcher } from "./ThemeControls"
+import { ActiveModeIcon, BackgroundPicker, LanguageSwitcher, ThemeSwitcher } from "./ThemeControls"
 
 const REVEAL = "opacity-0 transition-opacity duration-200 group-data-[expanded]/sidebar:opacity-100"
 
@@ -70,6 +72,7 @@ function NavSection({ title, tools, reveal, onNavigate }: NavSectionProps) {
 function SidebarContent({ collapsible = false, onNavigate }: SidebarContentProps) {
   const reveal = collapsible ? REVEAL : undefined
   const favorites = resolveTools(useUsage().favorites)
+  const t = useMessages(ui).shell
 
   return (
     <>
@@ -82,7 +85,7 @@ function SidebarContent({ collapsible = false, onNavigate }: SidebarContentProps
         className={glassButtonClass("frost", "w-full shrink-0 justify-start gap-3 px-[13px] text-ink-soft")}
       >
         <Search aria-hidden="true" className="size-[18px] shrink-0" />
-        <span className={cx("whitespace-nowrap", reveal)}>Cari tool…</span>
+        <span className={cx("whitespace-nowrap", reveal)}>{t.searchPlaceholder}</span>
         <kbd className={cx("ml-auto hidden font-mono text-xs whitespace-nowrap lg:inline", reveal)}>
           {PALETTE_SHORTCUT}
         </kbd>
@@ -93,7 +96,7 @@ function SidebarContent({ collapsible = false, onNavigate }: SidebarContentProps
         className={cx("-mx-1 min-h-0 flex-1 overflow-x-hidden overflow-y-auto px-1", collapsible && HIDE_SCROLLBAR)}
       >
         {favorites.length > 0 && (
-          <NavSection title="Favorit" tools={favorites} reveal={reveal} onNavigate={onNavigate} />
+          <NavSection title={t.favorites} tools={favorites} reveal={reveal} onNavigate={onNavigate} />
         )}
         {CATEGORY_IDS.filter((id) => toolsByCategory[id].length).map((id) => (
           <NavSection
@@ -114,7 +117,8 @@ function SidebarContent({ collapsible = false, onNavigate }: SidebarContentProps
           <ThemeSwitcher className={reveal} />
         </div>
         <div className={collapsible ? EXPAND_HEIGHT : undefined}>
-          <div className={cx("min-h-0 overflow-hidden", reveal)}>
+          <div className={cx("flex min-h-0 flex-col gap-3 overflow-hidden", reveal)}>
+            <LanguageSwitcher />
             <BackgroundPicker />
           </div>
         </div>
@@ -169,6 +173,7 @@ function DesktopSidebar() {
   const { focused, ...focusHandlers } = useKeyboardFocusWithin()
   const expanded = pinned || hovered || focused
   const PinIcon = pinned ? PinOff : Pin
+  const t = useMessages(ui).shell
 
   return (
     <aside
@@ -186,8 +191,8 @@ function DesktopSidebar() {
           <button
             type="button"
             aria-pressed={pinned}
-            aria-label={pinned ? "Lepas pin sidebar" : "Pin sidebar agar tetap terbuka"}
-            title={pinned ? "Lepas pin" : "Pin sidebar"}
+            aria-label={pinned ? t.unpinLong : t.pinLong}
+            title={pinned ? t.unpin : t.pin}
             onClick={() => setSidebarPinned(!pinned)}
             className={cx(glassButtonClass("frost", "size-8 shrink-0 px-0"), REVEAL)}
           >
@@ -203,6 +208,7 @@ function DesktopSidebar() {
 function MobileSidebar() {
   const drawerRef = useRef<HTMLDialogElement>(null)
   const close = () => drawerRef.current?.close()
+  const t = useMessages(ui).shell
 
   return (
     <>
@@ -214,7 +220,7 @@ function MobileSidebar() {
         <div className="flex gap-2">
           <button
             type="button"
-            aria-label="Cari tool"
+            aria-label={t.searchTool}
             onClick={openPalette}
             className={glassButtonClass("frost", "w-9 px-0")}
           >
@@ -222,7 +228,7 @@ function MobileSidebar() {
           </button>
           <button
             type="button"
-            aria-label="Buka menu"
+            aria-label={t.openMenu}
             onClick={() => drawerRef.current?.showModal()}
             className={glassButtonClass("frost", "w-9 px-0")}
           >
@@ -233,7 +239,7 @@ function MobileSidebar() {
 
       <dialog
         ref={drawerRef}
-        aria-label="Menu"
+        aria-label={t.menu}
         className="glass glass-strong m-0 h-dvh max-h-dvh w-[min(300px,85vw)] rounded-none rounded-r-glass p-0 text-ink backdrop:bg-black/40 open:animate-[drawer-in_.3s_var(--ease)] lg:hidden"
       >
         <div className="flex h-full flex-col gap-5 p-5">
@@ -241,7 +247,7 @@ function MobileSidebar() {
             <Logo onClick={close} />
             <button
               type="button"
-              aria-label="Tutup menu"
+              aria-label={t.closeMenu}
               onClick={close}
               className={glassButtonClass("frost", "w-9 px-0")}
             >

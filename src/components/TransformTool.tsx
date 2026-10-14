@@ -1,6 +1,8 @@
 import type { Extension } from "@uiw/react-codemirror"
 import { Download, Share2, Upload } from "lucide-react"
 import { type ReactNode, useEffect, useState } from "react"
+import { currentMessages, useMessages } from "@/i18n/locale"
+import { ui } from "@/i18n/ui"
 import { downloadText, pickFile } from "@/lib/file"
 import { errorMessage, type Result, settle } from "@/lib/result"
 import { buildShareUrl, decodeShare, sharedFromHash } from "@/lib/share"
@@ -35,6 +37,7 @@ export function TransformTool({
   accept,
   outputFileName = "output.txt",
 }: TransformToolProps) {
+  const t = useMessages(ui).transform
   const [input, setInput] = useState("")
   const [result, setResult] = useState<Result<string>>({ ok: true, value: "" })
 
@@ -45,7 +48,7 @@ export function TransformTool({
     decodeShare(shared).then(
       (text) => {
         setInput(text)
-        toast("Input dari tautan dimuat")
+        toast(currentMessages(ui).transform.sharedLoaded)
       },
       (error) => toast(errorMessage(error), "error"),
     )
@@ -63,27 +66,27 @@ export function TransformTool({
   const loadFile = async (file: File | null) => {
     if (!file) return
     setInput(await file.text())
-    toast(`${file.name} dimuat`)
+    toast(t.fileLoaded(file.name))
   }
 
   const copyShareLink = async () => {
-    if (!input) return toast("Input masih kosong", "error")
+    if (!input) return toast(t.inputEmpty, "error")
     try {
       await navigator.clipboard.writeText(await buildShareUrl(input, window.location))
-      toast("Tautan berbagi tersalin")
+      toast(t.shareCopied)
     } catch (error) {
       toast(errorMessage(error), "error")
     }
   }
 
   const menuItems = [
-    { label: "Buka file…", icon: Upload, onSelect: async () => loadFile(await pickFile(accept)) },
+    { label: t.openFile, icon: Upload, onSelect: async () => loadFile(await pickFile(accept)) },
     {
-      label: "Unduh output",
+      label: t.downloadOutput,
       icon: Download,
-      onSelect: () => (output ? downloadText(output, outputFileName) : toast("Output masih kosong", "error")),
+      onSelect: () => (output ? downloadText(output, outputFileName) : toast(t.outputEmpty, "error")),
     },
-    { label: "Salin tautan berbagi", icon: Share2, onSelect: copyShareLink },
+    { label: t.copyShareLink, icon: Share2, onSelect: copyShareLink },
   ]
 
   return (
@@ -94,7 +97,7 @@ export function TransformTool({
           {sample && <SampleButton onClick={() => setInput(sample)} />}
           <ClearButton onClick={() => setInput("")} disabled={!input} />
           <GlassMenu
-            label="Opsi lain"
+            label={t.moreOptions}
             items={menuItems}
             trigger={<MoreIcon className="h-2.5 w-6" />}
             triggerClassName={glassButtonClass("frost", "w-11 px-0")}
@@ -111,7 +114,7 @@ export function TransformTool({
               value={input}
               onChange={setInput}
               language={inputLanguage}
-              placeholder="Tempel di sini, atau seret file ke sini…"
+              placeholder={t.placeholder}
             />
           </Pane>
         </FileDrop>

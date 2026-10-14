@@ -1,8 +1,9 @@
+import { LocalizedError } from "@/i18n/errors"
 export const CHARSETS = {
-  lower: { label: "Huruf kecil (a-z)", chars: "abcdefghijklmnopqrstuvwxyz" },
-  upper: { label: "Huruf besar (A-Z)", chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
-  digits: { label: "Angka (0-9)", chars: "0123456789" },
-  symbols: { label: "Simbol (!@#…)", chars: "!@#$%^&*()-_=+[]{};:,.<>?/~" },
+  lower: { chars: "abcdefghijklmnopqrstuvwxyz" },
+  upper: { chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
+  digits: { chars: "0123456789" },
+  symbols: { chars: "!@#$%^&*()-_=+[]{};:,.<>?/~" },
 } as const
 
 export type CharsetId = keyof typeof CHARSETS
@@ -40,7 +41,7 @@ const pick = (chars: string) => chars[randomInt(chars.length)]!
 
 export function generatePassword(options: PasswordOptions): string {
   const sets = setsFor(options)
-  if (!sets.length) throw new Error("Pilih minimal satu jenis karakter")
+  if (!sets.length) throw new LocalizedError("noCharset")
   const pool = sets.join("")
   const length = Math.max(options.length, sets.length)
   const chars = [...sets.map(pick), ...Array.from({ length: length - sets.length }, () => pick(pool))]
@@ -54,9 +55,11 @@ export function generatePassword(options: PasswordOptions): string {
 export const entropyBits = (options: PasswordOptions) =>
   options.length * Math.log2(setsFor(options).join("").length || 1)
 
+export type StrengthLevel = ReturnType<typeof strength>["level"]
+
 export function strength(bits: number) {
-  if (bits < 40) return { label: "Lemah", tone: "danger" } as const
-  if (bits < 64) return { label: "Sedang", tone: "neutral" } as const
-  if (bits < 100) return { label: "Kuat", tone: "success" } as const
-  return { label: "Sangat kuat", tone: "success" } as const
+  if (bits < 40) return { level: "weak", tone: "danger" } as const
+  if (bits < 64) return { level: "fair", tone: "neutral" } as const
+  if (bits < 100) return { level: "strong", tone: "success" } as const
+  return { level: "veryStrong", tone: "success" } as const
 }

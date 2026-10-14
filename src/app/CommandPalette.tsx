@@ -2,18 +2,21 @@ import Fuse from "fuse.js"
 import { Search } from "lucide-react"
 import { type KeyboardEvent, useEffect, useId, useMemo, useRef, useState } from "react"
 import { useNavigate } from "react-router"
+import { useMessages } from "@/i18n/locale"
+import { ui } from "@/i18n/ui"
 import { cx } from "@/lib/cx"
 import { onOpenPalette } from "@/lib/palette"
 import { CATEGORIES, type Tool } from "@/lib/tool"
 import { useUsage } from "@/lib/usage"
 import { resolveTools, tools } from "@/tools/registry"
 
-const fuse = new Fuse(tools, { keys: ["name", "keywords", "description"], threshold: 0.4 })
+const fuse = new Fuse(tools, { keys: ["name", "keywords", "description.id", "description.en"], threshold: 0.4 })
 
 export function CommandPalette() {
   const id = useId()
   const dialogRef = useRef<HTMLDialogElement>(null)
   const navigate = useNavigate()
+  const t = useMessages(ui).shell
   const [query, setQuery] = useState("")
   const [active, setActive] = useState(0)
 
@@ -60,7 +63,7 @@ export function CommandPalette() {
   return (
     <dialog
       ref={dialogRef}
-      aria-label="Cari tool"
+      aria-label={t.searchTool}
       onClose={() => {
         setQuery("")
         setActive(0)
@@ -80,14 +83,12 @@ export function CommandPalette() {
             setActive(0)
           }}
           onKeyDown={onInputKey}
-          placeholder="Cari tool…"
+          placeholder={t.searchPlaceholder}
           className="h-14 flex-1 bg-transparent text-base outline-none placeholder:text-ink-soft"
         />
       </div>
-      <div id={`${id}-list`} role="listbox" aria-label="Hasil" className="max-h-80 overflow-y-auto p-2">
-        {results.length === 0 && (
-          <p className="px-3 py-6 text-center text-sm text-ink-soft">Tidak ada tool yang cocok</p>
-        )}
+      <div id={`${id}-list`} role="listbox" aria-label={t.results} className="max-h-80 overflow-y-auto p-2">
+        {results.length === 0 && <p className="px-3 py-6 text-center text-sm text-ink-soft">{t.noResults}</p>}
         {results.map((tool, i) => (
           <div
             key={tool.id}

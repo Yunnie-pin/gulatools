@@ -5,10 +5,13 @@ import { GlassInput, GlassTextarea } from "@/components/glass/GlassInput"
 import { GlassPanel } from "@/components/glass/GlassPanel"
 import { Segmented } from "@/components/glass/Segmented"
 import { ValueRow } from "@/components/ValueRow"
+import { useMessages } from "@/i18n/locale"
 import { type Result, settle } from "@/lib/result"
 import { HMAC_ALGORITHMS, type HmacAlgorithm, type HmacDigest, hmac } from "./logic"
+import { messages } from "./messages"
 
 export default function HmacTool() {
+  const t = useMessages(messages)
   const [message, setMessage] = useState("")
   const [key, setKey] = useState("")
   const [algorithm, setAlgorithm] = useState<HmacAlgorithm>("SHA-256")
@@ -30,12 +33,12 @@ export default function HmacTool() {
     <div className="flex flex-col gap-4">
       <GlassPanel variant="solid" className="flex flex-col gap-4 p-5">
         <Segmented<HmacAlgorithm>
-          label="Algoritma"
+          label={t.algorithm}
           value={algorithm}
           options={HMAC_ALGORITHMS}
           onChange={setAlgorithm}
         />
-        <Field label="Pesan">
+        <Field label={t.message}>
           {(id) => (
             <GlassTextarea
               id={id}
@@ -46,7 +49,7 @@ export default function HmacTool() {
             />
           )}
         </Field>
-        <Field label="Kunci rahasia" hint="Kunci hanya dipakai di browser ini dan tidak disimpan.">
+        <Field label={t.secret} hint={t.secretHint}>
           {(id) => (
             <GlassInput
               id={id}

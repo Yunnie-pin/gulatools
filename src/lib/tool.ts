@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react"
 import type { ComponentType, LazyExoticComponent } from "react"
+import type { Localized, Text } from "@/i18n/locale"
 
 export const CATEGORIES = {
   formatter: { name: "Formatter" },
@@ -17,8 +18,8 @@ export const CATEGORY_IDS = Object.keys(CATEGORIES) as CategoryId[]
 export type Tool = {
   id: string
   name: string
-  short: string
-  description: string
+  short: Text
+  description: Localized
   category: CategoryId
   keywords: string[]
   sensitive?: boolean

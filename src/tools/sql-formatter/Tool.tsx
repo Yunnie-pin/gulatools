@@ -4,7 +4,11 @@ import type { KeywordCase, SqlLanguage } from "sql-formatter"
 import { Dropdown } from "@/components/glass/Dropdown"
 import { Segmented } from "@/components/glass/Segmented"
 import { TransformTool } from "@/components/TransformTool"
+import { useMessages } from "@/i18n/locale"
+import { labeled } from "@/lib/options"
+
 import { formatSql, type SqlOptions } from "./logic"
+import { messages } from "./messages"
 
 const language = sql()
 
@@ -23,18 +27,12 @@ const DIALECTS = [
   { value: "snowflake", label: "Snowflake" },
 ] as const satisfies readonly { value: SqlLanguage; label: string }[]
 
-const CASES = [
-  { value: "upper", label: "UPPER" },
-  { value: "lower", label: "lower" },
-  { value: "preserve", label: "Asli" },
-] as const satisfies readonly { value: KeywordCase; label: string }[]
+const CASES = ["upper", "lower", "preserve"] as const satisfies readonly KeywordCase[]
 
-const INDENTS = [
-  { value: 2, label: "2 spasi" },
-  { value: 4, label: "4 spasi" },
-] as const satisfies readonly { value: SqlOptions["indent"]; label: string }[]
+const INDENTS = [2, 4] as const satisfies readonly SqlOptions["indent"][]
 
 export default function SqlFormatter() {
+  const t = useMessages(messages)
   const [dialect, setDialect] = useState<SqlLanguage>("sql")
   const [keywordCase, setKeywordCase] = useState<KeywordCase>("upper")
   const [indent, setIndent] = useState<SqlOptions["indent"]>(2)
@@ -53,9 +51,19 @@ export default function SqlFormatter() {
       outputFileName="query.sql"
       options={
         <>
-          <Dropdown<SqlLanguage> label="Dialek" value={dialect} options={DIALECTS} onChange={setDialect} />
-          <Segmented<KeywordCase> label="Huruf keyword" value={keywordCase} options={CASES} onChange={setKeywordCase} />
-          <Segmented<SqlOptions["indent"]> label="Indentasi" value={indent} options={INDENTS} onChange={setIndent} />
+          <Dropdown<SqlLanguage> label={t.dialect} value={dialect} options={DIALECTS} onChange={setDialect} />
+          <Segmented<KeywordCase>
+            label={t.keywordCase}
+            value={keywordCase}
+            options={labeled(CASES, t.cases)}
+            onChange={setKeywordCase}
+          />
+          <Segmented<SqlOptions["indent"]>
+            label={t.indent}
+            value={indent}
+            options={INDENTS.map((value) => ({ value, label: t.spaces(value) }))}
+            onChange={setIndent}
+          />
         </>
       }
     />

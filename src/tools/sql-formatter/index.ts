@@ -5,8 +5,11 @@ import type { Tool } from "@/lib/tool"
 export const sqlFormatter: Tool = {
   id: "sql-formatter",
   name: "SQL Formatter",
-  short: "9 dialek",
-  description: "Rapikan query SQL untuk PostgreSQL, MySQL, SQLite, SQL Server, dan lainnya.",
+  short: { id: "9 dialek", en: "9 dialects" },
+  description: {
+    id: "Rapikan query SQL untuk PostgreSQL, MySQL, SQLite, SQL Server, dan lainnya.",
+    en: "Format SQL queries for PostgreSQL, MySQL, SQLite, SQL Server, and more.",
+  },
   category: "formatter",
   keywords: ["sql", "query", "format", "beautify", "postgres", "mysql", "sqlite"],
   icon: Database,

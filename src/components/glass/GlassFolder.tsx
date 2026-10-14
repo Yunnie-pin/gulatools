@@ -2,6 +2,8 @@ import { Layers, type LucideIcon } from "lucide-react"
 import { type CSSProperties, type RefObject, useEffect, useId, useRef, useState } from "react"
 import { Link, useNavigate } from "react-router"
 import { MoreIcon } from "@/components/icons"
+import { useMessages } from "@/i18n/locale"
+import { ui } from "@/i18n/ui"
 import { hashString, rng } from "@/lib/random"
 import { GlassMenu } from "./GlassMenu"
 
@@ -33,7 +35,6 @@ const BACK_PATH =
 const FRONT_PATH = `M0 22A22 22 0 0 1 22 0L118 0C144 0 146 32 172 32L318 32A22 22 0 0 1 340 54L340 ${FRONT_H - 22}A22 22 0 0 1 318 ${FRONT_H}L22 ${FRONT_H}A22 22 0 0 1 0 ${FRONT_H - 22}Z`
 
 const fanSlot = (index: number, count: number) => (count <= 1 ? 0 : (index / (count - 1)) * 2 - 1)
-const countLabel = (n: number) => `${n} ${n === 1 ? "tool" : "tools"}`
 
 function useEntrance(delay: number) {
   const ref = useRef<HTMLDivElement>(null)
@@ -134,7 +135,9 @@ export function GlassFolder({ label, icon: Icon, accent, meta, files, width = W,
   const visible = overflowing ? files.slice(0, FOLDER_CAPACITY - 1) : files
   const hidden = overflowing ? files.slice(FOLDER_CAPACITY - 1) : []
   const sheetCount = visible.length + (hidden.length ? 1 : 0)
-  const metaLine = meta ?? countLabel(files.length)
+  const t = useMessages(ui).folder
+  const count = t.count(files.length)
+  const metaLine = meta ?? count
 
   const sheetStyle = (index: number, seed: string) => {
     const jitter = rng(hashString(seed))
@@ -185,7 +188,7 @@ export function GlassFolder({ label, icon: Icon, accent, meta, files, width = W,
               type="button"
               className="gf-hit"
               aria-expanded={open}
-              aria-label={`${open ? "Tutup" : "Buka"} ${label}, ${countLabel(files.length)}`}
+              aria-label={t.toggle(open, label, count)}
               onClick={() => setOpen(!open)}
             />
             <div className="gf-label">
@@ -197,7 +200,7 @@ export function GlassFolder({ label, icon: Icon, accent, meta, files, width = W,
             </div>
           </div>
 
-          <ul ref={filesRef} className="gf-files" aria-label={`Isi ${label}`}>
+          <ul ref={filesRef} className="gf-files" aria-label={t.contents(label)}>
             {visible.map((file, i) => (
               <li key={file.to} className="gf-sheet-slot">
                 <Link to={file.to} className="gf-sheet" style={sheetStyle(i, file.name)}>
@@ -234,9 +237,10 @@ export function GlassFolder({ label, icon: Icon, accent, meta, files, width = W,
                   </span>
                   <span className="gf-sheet-head">
                     <span className="gf-sheet-name">
-                      <Layers aria-hidden="true" className="gf-sheet-icon" />+{hidden.length} lainnya
+                      <Layers aria-hidden="true" className="gf-sheet-icon" />
+                      {t.more(hidden.length)}
                     </span>
-                    <span className="gf-sheet-meta">Lihat semua</span>
+                    <span className="gf-sheet-meta">{t.seeAll}</span>
                   </span>
                 </button>
               </li>
@@ -245,7 +249,7 @@ export function GlassFolder({ label, icon: Icon, accent, meta, files, width = W,
 
           {hidden.length > 0 && (
             <GlassMenu
-              label={`Tool lain di ${label}`}
+              label={t.otherTools(label)}
               items={hidden.map((file) => ({ label: file.name, onSelect: () => navigate(file.to) }))}
               trigger={<MoreIcon className="gf-glyph" />}
               triggerClassName="gf-key"

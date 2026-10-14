@@ -10,9 +10,11 @@ import { GlassPanel } from "@/components/glass/GlassPanel"
 import { Segmented, type SegmentedOption } from "@/components/glass/Segmented"
 import { RangeField } from "@/components/RangeField"
 import { ValueRow } from "@/components/ValueRow"
+import { useLocale, useMessages } from "@/i18n/locale"
 import { attempt } from "@/lib/result"
 import { useAsync } from "@/lib/use-async"
 import { type Argon2Params, type Argon2Variant, parseArgon2, type ScryptParams } from "./logic"
+import { messages } from "./messages"
 import type { KdfApi } from "./worker"
 
 const kdf = wrap<KdfApi>(new Worker(new URL("./worker.ts", import.meta.url), { type: "module" }))
@@ -28,8 +30,6 @@ const ALGORITHMS = [
 
 type HashResult = { lines: { label: string; value: string }[]; ms: number }
 
-const seconds = (ms: number) => `${(ms / 1000).toFixed(2)} detik`
-
 export default function KdfTool() {
   return (
     <div className="grid gap-4 lg:grid-cols-2">
@@ -40,6 +40,8 @@ export default function KdfTool() {
 }
 
 function HashPanel() {
+  const locale = useLocale()
+  const t = messages[locale]
   const [algorithm, setAlgorithm] = useState<Algorithm>("argon2id")
   const [password, setPassword] = useState("")
   const [argon, setArgon] = useState<Argon2Params>({ iterations: 3, memoryMiB: 64, parallelism: 1 })
@@ -68,9 +70,9 @@ function HashPanel() {
   return (
     <GlassPanel variant="solid" className="p-5">
       <form onSubmit={submit} className="flex flex-col gap-4">
-        <h2 className="font-medium">Buat hash</h2>
+        <h2 className="font-medium">{t.createHash}</h2>
         <Segmented<Algorithm>
-          label="Algoritma"
+          label={t.algorithm}
           value={algorithm}
           options={ALGORITHMS}
           onChange={(next) => {
@@ -95,31 +97,31 @@ function HashPanel() {
             value={scrypt.costLog2}
             min={10}
             max={20}
-            format={(log2) => `2^${log2} = ${(2 ** log2).toLocaleString("id")}`}
-            hint="r = 8, p = 1. Memori yang dipakai sekitar 128 × N × r byte."
+            format={(log2) => `2^${log2} = ${(2 ** log2).toLocaleString(locale)}`}
+            hint={t.scryptHint}
             onChange={(costLog2) => setScrypt((s) => ({ ...s, costLog2 }))}
           />
         ) : (
           <>
             <RangeField
-              label="Memori"
+              label={t.memory}
               value={argon.memoryMiB}
               min={8}
               max={256}
               step={8}
               format={(mib) => `${mib} MiB`}
-              hint="OWASP merekomendasikan minimal 19 MiB untuk Argon2id."
+              hint={t.memoryHint}
               onChange={(memoryMiB) => setArgon((a) => ({ ...a, memoryMiB }))}
             />
             <RangeField
-              label="Iterasi"
+              label={t.iterations}
               value={argon.iterations}
               min={1}
               max={10}
               onChange={(iterations) => setArgon((a) => ({ ...a, iterations }))}
             />
             <RangeField
-              label="Paralelisme"
+              label={t.parallelism}
               value={argon.parallelism}
               min={1}
               max={4}
@@ -128,7 +130,7 @@ function HashPanel() {
           </>
         )}
         <GlassButton type="submit" variant="key" disabled={task.pending} className="self-start">
-          {task.pending ? "Menghitung…" : "Generate hash"}
+          {task.pending ? t.hashing : t.generate}
         </GlassButton>
         {task.result &&
           (task.result.ok ? (
@@ -136,7 +138,7 @@ function HashPanel() {
               {task.result.value.lines.map((line) => (
                 <ValueRow key={line.label} label={line.label} value={line.value} />
               ))}
-              <p className="mt-2 text-xs text-ink-soft">Selesai dalam {seconds(task.result.value.ms)}</p>
+              <p className="mt-2 text-xs text-ink-soft">{t.doneIn(task.result.value.ms / 1000)}</p>
             </div>
           ) : (
             <ErrorText>{task.result.error}</ErrorText>
@@ -149,6 +151,7 @@ function HashPanel() {
 function VerifyPanel() {
   const [password, setPassword] = useState("")
   const [hash, setHash] = useState("")
+  const t = useMessages(messages)
   const task = useAsync(kdf.verify)
   const info = hash.trim() ? attempt(() => parseArgon2(hash)) : null
 
@@ -160,7 +163,7 @@ function VerifyPanel() {
   return (
     <GlassPanel variant="solid" className="p-5">
       <form onSubmit={submit} className="flex flex-col gap-4">
-        <h2 className="font-medium">Verifikasi Argon2</h2>
+        <h2 className="font-medium">{t.verify}</h2>
         <Field label="Password">
           {(id) => (
             <GlassInput
@@ -177,14 +180,7 @@ function VerifyPanel() {
         </Field>
         <Field
           label="Hash"
-          hint={
-            info &&
-            (info.ok ? (
-              `${info.value.variant} · ${info.value.memoryMiB} MiB · ${info.value.iterations} iterasi · paralelisme ${info.value.parallelism}`
-            ) : (
-              <span className="text-danger">{info.error}</span>
-            ))
-          }
+          hint={info && (info.ok ? t.hashInfo(info.value) : <span className="text-danger">{info.error}</span>)}
         >
           {(id) => (
             <GlassInput
@@ -201,13 +197,13 @@ function VerifyPanel() {
           )}
         </Field>
         <GlassButton type="submit" variant="key" disabled={task.pending || !info?.ok} className="self-start">
-          {task.pending ? "Memeriksa…" : "Cek kecocokan"}
+          {task.pending ? t.checking : t.check}
         </GlassButton>
         {task.result && (
           <div role="status">
             {task.result.ok ? (
               <Badge tone={task.result.value ? "success" : "danger"} icon={task.result.value ? CircleCheck : CircleX}>
-                {task.result.value ? "Password cocok" : "Password tidak cocok"}
+                {task.result.value ? t.match : t.mismatch}
               </Badge>
             ) : (
               <ErrorText>{task.result.error}</ErrorText>

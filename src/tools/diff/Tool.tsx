@@ -8,19 +8,19 @@ import { GlassTextarea } from "@/components/glass/GlassInput"
 import { GlassPanel } from "@/components/glass/GlassPanel"
 import { Segmented } from "@/components/glass/Segmented"
 import { Pane } from "@/components/Pane"
+import { useMessages } from "@/i18n/locale"
 import { cx } from "@/lib/cx"
+import { labeled } from "@/lib/options"
 import { type DiffMode, diffTexts, summarize, toPatch } from "./logic"
+import { messages } from "./messages"
 
-const MODES = [
-  { value: "lines", label: "Baris" },
-  { value: "words", label: "Kata" },
-  { value: "chars", label: "Karakter" },
-] as const satisfies readonly { value: DiffMode; label: string }[]
+const MODES = ["lines", "words", "chars"] as const satisfies readonly DiffMode[]
 
 const SAMPLE_ORIGINAL = "nama: gulatools\nversi: 1.0.0\nfitur:\n  - json\n  - jwt\n"
 const SAMPLE_MODIFIED = "nama: gulatools\nversi: 1.1.0\nfitur:\n  - json\n  - jwt\n  - bcrypt\n"
 
 export default function DiffTool() {
+  const t = useMessages(messages)
   const [original, setOriginal] = useState("")
   const [modified, setModified] = useState("")
   const [mode, setMode] = useState<DiffMode>("lines")
@@ -38,9 +38,9 @@ export default function DiffTool() {
   return (
     <div className="flex flex-col gap-4">
       <GlassPanel className="flex flex-wrap items-center gap-3 px-4 py-3">
-        <Segmented<DiffMode> label="Satuan" value={mode} options={MODES} onChange={setMode} />
+        <Segmented<DiffMode> label={t.unit} value={mode} options={labeled(MODES, t.modes)} onChange={setMode} />
         {mode !== "chars" && (
-          <Checkbox label="Abaikan spasi" checked={ignoreWhitespace} onChange={setIgnoreWhitespace} />
+          <Checkbox label={t.ignoreWhitespace} checked={ignoreWhitespace} onChange={setIgnoreWhitespace} />
         )}
         <div className="ml-auto flex gap-2">
           <SampleButton
@@ -60,13 +60,13 @@ export default function DiffTool() {
       </GlassPanel>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <TextPanel title="Asli" value={original} onChange={setOriginal} />
-        <TextPanel title="Diubah" value={modified} onChange={setModified} />
+        <TextPanel title={t.original} value={original} onChange={setOriginal} />
+        <TextPanel title={t.modified} value={modified} onChange={setModified} />
       </div>
 
       {hasInput && (
         <Pane
-          title="Perbedaan"
+          title={t.difference}
           className="min-h-48"
           action={
             <div className="flex items-center gap-2">

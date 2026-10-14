@@ -10,9 +10,11 @@ import { GlassInput, GlassTextarea } from "@/components/glass/GlassInput"
 import { GlassPanel } from "@/components/glass/GlassPanel"
 import { Pane } from "@/components/Pane"
 import { ValueRow } from "@/components/ValueRow"
+import { useLocale, useMessages } from "@/i18n/locale"
 import { attempt, errorMessage, type Result } from "@/lib/result"
 import { formatDateTime, relativeTime } from "@/lib/time"
-import { claimDate, decodeToken, isHmac, TIME_CLAIMS, type TimeClaim, tokenStatus, verifySignature } from "./logic"
+import { claimDate, decodeToken, isHmac, TIME_CLAIMS, tokenStatus, verifySignature } from "./logic"
+import { messages } from "./messages"
 
 const language = json()
 
@@ -20,15 +22,12 @@ const SAMPLE_TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiR3VsYSBNYW5pcyIsInJvbGUiOiJhZG1pbiIsInN1YiI6IjEyMzQ1Njc4OTAiLCJpYXQiOjE3NjAwMDAwMDAsImV4cCI6NDEwMjQ0NDgwMH0.fiLQmHNB3vHerqlkeK4wFI5hpX9XGvH3kBW9Ves_Akw"
 const SAMPLE_SECRET = "gula-rahasia"
 
-const STATUS = {
-  valid: { tone: "success", label: "Masih berlaku" },
-  expired: { tone: "danger", label: "Kedaluwarsa" },
-  "not-yet-valid": { tone: "danger", label: "Belum berlaku" },
-} as const
+const STATUS_TONES = { valid: "success", expired: "danger", "not-yet-valid": "danger" } as const
 
 const pretty = (value: unknown) => JSON.stringify(value, null, 2)
 
 export function JwtDecode() {
+  const t = useMessages(messages)
   const [token, setToken] = useState("")
   const [key, setKey] = useState("")
   const [verification, setVerification] = useState<Result<boolean> | null>(null)
@@ -38,7 +37,7 @@ export function JwtDecode() {
   const jwt = decoded?.ok ? decoded.value : null
   const alg = jwt?.header.alg ?? ""
   const hmac = isHmac(alg)
-  const status = jwt && STATUS[tokenStatus(jwt.payload)]
+  const status = jwt && tokenStatus(jwt.payload)
 
   useEffect(() => {
     if (!jwt || !key) {
@@ -72,29 +71,26 @@ export function JwtDecode() {
             </div>
           </div>
           <GlassTextarea
-            aria-label="Token JWT"
+            aria-label={t.tokenLabel}
             rows={7}
             value={token}
             onChange={(e) => setToken(e.target.value)}
-            placeholder="Tempel JWT di sini…"
+            placeholder={t.tokenPlaceholder}
           />
           {decoded && !decoded.ok && <ErrorText>{decoded.error}</ErrorText>}
           {jwt && (
             <div className="flex flex-wrap gap-2">
-              <Badge>{alg || "tanpa alg"}</Badge>
+              <Badge>{alg || t.noAlg}</Badge>
               {jwt.header.typ && <Badge>{jwt.header.typ}</Badge>}
-              {status && <Badge tone={status.tone}>{status.label}</Badge>}
-              {alg === "none" && <Badge tone="danger">Tidak ditandatangani</Badge>}
+              {status && <Badge tone={STATUS_TONES[status]}>{t.status[status]}</Badge>}
+              {alg === "none" && <Badge tone="danger">{t.unsigned}</Badge>}
             </div>
           )}
         </GlassPanel>
 
         <GlassPanel variant="solid" className="flex flex-col gap-3 p-4">
-          <h2 className="text-sm font-medium text-ink-soft">Verifikasi signature</h2>
-          <Field
-            label={hmac || !alg ? "Secret" : "Kunci publik (PEM atau JWK)"}
-            hint="Kunci hanya dipakai di browser ini dan tidak disimpan."
-          >
+          <h2 className="text-sm font-medium text-ink-soft">{t.verifySignature}</h2>
+          <Field label={hmac || !alg ? "Secret" : t.publicKey} hint={t.keyHint}>
             {(id) =>
               hmac || !alg ? (
                 <GlassInput
@@ -123,7 +119,7 @@ export function JwtDecode() {
                   tone={verification.value ? "success" : "danger"}
                   icon={verification.value ? CircleCheck : CircleX}
                 >
-                  {verification.value ? "Signature valid" : "Signature tidak valid"}
+                  {verification.value ? t.signatureValid : t.signatureInvalid}
                 </Badge>
               ) : (
                 <ErrorText>{verification.error}</ErrorText>
@@ -147,7 +143,9 @@ export function JwtDecode() {
 }
 
 function TimeClaims({ payload }: { payload: Parameters<typeof claimDate>[0] }) {
-  const rows = (Object.keys(TIME_CLAIMS) as TimeClaim[]).flatMap((claim) => {
+  const locale = useLocale()
+  const t = messages[locale]
+  const rows = TIME_CLAIMS.flatMap((claim) => {
     const date = claimDate(payload, claim)
     return date ? [{ claim, date }] : []
   })
@@ -158,8 +156,8 @@ function TimeClaims({ payload }: { payload: Parameters<typeof claimDate>[0] }) {
       {rows.map(({ claim, date }) => (
         <ValueRow
           key={claim}
-          label={`${TIME_CLAIMS[claim]} (${claim})`}
-          value={`${formatDateTime(date)} · ${relativeTime(date)}`}
+          label={`${t.claims[claim]} (${claim})`}
+          value={`${formatDateTime(date, locale)} · ${relativeTime(date, locale)}`}
         />
       ))}
     </GlassPanel>

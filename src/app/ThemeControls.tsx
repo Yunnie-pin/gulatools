@@ -1,23 +1,32 @@
-import { Check, Monitor, Moon, Sun } from "lucide-react"
+import { Check, type LucideIcon, Monitor, Moon, Sun } from "lucide-react"
 import { useId } from "react"
 import { Segmented, type SegmentedOption } from "@/components/glass/Segmented"
+import { type Locale, setLocale, useLocale, useMessages } from "@/i18n/locale"
+import { ui } from "@/i18n/ui"
 import { BACKGROUND_IDS, backgroundThumbUrl } from "@/lib/backgrounds"
 import { cx } from "@/lib/cx"
 import { type Mode, useTheme } from "@/lib/theme"
 
-const MODES = [
-  { value: "light", label: "Terang", icon: Sun },
-  { value: "system", label: "Ikuti sistem", icon: Monitor },
-  { value: "dark", label: "Gelap", icon: Moon },
-] as const satisfies readonly SegmentedOption<Mode>[]
+const MODE_ICONS = { light: Sun, system: Monitor, dark: Moon } as const satisfies Record<Mode, LucideIcon>
+
+const LANGUAGES: readonly SegmentedOption<Locale>[] = [
+  { value: "id", label: "Indonesia" },
+  { value: "en", label: "English" },
+]
 
 export function ThemeSwitcher({ className }: { className?: string }) {
   const { mode, setMode } = useTheme()
+  const t = useMessages(ui).shell
+  const modes: SegmentedOption<Mode>[] = [
+    { value: "light", label: t.light, icon: MODE_ICONS.light },
+    { value: "system", label: t.system, icon: MODE_ICONS.system },
+    { value: "dark", label: t.dark, icon: MODE_ICONS.dark },
+  ]
   return (
     <Segmented<Mode>
-      label="Tema"
+      label={t.theme}
       value={mode}
-      options={MODES}
+      options={modes}
       onChange={setMode}
       iconOnly
       className={cx("w-full", className)}
@@ -27,7 +36,7 @@ export function ThemeSwitcher({ className }: { className?: string }) {
 
 export function ActiveModeIcon({ className }: { className?: string }) {
   const { mode } = useTheme()
-  const Icon = MODES.find((m) => m.value === mode)?.icon ?? Monitor
+  const Icon = MODE_ICONS[mode]
   return (
     <span
       aria-hidden="true"
@@ -41,17 +50,31 @@ export function ActiveModeIcon({ className }: { className?: string }) {
   )
 }
 
+export function LanguageSwitcher() {
+  const locale = useLocale()
+  return (
+    <Segmented<Locale>
+      label={ui[locale].shell.language}
+      value={locale}
+      options={LANGUAGES}
+      onChange={setLocale}
+      className="w-full [&>label]:flex-1 [&>label]:justify-center"
+    />
+  )
+}
+
 export function BackgroundPicker() {
   const { background, setBackground } = useTheme()
   const name = useId()
+  const t = useMessages(ui).shell
 
   return (
     <div className="flex flex-col gap-1.5">
       <span aria-hidden="true" className="px-1 text-xs font-medium text-ink-soft">
-        Latar
+        {t.background}
       </span>
       <fieldset className="grid grid-cols-4 gap-2 p-1">
-        <legend className="sr-only">Latar</legend>
+        <legend className="sr-only">{t.background}</legend>
         {BACKGROUND_IDS.map((id, i) => {
           const selected = id === background
           return (
@@ -68,7 +91,7 @@ export function BackgroundPicker() {
               />
               <img
                 src={backgroundThumbUrl(id)}
-                alt={`Latar ${i + 1}`}
+                alt={t.backgroundN(i + 1)}
                 width={160}
                 height={90}
                 className="size-full object-cover"

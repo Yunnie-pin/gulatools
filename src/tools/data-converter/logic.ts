@@ -1,3 +1,4 @@
+import { LocalizedError } from "@/i18n/errors"
 import { isRecord } from "@/lib/guards"
 
 export const FORMATS = { json: "JSON", yaml: "YAML", toml: "TOML", xml: "XML", csv: "CSV" } as const
@@ -20,7 +21,7 @@ const loadCsv = async () => (await import("papaparse")).default
 async function readXml(input: string): Promise<unknown> {
   const { XMLParser, XMLValidator } = await loadXml()
   const validation = XMLValidator.validate(input)
-  if (validation !== true) throw new Error(`XML tidak valid: ${validation.err.msg} (baris ${validation.err.line})`)
+  if (validation !== true) throw new LocalizedError("invalidXml", validation.err.msg, validation.err.line)
   return new XMLParser(XML_OPTIONS).parse(input)
 }
 
@@ -28,7 +29,7 @@ async function readCsv(input: string): Promise<unknown> {
   const Papa = await loadCsv()
   const { data, errors } = Papa.parse(input.trim(), { header: true, dynamicTyping: true, skipEmptyLines: true })
   const [error] = errors
-  if (error) throw new Error(`CSV tidak valid: ${error.message} (baris ${(error.row ?? 0) + 2})`)
+  if (error) throw new LocalizedError("invalidCsv", error.message, (error.row ?? 0) + 2)
   return data
 }
 
@@ -39,7 +40,7 @@ async function writeXml(value: unknown): Promise<string> {
 }
 
 async function writeCsv(value: unknown): Promise<string> {
-  if (!Array.isArray(value) || !value.every(isRecord)) throw new Error("CSV membutuhkan array berisi objek")
+  if (!Array.isArray(value) || !value.every(isRecord)) throw new LocalizedError("csvNeedsRows")
   const Papa = await loadCsv()
   const rows = value.map((row) =>
     Object.fromEntries(
@@ -53,7 +54,7 @@ async function writeCsv(value: unknown): Promise<string> {
 }
 
 async function writeToml(value: unknown): Promise<string> {
-  if (!isRecord(value)) throw new Error("TOML membutuhkan objek di level teratas")
+  if (!isRecord(value)) throw new LocalizedError("tomlNeedsObject")
   return (await loadToml()).stringify(value)
 }
 

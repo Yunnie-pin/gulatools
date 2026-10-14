@@ -1,3 +1,4 @@
+import { LocalizedError } from "@/i18n/errors"
 export const MIN_COST = 4
 export const MAX_COST = 15
 export const MAX_PASSWORD_BYTES = 72
@@ -12,7 +13,7 @@ const BCRYPT_PATTERN = /^\$(2[abxy])\$(\d{2})\$([./A-Za-z0-9]{22})[./A-Za-z0-9]{
 
 export function parseBcryptHash(hash: string): BcryptInfo {
   const match = BCRYPT_PATTERN.exec(hash.trim())
-  if (!match) throw new Error("Bukan hash bcrypt yang valid (format: $2b$10$…, 60 karakter)")
+  if (!match) throw new LocalizedError("invalidBcrypt")
   const [, version = "", cost = "", salt = ""] = match
   return { version, cost: Number(cost), salt }
 }

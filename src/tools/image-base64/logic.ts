@@ -1,3 +1,4 @@
+import { LocalizedError } from "@/i18n/errors"
 export const IMAGE_TYPES = [
   { value: "image/png", label: "PNG" },
   { value: "image/jpeg", label: "JPEG" },
@@ -20,13 +21,13 @@ const BASE64 = /^[A-Za-z0-9+/=\s]+$/
 
 export function toDataUrl(input: string, fallbackType: ImageType): string {
   const text = input.trim()
-  if (!text) throw new Error("Tempel data URI atau string Base64")
+  if (!text) throw new LocalizedError("emptyImage")
   const match = DATA_URL.exec(text)
   if (match) {
-    if (match[1] && !match[1].startsWith("image/")) throw new Error(`Data URI bertipe ${match[1]}, bukan gambar`)
+    if (match[1] && !match[1].startsWith("image/")) throw new LocalizedError("notAnImage", match[1])
     return text.replace(/\s/g, "")
   }
-  if (!BASE64.test(text)) throw new Error("Bukan data URI atau Base64 yang valid")
+  if (!BASE64.test(text)) throw new LocalizedError("invalidImageData")
   return `data:${fallbackType};base64,${text.replace(/\s/g, "")}`
 }
 

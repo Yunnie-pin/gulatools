@@ -2,7 +2,10 @@ import { json } from "@codemirror/lang-json"
 import { useCallback, useState } from "react"
 import { GlassInput } from "@/components/glass/GlassInput"
 import { TransformTool } from "@/components/TransformTool"
+import { useMessages } from "@/i18n/locale"
+
 import { queryJson } from "./logic"
+import { messages } from "./messages"
 
 const language = json()
 
@@ -18,6 +21,7 @@ const SAMPLE = JSON.stringify({
 })
 
 export default function JsonPathTool() {
+  const t = useMessages(messages)
   const [path, setPath] = useState("$.store.book[?(@.price > 100000)].title")
   const transform = useCallback((input: string) => queryJson(input, path), [path])
 
@@ -30,7 +34,7 @@ export default function JsonPathTool() {
       outputFileName="result.json"
       options={
         <GlassInput
-          aria-label="Ekspresi JSONPath"
+          aria-label={t.expression}
           value={path}
           onChange={(e) => setPath(e.target.value)}
           placeholder="$.store.book[*].title"

@@ -6,7 +6,10 @@ export const jsonToTs: Tool = {
   id: "json-to-ts",
   name: "JSON to TypeScript",
   short: "Interface · Zod",
-  description: "Buat interface TypeScript atau schema Zod dari contoh JSON, termasuk field opsional dan nullable.",
+  description: {
+    id: "Buat interface TypeScript atau schema Zod dari contoh JSON, termasuk field opsional dan nullable.",
+    en: "Generate TypeScript interfaces or Zod schemas from sample JSON, including optional and nullable fields.",
+  },
   category: "converter",
   keywords: ["json", "typescript", "interface", "type", "zod", "schema", "quicktype", "generate"],
   icon: FileType,

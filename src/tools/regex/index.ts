@@ -6,7 +6,10 @@ export const regex: Tool = {
   id: "regex",
   name: "Regex Tester",
   short: "Match · Replace",
-  description: "Uji regular expression JavaScript: lihat semua match, grup, dan hasil replace secara langsung.",
+  description: {
+    id: "Uji regular expression JavaScript: lihat semua match, grup, dan hasil replace secara langsung.",
+    en: "Test JavaScript regular expressions: see every match, group, and replacement live.",
+  },
   category: "text",
   keywords: ["regex", "regexp", "regular expression", "match", "replace", "pattern"],
   icon: Regex,

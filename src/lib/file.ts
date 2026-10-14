@@ -1,3 +1,6 @@
+import { currentMessages } from "@/i18n/locale"
+import { ui } from "@/i18n/ui"
+
 export function downloadUrl(url: string, fileName: string) {
   const link = document.createElement("a")
   link.href = url
@@ -29,7 +32,7 @@ export function readAsDataUrl(file: Blob): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
     reader.onload = () => resolve(String(reader.result))
-    reader.onerror = () => reject(new Error("Gagal membaca file"))
+    reader.onerror = () => reject(new Error(currentMessages(ui).common.readFileFailed))
     reader.readAsDataURL(file)
   })
 }

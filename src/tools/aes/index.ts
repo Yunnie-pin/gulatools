@@ -6,7 +6,10 @@ export const aes: Tool = {
   id: "aes",
   name: "AES Encrypt",
   short: "AES-256-GCM",
-  description: "Enkripsi dan dekripsi teks dengan AES-256-GCM. Kunci diturunkan dari password dengan PBKDF2.",
+  description: {
+    id: "Enkripsi dan dekripsi teks dengan AES-256-GCM. Kunci diturunkan dari password dengan PBKDF2.",
+    en: "Encrypt and decrypt text with AES-256-GCM. The key is derived from a password with PBKDF2.",
+  },
   category: "crypto",
   keywords: ["aes", "encrypt", "decrypt", "enkripsi", "dekripsi", "gcm", "pbkdf2", "cipher"],
   sensitive: true,

@@ -1,3 +1,4 @@
+import { LocalizedError } from "@/i18n/errors"
 export type UrlMode = "component" | "uri" | "decode"
 
 export function transformUrl(input: string, mode: UrlMode): string {
@@ -6,6 +7,6 @@ export function transformUrl(input: string, mode: UrlMode): string {
   try {
     return decodeURIComponent(input.replace(/\+/g, " "))
   } catch {
-    throw new Error("Input berisi escape sequence (%XX) yang tidak valid")
+    throw new LocalizedError("invalidPercentEscape")
   }
 }

@@ -50,6 +50,6 @@ describe("randomInt", () => {
 describe("entropy", () => {
   it("grows with length and pool size", () => {
     expect(entropyBits(options({ length: 10, sets: { ...all, symbols: false, upper: false } }))).toBeCloseTo(51.7, 1)
-    expect(strength(entropyBits(options({ length: 24 }))).label).toBe("Sangat kuat")
+    expect(strength(entropyBits(options({ length: 24 }))).level).toBe("veryStrong")
   })
 })

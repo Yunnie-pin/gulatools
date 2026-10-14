@@ -6,10 +6,10 @@ import { ErrorText } from "@/components/ErrorText"
 import { Checkbox } from "@/components/glass/Checkbox"
 import { GlassPanel } from "@/components/glass/GlassPanel"
 import { RangeField } from "@/components/RangeField"
+import { useMessages } from "@/i18n/locale"
 import { attempt } from "@/lib/result"
 import {
   CHARSET_IDS,
-  CHARSETS,
   entropyBits,
   generatePassword,
   MAX_LENGTH,
@@ -17,6 +17,7 @@ import {
   type PasswordOptions,
   strength,
 } from "./logic"
+import { messages } from "./messages"
 
 const INITIAL: PasswordOptions = {
   length: 20,
@@ -25,6 +26,7 @@ const INITIAL: PasswordOptions = {
 }
 
 export default function PasswordTool() {
+  const t = useMessages(messages)
   const [options, setOptions] = useState(INITIAL)
   const [password, setPassword] = useState(() => attempt(() => generatePassword(INITIAL)))
 
@@ -44,8 +46,8 @@ export default function PasswordTool() {
           {password.ok ? password.value : <ErrorText>{password.error}</ErrorText>}
         </output>
         <div className="flex flex-wrap items-center gap-2">
-          <Badge tone={rating.tone}>{rating.label}</Badge>
-          <Badge>≈ {Math.round(bits)} bit entropi</Badge>
+          <Badge tone={rating.tone}>{t.strength[rating.level]}</Badge>
+          <Badge>{t.entropy(Math.round(bits))}</Badge>
           <div className="ml-auto flex gap-2">
             <RegenerateButton onClick={() => update({})} />
             <CopyButton text={password.ok ? password.value : ""} />
@@ -55,24 +57,24 @@ export default function PasswordTool() {
 
       <GlassPanel variant="solid" className="flex flex-col gap-4 p-5">
         <RangeField
-          label="Panjang"
+          label={t.length}
           value={options.length}
           min={MIN_LENGTH}
           max={MAX_LENGTH}
-          format={(length) => `${length} karakter`}
+          format={t.characters}
           onChange={(length) => update({ length })}
         />
         <div className="grid gap-3 sm:grid-cols-2">
           {CHARSET_IDS.map((id) => (
             <Checkbox
               key={id}
-              label={CHARSETS[id].label}
+              label={t.charsets[id]}
               checked={options.sets[id]}
               onChange={(on) => update({ sets: { ...options.sets, [id]: on } })}
             />
           ))}
           <Checkbox
-            label="Hindari karakter mirip (O 0 l 1 I |)"
+            label={t.excludeAmbiguous}
             checked={options.excludeAmbiguous}
             onChange={(excludeAmbiguous) => update({ excludeAmbiguous })}
           />

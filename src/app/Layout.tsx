@@ -2,6 +2,8 @@ import { useEffect, useRef } from "react"
 import { Outlet, useLocation } from "react-router"
 import { Backdrop } from "@/components/glass/Backdrop"
 import { Toaster } from "@/components/glass/Toaster"
+import { useMessages } from "@/i18n/locale"
+import { ui } from "@/i18n/ui"
 import { cx } from "@/lib/cx"
 import { useSidebarPinned } from "@/lib/sidebar"
 import { CommandPalette } from "./CommandPalette"
@@ -25,6 +27,7 @@ function useFocusOnNavigation() {
 export function Layout() {
   const pinned = useSidebarPinned()
   const mainRef = useFocusOnNavigation()
+  const t = useMessages(ui).shell
 
   return (
     <>
@@ -32,7 +35,7 @@ export function Layout() {
         href="#content"
         className="glass fixed top-3 left-3 z-[60] -translate-y-20 rounded-glass-sm px-4 py-2 text-sm font-medium transition-transform focus:translate-y-0"
       >
-        Lewati ke konten
+        {t.skipToContent}
       </a>
       <Backdrop />
       <div

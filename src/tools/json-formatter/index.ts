@@ -6,7 +6,10 @@ export const jsonFormatter: Tool = {
   id: "json-formatter",
   name: "JSON Formatter",
   short: "Format · Minify",
-  description: "Rapikan, minify, dan validasi JSON.",
+  description: {
+    id: "Rapikan, minify, dan validasi JSON.",
+    en: "Format, minify, and validate JSON.",
+  },
   category: "formatter",
   keywords: ["json", "beautify", "prettify", "minify", "validate"],
   icon: Braces,

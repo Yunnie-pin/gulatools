@@ -1,7 +1,8 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises"
 import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
-import { pageTitle, SITE_DESCRIPTION, SITE_NAME } from "../src/lib/meta"
+import { ui } from "../src/i18n/ui"
+import { pageTitle, SITE_NAME } from "../src/lib/meta"
 import { CATEGORIES } from "../src/lib/tool"
 import { tools } from "../src/tools/registry"
 
@@ -38,22 +39,24 @@ function render(template: string, page: Page) {
     .replace('<div id="root"></div>', `<div id="root">${page.body}</div>`)
 }
 
+const { site, home } = ui.id
+
 const toolList = tools
-  .map((tool) => `<li><a href="/${tool.id}">${escapeHtml(tool.name)}</a>: ${escapeHtml(tool.description)}</li>`)
+  .map((tool) => `<li><a href="/${tool.id}">${escapeHtml(tool.name)}</a>: ${escapeHtml(tool.description.id)}</li>`)
   .join("")
 
 const pages: Page[] = [
   {
     path: "/",
-    title: pageTitle(),
-    description: SITE_DESCRIPTION,
-    body: `<main class="sr-only"><h1>Developer tools, langsung di browser.</h1><p>${escapeHtml(SITE_DESCRIPTION)}</p><ul>${toolList}</ul></main>`,
+    title: pageTitle("id"),
+    description: site.description,
+    body: `<main class="sr-only"><h1>${escapeHtml(home.title)}</h1><p>${escapeHtml(site.description)}</p><ul>${toolList}</ul></main>`,
   },
   ...tools.map((tool) => ({
     path: `/${tool.id}`,
-    title: pageTitle(tool.name),
-    description: tool.description,
-    body: `<main class="sr-only"><p>${escapeHtml(CATEGORIES[tool.category].name)}</p><h1>${escapeHtml(tool.name)}</h1><p>${escapeHtml(tool.description)}</p></main>`,
+    title: pageTitle("id", tool.name),
+    description: tool.description.id,
+    body: `<main class="sr-only"><p>${escapeHtml(CATEGORIES[tool.category].name)}</p><h1>${escapeHtml(tool.name)}</h1><p>${escapeHtml(tool.description.id)}</p></main>`,
   })),
 ]
 

@@ -1,6 +1,12 @@
+import { LocalizedError } from "@/i18n/errors"
+import { getLocale } from "@/i18n/locale"
+
 export type Result<T> = { ok: true; value: T } | { ok: false; error: string }
 
-export const errorMessage = (error: unknown) => (error instanceof Error ? error.message : String(error))
+export function errorMessage(error: unknown): string {
+  if (error instanceof LocalizedError) return error.in(getLocale())
+  return error instanceof Error ? error.message : String(error)
+}
 
 export function attempt<T>(fn: () => T): Result<T> {
   try {

@@ -1,16 +1,19 @@
 import { useEffect } from "react"
+import { type Locale, localize, type Text, useLocale } from "@/i18n/locale"
+import { ui } from "@/i18n/ui"
 
 export const SITE_NAME = "GulaTools"
 
-export const SITE_DESCRIPTION =
-  "Developer tools yang berjalan 100% di browser: formatter, converter, JWT, bcrypt, hash, dan lainnya. Data tidak pernah meninggalkan perangkat."
+export const pageTitle = (locale: Locale, title?: string) =>
+  title ? `${title} · ${SITE_NAME}` : `${SITE_NAME}: ${ui[locale].site.tagline}`
 
-export const pageTitle = (title?: string) =>
-  title ? `${title} · ${SITE_NAME}` : `${SITE_NAME}: developer tools di browser`
+export function usePageMeta(title?: Text, description?: Text) {
+  const locale = useLocale()
+  const titleText = title && localize(title, locale)
+  const descriptionText = description ? localize(description, locale) : ui[locale].site.description
 
-export function usePageMeta(title?: string, description = SITE_DESCRIPTION) {
   useEffect(() => {
-    document.title = pageTitle(title)
-    document.querySelector('meta[name="description"]')?.setAttribute("content", description)
-  }, [title, description])
+    document.title = pageTitle(locale, titleText)
+    document.querySelector('meta[name="description"]')?.setAttribute("content", descriptionText)
+  }, [locale, titleText, descriptionText])
 }

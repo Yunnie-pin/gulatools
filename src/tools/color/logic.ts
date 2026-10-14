@@ -1,4 +1,5 @@
 import { type Color, converter, formatHex, formatHex8, formatHsl, formatRgb, parse, wcagContrast } from "culori"
+import { LocalizedError } from "@/i18n/errors"
 
 const toOklch = converter("oklch")
 
@@ -19,7 +20,7 @@ function formatOklch(color: Color): string {
 
 export function convertColor(input: string): ColorInfo {
   const color = parse(input.trim())
-  if (!color) throw new Error("Warna tidak dikenali. Contoh: #ff6b5e, rgb(255 107 94), hsl(5 100% 68%), coral")
+  if (!color) throw new LocalizedError("unknownColor")
   return {
     hex: formatHex(color),
     hex8: formatHex8(color),
