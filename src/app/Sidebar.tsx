@@ -129,17 +129,25 @@ const CLOSE_DELAY_MS = 200
 function useHoverIntent() {
   const [hovered, setHovered] = useState(false)
   const timer = useRef(0)
+  const target = useRef(false)
 
   useEffect(() => () => window.clearTimeout(timer.current), [])
 
   const schedule = (next: boolean, delay: number) => {
+    if (target.current === next) return
+    target.current = next
     window.clearTimeout(timer.current)
     timer.current = window.setTimeout(() => setHovered(next), delay)
   }
 
+  const open = (e: PointerEvent) => {
+    if (e.pointerType === "mouse") schedule(true, OPEN_DELAY_MS)
+  }
+
   return {
     hovered,
-    onPointerEnter: (e: PointerEvent) => e.pointerType === "mouse" && schedule(true, OPEN_DELAY_MS),
+    onPointerEnter: open,
+    onPointerMove: open,
     onPointerLeave: () => schedule(false, CLOSE_DELAY_MS),
   }
 }

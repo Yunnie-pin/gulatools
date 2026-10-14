@@ -1,3 +1,4 @@
+import { readFile } from "node:fs/promises"
 import { expect, expectAccessible, test } from "./fixtures"
 
 test("regex shows matches and stops catastrophic patterns", async ({ page }) => {
@@ -38,8 +39,9 @@ test("case converter, cron, color and timestamp", async ({ page }) => {
 
 test("QR code round-trips through the scanner and image tool", async ({ page }) => {
   await page.goto("/qr")
-  const src = (await page.locator("main img").first().getAttribute("src")) ?? ""
-  const png = Buffer.from(src.split(",")[1] ?? "", "base64")
+  const download = page.waitForEvent("download")
+  await page.getByRole("button", { name: "PNG" }).click()
+  const png = await readFile((await (await download).path()) ?? "")
 
   await page.getByText("Pindai", { exact: true }).click()
   const chooser = page.waitForEvent("filechooser")

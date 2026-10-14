@@ -19,6 +19,20 @@ export async function createQrSvg(text: string, level: ErrorLevel): Promise<stri
   return QRCode.toString(text, { ...options(level), type: "svg" })
 }
 
+export type QrMatrix = { size: number; path: string }
+
+export function createQrMatrix(text: string, level: ErrorLevel): QrMatrix {
+  requireText(text)
+  const { modules } = QRCode.create(text, { errorCorrectionLevel: level })
+  let path = ""
+  for (let y = 0; y < modules.size; y++) {
+    for (let x = 0; x < modules.size; x++) {
+      if (modules.get(y, x)) path += `M${x} ${y}h1v1h-1z`
+    }
+  }
+  return { size: modules.size, path }
+}
+
 export function decodeQr(pixels: Uint8ClampedArray, width: number, height: number): string {
   const code = jsQR(pixels, width, height)
   if (!code) throw new Error("Tidak ada QR code yang terbaca di gambar ini")

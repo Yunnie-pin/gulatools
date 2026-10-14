@@ -4,8 +4,8 @@ import { cx } from "@/lib/cx"
 
 const tones = {
   neutral: "bg-black/5 text-ink dark:bg-white/10",
-  success: "bg-success/15 text-success",
-  danger: "bg-danger/15 text-danger",
+  success: "bg-white/85 text-success ring-1 ring-success/30 dark:bg-success/15 dark:ring-0",
+  danger: "bg-white/85 text-danger ring-1 ring-danger/30 dark:bg-danger/15 dark:ring-0",
 }
 
 type BadgeProps = {

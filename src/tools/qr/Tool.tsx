@@ -1,5 +1,5 @@
 import { Download, FileUp, QrCode, ScanLine } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useMemo, useState } from "react"
 import { CopyButton } from "@/components/CopyButton"
 import { ErrorText } from "@/components/ErrorText"
 import { Field } from "@/components/Field"
@@ -9,9 +9,9 @@ import { GlassTextarea } from "@/components/glass/GlassInput"
 import { GlassPanel } from "@/components/glass/GlassPanel"
 import { Segmented, type SegmentedOption } from "@/components/glass/Segmented"
 import { downloadText, downloadUrl, pickFile } from "@/lib/file"
-import { type Result, settle } from "@/lib/result"
+import { attempt } from "@/lib/result"
 import { useAsync } from "@/lib/use-async"
-import { createQrPng, createQrSvg, type ErrorLevel, scanQr } from "./logic"
+import { createQrMatrix, createQrPng, createQrSvg, type ErrorLevel, scanQr } from "./logic"
 
 type Mode = "create" | "scan"
 
@@ -43,16 +43,9 @@ export default function QrTool() {
 function CreatePanel() {
   const [text, setText] = useState("https://gulatools.dev")
   const [level, setLevel] = useState<ErrorLevel>("M")
-  const [png, setPng] = useState<Result<string> | null>(null)
+  const matrix = useMemo(() => attempt(() => createQrMatrix(text, level)), [text, level])
 
-  useEffect(() => {
-    let live = true
-    settle(() => createQrPng(text, level)).then((next) => live && setPng(next))
-    return () => {
-      live = false
-    }
-  }, [text, level])
-
+  const downloadPng = async () => downloadUrl(await createQrPng(text, level), "qrcode.png")
   const downloadSvg = async () => downloadText(await createQrSvg(text, level), "qrcode.svg", "image/svg+xml")
 
   return (
@@ -77,15 +70,19 @@ function CreatePanel() {
       </GlassPanel>
 
       <GlassPanel variant="solid" className="flex flex-col items-center gap-4 p-5">
-        {png?.ok ? (
+        {matrix.ok ? (
           <>
-            <img
-              src={png.value}
-              alt={`QR code untuk ${text}`}
+            <svg
+              role="img"
+              aria-label={`QR code untuk ${text}`}
+              viewBox={`-2 -2 ${matrix.value.size + 4} ${matrix.value.size + 4}`}
+              shapeRendering="crispEdges"
               className="aspect-square w-full max-w-72 rounded-glass-sm bg-white"
-            />
+            >
+              <path d={matrix.value.path} fill="#000" />
+            </svg>
             <div className="flex gap-2">
-              <GlassButton onClick={() => downloadUrl(png.value, "qrcode.png")}>
+              <GlassButton onClick={downloadPng}>
                 <Download aria-hidden="true" className="size-4" />
                 PNG
               </GlassButton>
@@ -96,7 +93,7 @@ function CreatePanel() {
             </div>
           </>
         ) : (
-          png && <ErrorText>{png.error}</ErrorText>
+          <ErrorText>{matrix.error}</ErrorText>
         )}
       </GlassPanel>
     </div>

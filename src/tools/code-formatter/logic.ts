@@ -1,5 +1,4 @@
 import type { Plugin } from "prettier"
-import { format } from "prettier/standalone"
 
 const estree = () => import("prettier/plugins/estree")
 const babel = () => import("prettier/plugins/babel")
@@ -36,5 +35,9 @@ export type CodeOptions = {
 
 export async function formatCode(input: string, { language, ...options }: CodeOptions): Promise<string> {
   const { parser, plugins } = LANGUAGES[language]
-  return format(input, { parser, plugins: await Promise.all(plugins.map((load) => load())), ...options })
+  const [{ format }, loaded] = await Promise.all([
+    import("prettier/standalone"),
+    Promise.all(plugins.map((load) => load())),
+  ])
+  return format(input, { parser, plugins: loaded, ...options })
 }

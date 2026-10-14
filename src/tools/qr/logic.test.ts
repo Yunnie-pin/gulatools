@@ -1,6 +1,6 @@
 import QRCode from "qrcode"
 import { describe, expect, it } from "vitest"
-import { createQrSvg, decodeQr } from "./logic"
+import { createQrMatrix, createQrSvg, decodeQr } from "./logic"
 
 function render(text: string, scale = 4, margin = 4) {
   const { modules } = QRCode.create(text, { errorCorrectionLevel: "M" })
@@ -30,6 +30,13 @@ describe("qr", () => {
   it("reports images without a code", () => {
     const blank = new Uint8ClampedArray(64 * 64 * 4).fill(255)
     expect(() => decodeQr(blank, 64, 64)).toThrow("Tidak ada QR code")
+  })
+
+  it("builds an svg path with one square per dark module", () => {
+    const { size, path } = createQrMatrix("halo", "M")
+    const { modules } = QRCode.create("halo", { errorCorrectionLevel: "M" })
+    expect(size).toBe(modules.size)
+    expect(path.match(/M/g)).toHaveLength(Array.from(modules.data).filter(Boolean).length)
   })
 
   it("creates an svg", async () => {

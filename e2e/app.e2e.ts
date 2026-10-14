@@ -35,6 +35,7 @@ test("command palette searches and navigates", async ({ page }) => {
 
 test("sidebar expands on hover, not after a mouse click, and can be pinned", async ({ page }) => {
   await page.goto("/jwt")
+  await expect(page.getByRole("heading", { level: 1, name: "JWT" })).toBeVisible()
   const panel = page.locator("aside > div").first()
   const width = async () => Math.round((await panel.boundingBox())?.width ?? 0)
   await page.mouse.move(900, 500)

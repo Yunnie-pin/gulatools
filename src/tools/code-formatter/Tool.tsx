@@ -1,25 +1,37 @@
-import { css } from "@codemirror/lang-css"
-import { html } from "@codemirror/lang-html"
-import { javascript } from "@codemirror/lang-javascript"
-import { markdown } from "@codemirror/lang-markdown"
-import { yaml } from "@codemirror/lang-yaml"
 import type { Extension } from "@uiw/react-codemirror"
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { Checkbox } from "@/components/glass/Checkbox"
 import { Dropdown } from "@/components/glass/Dropdown"
 import { Segmented } from "@/components/glass/Segmented"
 import { TransformTool } from "@/components/TransformTool"
 import { type CodeOptions, formatCode, LANGUAGES, type LanguageId } from "./logic"
 
-const EDITOR_LANGUAGES: Partial<Record<LanguageId, Extension>> = {
-  javascript: javascript({ jsx: true }),
-  typescript: javascript({ jsx: true, typescript: true }),
-  css: css(),
-  scss: css(),
-  less: css(),
-  html: html(),
-  markdown: markdown(),
-  yaml: yaml(),
+const loadCss = async () => (await import("@codemirror/lang-css")).css()
+
+const EDITOR_LANGUAGES: Partial<Record<LanguageId, () => Promise<Extension>>> = {
+  javascript: async () => (await import("@codemirror/lang-javascript")).javascript({ jsx: true }),
+  typescript: async () => (await import("@codemirror/lang-javascript")).javascript({ jsx: true, typescript: true }),
+  css: loadCss,
+  scss: loadCss,
+  less: loadCss,
+  html: async () => (await import("@codemirror/lang-html")).html(),
+  markdown: async () => (await import("@codemirror/lang-markdown")).markdown(),
+  yaml: async () => (await import("@codemirror/lang-yaml")).yaml(),
+}
+
+function useEditorLanguage(language: LanguageId) {
+  const [extension, setExtension] = useState<Extension>()
+
+  useEffect(() => {
+    let live = true
+    setExtension(undefined)
+    EDITOR_LANGUAGES[language]?.().then((loaded) => live && setExtension(loaded))
+    return () => {
+      live = false
+    }
+  }, [language])
+
+  return extension
 }
 
 const SAMPLES: Record<LanguageId, string> = {
@@ -62,13 +74,14 @@ export default function CodeFormatter() {
     singleQuote: false,
   })
   const set = (next: Partial<CodeOptions>) => setOptions((current) => ({ ...current, ...next }))
+  const editorLanguage = useEditorLanguage(options.language)
 
   const transform = useCallback((input: string) => formatCode(input, options), [options])
 
   return (
     <TransformTool
       transform={transform}
-      inputLanguage={EDITOR_LANGUAGES[options.language]}
+      inputLanguage={editorLanguage}
       sample={SAMPLES[options.language]}
       options={
         <>

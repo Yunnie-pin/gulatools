@@ -1,4 +1,4 @@
-import { format, type KeywordCase, type SqlLanguage } from "sql-formatter"
+import type { KeywordCase, SqlLanguage } from "sql-formatter"
 
 export type SqlOptions = {
   dialect: SqlLanguage
@@ -6,6 +6,7 @@ export type SqlOptions = {
   indent: 2 | 4
 }
 
-export function formatSql(input: string, { dialect, keywordCase, indent }: SqlOptions): string {
+export async function formatSql(input: string, { dialect, keywordCase, indent }: SqlOptions): Promise<string> {
+  const { format } = await import("sql-formatter")
   return format(input, { language: dialect, keywordCase, tabWidth: indent })
 }
