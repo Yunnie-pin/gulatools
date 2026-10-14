@@ -10,11 +10,11 @@ import { messages } from "./messages"
 const MODES = ["json", "jsonUnescape", "regex", "shell", "sql"] as const satisfies readonly EscapeMode[]
 
 const SAMPLES: Record<EscapeMode, string> = {
-  json: 'Gula "manis"\nkopi\tpahit',
-  jsonUnescape: 'Gula \\"manis\\"\\nkopi\\tpahit',
-  regex: "harga: Rp5.000 (diskon?) [promo]",
+  json: 'Say "hello"\nthen\tleave',
+  jsonUnescape: 'Say \\"hello\\"\\nthen\\tleave',
+  regex: "price: $5.00 (approx?) [sale]",
   shell: "it's $HOME",
-  sql: "Jum'at",
+  sql: "O'Brien",
 }
 
 export default function TextEscapeTool() {

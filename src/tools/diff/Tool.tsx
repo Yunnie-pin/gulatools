@@ -17,8 +17,8 @@ import { messages } from "./messages"
 
 const MODES = ["lines", "words", "chars"] as const satisfies readonly DiffMode[]
 
-const SAMPLE_ORIGINAL = "nama: gulatools\nversi: 1.0.0\nfitur:\n  - json\n  - jwt\n"
-const SAMPLE_MODIFIED = "nama: gulatools\nversi: 1.1.0\nfitur:\n  - json\n  - jwt\n  - bcrypt\n"
+const SAMPLE_ORIGINAL = "name: gulatools\nversion: 1.0.0\nfeatures:\n  - json\n  - jwt\n"
+const SAMPLE_MODIFIED = "name: gulatools\nversion: 1.1.0\nfeatures:\n  - json\n  - jwt\n  - bcrypt\n"
 
 export default function DiffTool() {
   const t = useMessages(messages)

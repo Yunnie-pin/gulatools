@@ -21,7 +21,7 @@ const SAMPLES: Record<Format, string> = {
   yaml: "app: gulatools\nport: 8080\nfeatures:\n  - json\n  - yaml\ndb:\n  host: localhost\n  ssl: false\n",
   toml: 'app = "gulatools"\nport = 8080\nfeatures = ["json", "yaml"]\n\n[db]\nhost = "localhost"\nssl = false\n',
   xml: '<app name="gulatools">\n  <port>8080</port>\n  <feature>json</feature>\n  <feature>yaml</feature>\n</app>',
-  csv: "id,name,role\n1,Gula,admin\n2,Manis,editor\n",
+  csv: "id,name,role\n1,Alice,admin\n2,Bob,editor\n",
 }
 
 const FORMAT_OPTIONS = (Object.keys(FORMATS) as Format[]).map((value) => ({ value, label: FORMATS[value] }))

@@ -4,6 +4,7 @@ import { glassButtonClass } from "@/components/glass/GlassButton"
 import { Logo } from "@/components/Logo"
 import { useMessages } from "@/i18n/locale"
 import { ui } from "@/i18n/ui"
+import { useLightDismiss } from "@/lib/dialog"
 
 export const REPO_URL = "https://github.com/Yunnie-pin/gulatools"
 
@@ -16,6 +17,7 @@ export function AboutDialog() {
   const dialogRef = useRef<HTMLDialogElement>(null)
   const t = useMessages(ui).shell
   const close = () => dialogRef.current?.close()
+  const lightDismiss = useLightDismiss()
 
   useEffect(() => {
     const open = () => dialogRef.current?.showModal()
@@ -27,6 +29,7 @@ export function AboutDialog() {
     <dialog
       ref={dialogRef}
       aria-labelledby={titleId}
+      {...lightDismiss}
       className="glass glass-strong m-auto w-[min(420px,calc(100%-2rem))] rounded-glass p-0 text-ink backdrop:bg-black/30"
     >
       <div className="flex flex-col gap-4 p-6">

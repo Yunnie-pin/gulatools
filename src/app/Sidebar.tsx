@@ -7,6 +7,7 @@ import { Logo } from "@/components/Logo"
 import { useMessages } from "@/i18n/locale"
 import { ui } from "@/i18n/ui"
 import { cx } from "@/lib/cx"
+import { useLightDismiss } from "@/lib/dialog"
 import { openPalette, PALETTE_SHORTCUT } from "@/lib/palette"
 import { setSidebarPinned, useSidebarPinned } from "@/lib/sidebar"
 import { CATEGORIES, CATEGORY_IDS, type Tool } from "@/lib/tool"
@@ -221,6 +222,7 @@ function DesktopSidebar() {
 function MobileSidebar() {
   const drawerRef = useRef<HTMLDialogElement>(null)
   const close = () => drawerRef.current?.close()
+  const lightDismiss = useLightDismiss()
   const t = useMessages(ui).shell
 
   return (
@@ -253,6 +255,7 @@ function MobileSidebar() {
       <dialog
         ref={drawerRef}
         aria-label={t.menu}
+        {...lightDismiss}
         className="glass glass-strong m-0 h-dvh max-h-dvh w-[min(300px,85vw)] rounded-none rounded-r-glass p-0 text-ink backdrop:bg-black/40 open:animate-[drawer-in_.3s_var(--ease)] lg:hidden"
       >
         <div className="flex h-full flex-col gap-5 p-5">

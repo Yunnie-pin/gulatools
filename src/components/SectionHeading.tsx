@@ -15,7 +15,7 @@ export function SectionHeading({ id, icon: Icon, as: Tag = "h2", className, chil
     <Tag
       id={id}
       className={cx(
-        "flex items-center gap-2 px-1 font-semibold tracking-wide text-ink uppercase",
+        "glass flex w-fit items-center gap-2 rounded-full px-3 py-1.5 font-semibold tracking-wide text-ink uppercase",
         Tag === "h2" ? "text-sm" : "text-xs text-ink-soft",
         className,
       )}

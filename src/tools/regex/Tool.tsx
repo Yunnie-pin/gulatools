@@ -15,7 +15,7 @@ import { runInWorker } from "./runner"
 
 const DEBOUNCE_MS = 150
 
-const SAMPLE_TEXT = "Hubungi gula@manis.id atau tim@gulatools.dev\nnomor lama: admin@contoh.co.id"
+const SAMPLE_TEXT = "Contact jane@example.com or team@gulatools.dev\nold address: admin@example.co.uk"
 
 const isNullableString = (value: unknown) => value === null || typeof value === "string"
 

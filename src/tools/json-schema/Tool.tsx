@@ -33,7 +33,7 @@ const SAMPLE_SCHEMA = JSON.stringify(
 )
 
 const SAMPLE_DATA = JSON.stringify(
-  { name: "Gula", email: "bukan-email", age: -1, tags: ["manis", "manis"], warna: "coklat" },
+  { name: "Jane", email: "not-an-email", age: -1, tags: ["sweet", "sweet"], color: "brown" },
   null,
   2,
 )

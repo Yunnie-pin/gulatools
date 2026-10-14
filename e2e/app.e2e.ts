@@ -160,3 +160,30 @@ test("works offline once the service worker is installed", async ({ page, contex
   }
   await context.setOffline(false)
 })
+
+test("dialogs close when clicking outside, but not when a drag ends outside", async ({ page }) => {
+  await page.goto("/")
+  await page.locator("aside").getByRole("button", { name: "Tentang GulaTools" }).click()
+  const about = page.getByRole("dialog", { name: "Open source" })
+  await expect(about).toBeVisible()
+
+  await about.getByRole("heading").click()
+  await expect(about).toBeVisible()
+
+  const box = await about.boundingBox()
+  if (!box) throw new Error("dialog has no box")
+  await page.mouse.move(box.x + 20, box.y + box.height / 2)
+  await page.mouse.down()
+  await page.mouse.move(5, 5)
+  await page.mouse.up()
+  await expect(about).toBeVisible()
+
+  await page.mouse.click(5, 5)
+  await expect(about).toBeHidden()
+
+  await page.keyboard.press("Control+k")
+  const palette = page.getByRole("dialog", { name: "Cari tool" })
+  await expect(palette).toBeVisible()
+  await page.mouse.click(5, 5)
+  await expect(palette).toBeHidden()
+})

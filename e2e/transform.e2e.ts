@@ -39,7 +39,7 @@ test("data converter turns CSV into JSON", async ({ page }) => {
   await page.getByRole("button", { name: /^Ke:/ }).click()
   await page.getByRole("option", { name: "JSON" }).click()
   await page.getByRole("button", { name: "Contoh" }).click()
-  await expect(editorOutput(page)).toContainText('"name": "Gula"')
+  await expect(editorOutput(page)).toContainText('"name": "Alice"')
 })
 
 test("JSON to TypeScript infers interfaces", async ({ page }) => {
@@ -52,23 +52,23 @@ test("JSON to TypeScript infers interfaces", async ({ page }) => {
 
 test("JSONPath filters with expressions", async ({ page }) => {
   await openWithSample(page, "/jsonpath")
-  await expect(editorOutput(page)).toContainText('"Bumi Manusia"')
-  await expect(editorOutput(page)).not.toContainText("Laskar Pelangi")
+  await expect(editorOutput(page)).toContainText('"Dune"')
+  await expect(editorOutput(page)).not.toContainText("The Hobbit")
 })
 
 test("Base64 and URL encoder produce expected output", async ({ page }) => {
   await openWithSample(page, "/base64")
-  await expect(editorOutput(page)).toHaveText("R3VsYSBpdHUgbWFuaXMg4oCUIMO8bsOvY8O2ZMOp")
+  await expect(editorOutput(page)).toHaveText("U3VnYXIgaXMgc3dlZXQg4oCUIMO8bsOvY8O2ZMOp")
   await openWithSample(page, "/url-encoder")
-  await expect(editorOutput(page)).toHaveText("q%3Dgula%20manis%26lang%3Did")
+  await expect(editorOutput(page)).toHaveText("q%3Dsweet%20sugar%26lang%3Den")
 })
 
 test("HTML entity decode resolves named and numeric entities without parsing tags", async ({ page }) => {
   await openWithSample(page, "/html-entity")
-  await expect(editorOutput(page)).toHaveText("&lt;p class=&quot;note&quot;&gt;Gula &amp; kopi — © 2026&lt;/p&gt;")
+  await expect(editorOutput(page)).toHaveText("&lt;p class=&quot;note&quot;&gt;Sugar &amp; spice — © 2026&lt;/p&gt;")
   await page.getByText("Decode", { exact: true }).click()
   await page.getByRole("button", { name: "Contoh" }).click()
-  await expect(editorOutput(page)).toHaveText("<p>Gula & kopi — © 2026 🍬</p>")
+  await expect(editorOutput(page)).toHaveText("<p>Sugar & spice — © 2026 🍬</p>")
 })
 
 test("TransformTool menu opens with keyboard and offers download", async ({ page }) => {
@@ -83,13 +83,13 @@ test("TransformTool menu opens with keyboard and offers download", async ({ page
 
 test("text escape quotes for SQL and round-trips JSON", async ({ page }) => {
   await openWithSample(page, "/text-escape")
-  await expect(editorOutput(page)).toHaveText('Gula \\"manis\\"\\nkopi\\tpahit')
+  await expect(editorOutput(page)).toHaveText('Say \\"hello\\"\\nthen\\tleave')
   await page.getByText("SQL", { exact: true }).click()
   await page.getByRole("button", { name: "Contoh" }).click()
-  await expect(editorOutput(page)).toHaveText("'Jum''at'")
+  await expect(editorOutput(page)).toHaveText("'O''Brien'")
   await page.getByText("Unescape JSON", { exact: true }).click()
   await page.getByRole("button", { name: "Contoh" }).click()
-  await expect(editorOutput(page)).toContainText('Gula "manis"')
+  await expect(editorOutput(page)).toContainText('Say "hello"')
 })
 
 test("markdown preview renders GFM and strips scripts and remote resources", async ({ page }) => {

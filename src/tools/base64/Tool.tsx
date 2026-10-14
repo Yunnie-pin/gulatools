@@ -30,7 +30,7 @@ export default function Base64Tool() {
   return (
     <TransformTool
       transform={transform}
-      sample={mode === "encode" ? "Gula itu manis — ünïcödé" : "R3VsYSBpdHUgbWFuaXMg4oCUIMO8bsOvY8O2ZMOp"}
+      sample={mode === "encode" ? "Sugar is sweet — ünïcödé" : "U3VnYXIgaXMgc3dlZXQg4oCUIMO8bsOvY8O2ZMOp"}
       options={
         <>
           <Segmented<Mode> label="Mode" value={mode} options={MODES} onChange={setMode} />

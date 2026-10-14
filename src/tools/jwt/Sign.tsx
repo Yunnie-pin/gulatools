@@ -26,7 +26,7 @@ type Secrets = Pick<SignOptions, "payload" | "key">
 const INITIAL_SETTINGS: Settings = { alg: "HS256", expiresIn: "1h", issuedAt: true }
 
 const INITIAL_SECRETS: Secrets = {
-  payload: JSON.stringify({ sub: "1234567890", name: "Gula Manis", role: "admin" }, null, 2),
+  payload: JSON.stringify({ sub: "1234567890", name: "Jane Doe", role: "admin" }, null, 2),
   key: "",
 }
 

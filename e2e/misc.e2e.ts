@@ -114,10 +114,10 @@ test("JSON schema validator lists every error and turns valid when fixed", async
   await expect(page.getByText("JSON Schema 2020-12")).toBeVisible()
   const issues = page.getByRole("list", { name: "Daftar error" })
   await expect(issues).toContainText('/emailmust match format "email"')
-  await expect(issues).toContainText("/must NOT have additional properties: warna")
+  await expect(issues).toContainText("/must NOT have additional properties: color")
   await expectAccessible(page)
 
-  await page.locator(".cm-content").nth(1).fill('{"name":"Gula","email":"gula@example.com","tags":["manis"]}')
+  await page.locator(".cm-content").nth(1).fill('{"name":"Jane","email":"jane@example.com","tags":["sweet"]}')
   await expect(page.getByText("Valid", { exact: true })).toBeVisible()
   await expect(issues).toHaveCount(0)
 })

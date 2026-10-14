@@ -17,7 +17,7 @@ export default function UrlEncoder() {
   return (
     <TransformTool
       transform={transform}
-      sample={mode === "decode" ? "q%3Dgula%20manis%26lang%3Did" : "q=gula manis&lang=id"}
+      sample={mode === "decode" ? "q%3Dsweet%20sugar%26lang%3Den" : "q=sweet sugar&lang=en"}
       options={<Segmented<UrlMode> label="Mode" value={mode} options={labeled(MODES, t.modes)} onChange={setMode} />}
     />
   )

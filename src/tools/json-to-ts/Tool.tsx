@@ -27,7 +27,7 @@ const SAMPLE = JSON.stringify({
   owner: { login: "gula", avatarUrl: null },
   releases: [
     { version: "1.0.0", date: "2026-10-13" },
-    { version: "1.1.0", date: "2026-11-01", notes: "Fase 3" },
+    { version: "1.1.0", date: "2026-11-01", notes: "Phase 3" },
   ],
 })
 

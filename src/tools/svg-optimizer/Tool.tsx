@@ -29,9 +29,9 @@ const INITIAL: SvgOptions = { precision: 3, multipass: true, pretty: false }
 const SAMPLE = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with a vector editor -->
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="64px" height="64px" viewBox="0 0 64 64">
-  <title>Gula</title>
+  <title>Sugar cube</title>
   <metadata>
-    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"><rdf:Description about="gula"/></rdf:RDF>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"><rdf:Description about="sugar-cube"/></rdf:RDF>
   </metadata>
   <defs></defs>
   <g id="Layer_1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">

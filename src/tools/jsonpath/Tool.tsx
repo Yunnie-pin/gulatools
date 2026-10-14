@@ -12,17 +12,17 @@ const language = json()
 const SAMPLE = JSON.stringify({
   store: {
     book: [
-      { category: "fiksi", title: "Laskar Pelangi", author: "Andrea Hirata", price: 85000 },
-      { category: "fiksi", title: "Bumi Manusia", author: "Pramoedya Ananta Toer", price: 120000 },
-      { category: "sains", title: "Kosmos", author: "Carl Sagan", price: 150000 },
+      { category: "fiction", title: "The Hobbit", author: "J. R. R. Tolkien", price: 8.99 },
+      { category: "fiction", title: "Dune", author: "Frank Herbert", price: 12.99 },
+      { category: "science", title: "Cosmos", author: "Carl Sagan", price: 15.99 },
     ],
-    location: { city: "Jakarta" },
+    location: { city: "London" },
   },
 })
 
 export default function JsonPathTool() {
   const t = useMessages(messages)
-  const [path, setPath] = usePersistentState("path", "$.store.book[?(@.price > 100000)].title")
+  const [path, setPath] = usePersistentState("path", "$.store.book[?(@.price > 10)].title")
   const transform = useCallback((input: string) => queryJson(input, path), [path])
 
   return (

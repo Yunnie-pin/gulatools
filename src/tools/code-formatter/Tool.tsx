@@ -38,7 +38,7 @@ function useEditorLanguage(language: LanguageId) {
 }
 
 const SAMPLES: Record<LanguageId, string> = {
-  javascript: "const greet=(name)=>{if(!name){return 'halo'}return 'halo '+name}\nexport default greet",
+  javascript: "const greet=(name)=>{if(!name){return 'hello'}return 'hello '+name}\nexport default greet",
   typescript:
     "interface User{id:number;name:string}\nexport function find(users:User[],id:number):User|undefined{return users.find(u=>u.id===id)}",
   css: ".card{display:flex;gap:8px;padding:16px}.card:hover{background:rgba(255,255,255,.6)}",

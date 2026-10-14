@@ -5,6 +5,7 @@ import { useNavigate } from "react-router"
 import { useMessages } from "@/i18n/locale"
 import { ui } from "@/i18n/ui"
 import { cx } from "@/lib/cx"
+import { useLightDismiss } from "@/lib/dialog"
 import { onOpenPalette } from "@/lib/palette"
 import { CATEGORIES, type Tool } from "@/lib/tool"
 import { useUsage } from "@/lib/usage"
@@ -19,6 +20,7 @@ export function CommandPalette() {
   const t = useMessages(ui).shell
   const [query, setQuery] = useState("")
   const [active, setActive] = useState(0)
+  const lightDismiss = useLightDismiss()
 
   const { recent } = useUsage()
   const results = useMemo(() => {
@@ -64,6 +66,7 @@ export function CommandPalette() {
     <dialog
       ref={dialogRef}
       aria-label={t.searchTool}
+      {...lightDismiss}
       onClose={() => {
         setQuery("")
         setActive(0)

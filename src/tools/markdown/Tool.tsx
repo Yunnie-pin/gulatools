@@ -21,26 +21,26 @@ const HTML = htmlLanguage()
 
 const SAMPLE = `# GulaTools
 
-Developer tools yang **manis** dan berjalan _sepenuhnya_ di browser.
+**Sweet** developer tools that run _entirely_ in your browser.
 
-## Fitur
+## Features
 
-- [x] Format JSON dan SQL
+- [x] Format JSON and SQL
 - [x] Decode JWT
-- [ ] Kopi gratis
+- [ ] Free coffee
 
-| Tool | Kategori |
+| Tool | Category |
 | ---- | -------- |
 | Base64 | Encoder |
 | UUID | Generator |
 
-> Data kamu tidak pernah meninggalkan perangkat ini.
+> Your data never leaves this device.
 
 \`\`\`ts
-const gula = "manis"
+const sugar = "sweet"
 \`\`\`
 
-Kunjungi [GitHub](https://github.com) untuk kodenya.
+Visit [GitHub](https://github.com) for the source.
 `
 
 export default function MarkdownTool() {

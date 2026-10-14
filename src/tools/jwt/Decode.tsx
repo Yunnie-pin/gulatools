@@ -19,8 +19,8 @@ import { messages } from "./messages"
 const language = json()
 
 const SAMPLE_TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiR3VsYSBNYW5pcyIsInJvbGUiOiJhZG1pbiIsInN1YiI6IjEyMzQ1Njc4OTAiLCJpYXQiOjE3NjAwMDAwMDAsImV4cCI6NDEwMjQ0NDgwMH0.fiLQmHNB3vHerqlkeK4wFI5hpX9XGvH3kBW9Ves_Akw"
-const SAMPLE_SECRET = "gula-rahasia"
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSmFuZSBEb2UiLCJyb2xlIjoiYWRtaW4iLCJzdWIiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNzYwMDAwMDAwLCJleHAiOjQxMDI0NDQ4MDB9.Q5OtkU9Ha-WB2zZ1ZU0zoW8gEkgLdaTUy1aMumUw9bw"
+const SAMPLE_SECRET = "sugar-secret"
 
 const STATUS_TONES = { valid: "success", expired: "danger", "not-yet-valid": "danger" } as const
 

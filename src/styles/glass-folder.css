@@ -193,18 +193,13 @@
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.02em;
-  color: rgba(24, 24, 27, 0.5);
+  color: rgba(24, 24, 27, 0.68);
 }
 [data-theme="dark"] .gf-sheet-name {
   color: #fafafa;
 }
-[data-theme="dark"] .gf-sheet-icon {
-  width: 14px;
-  height: 14px;
-  flex: none;
-}
-.gf-sheet-meta {
-  color: rgba(250, 250, 250, 0.66);
+[data-theme="dark"] .gf-sheet-meta {
+  color: rgba(250, 250, 250, 0.72);
 }
 .gf-sheet--more {
   font: inherit;

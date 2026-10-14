@@ -19,3 +19,14 @@ test("header stays visible while scrolling", async ({ page }) => {
   await page.getByRole("button", { name: "Cari tool" }).click()
   await expect(page.getByRole("dialog", { name: "Cari tool" })).toBeVisible()
 })
+
+test("drawer closes when tapping the backdrop", async ({ page }) => {
+  await page.goto("/")
+  await page.getByRole("button", { name: "Buka menu" }).click()
+  const drawer = page.getByRole("dialog", { name: "Menu" })
+  await expect(drawer).toBeVisible()
+  const viewport = page.viewportSize()
+  if (!viewport) throw new Error("no viewport")
+  await page.mouse.click(viewport.width - 10, viewport.height / 2)
+  await expect(drawer).toBeHidden()
+})
