@@ -23,6 +23,7 @@ import { password } from "./password"
 import { qr } from "./qr"
 import { regex } from "./regex"
 import { sqlFormatter } from "./sql-formatter"
+import { textStats } from "./text-stats"
 import { timestamp } from "./timestamp"
 import { urlEncoder } from "./url-encoder"
 import { uuid } from "./uuid"
@@ -55,6 +56,7 @@ export const tools: Tool[] = [
   regex,
   diff,
   caseConverter,
+  textStats,
 ]
 
 export const toolsByCategory = Object.fromEntries(

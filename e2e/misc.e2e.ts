@@ -56,3 +56,12 @@ test("QR code round-trips through the scanner and image tool", async ({ page }) 
   await expect(page.getByText("1024 × 1024 px")).toBeVisible()
   await expect(page.locator("main code").first()).toContainText("data:image/png;base64,iVBOR")
 })
+
+test("text stats counts graphemes and lists hidden characters from the sample", async ({ page }) => {
+  await page.goto("/text-stats")
+  await page.getByRole("button", { name: "Contoh" }).click()
+  await expect(page.getByText("2 jenis karakter tak terlihat")).toBeVisible()
+  await expect(page.getByText("ZERO WIDTH SPACE")).toBeVisible()
+  await expect(page.getByText("NO-BREAK SPACE", { exact: true })).toBeVisible()
+  await expect(page.getByText("ZERO WIDTH JOINER")).toHaveCount(0)
+})

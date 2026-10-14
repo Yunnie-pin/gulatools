@@ -1,0 +1,34 @@
+import { defineMessages } from "@/i18n/locale"
+
+export const messages = defineMessages(
+  {
+    textLabel: "Teks",
+    placeholder: "Tempel teks untuk dihitung dan diperiksa…",
+    graphemes: "Karakter",
+    codePoints: "Code point",
+    utf16Units: "Unit UTF-16",
+    utf8Bytes: "Byte UTF-8",
+    words: "Kata",
+    lines: "Baris",
+    hiddenTitle: (count: number) => `${count} jenis karakter tak terlihat`,
+    noHidden: "Tidak ada karakter tak terlihat",
+    bidiWarning: "Berisi kontrol arah teks (bidi) yang bisa menyamarkan isi kode",
+    copyCleaned: "Salin teks bersih",
+    position: (line: number, column: number, count: number) => `baris ${line}:${column} · ${count}×`,
+  },
+  {
+    textLabel: "Text",
+    placeholder: "Paste text to count and inspect…",
+    graphemes: "Characters",
+    codePoints: "Code points",
+    utf16Units: "UTF-16 units",
+    utf8Bytes: "UTF-8 bytes",
+    words: "Words",
+    lines: "Lines",
+    hiddenTitle: (count: number) => `${count} kinds of hidden characters`,
+    noHidden: "No hidden characters",
+    bidiWarning: "Contains bidirectional text controls that can disguise code",
+    copyCleaned: "Copy cleaned text",
+    position: (line: number, column: number, count: number) => `line ${line}:${column} · ${count}×`,
+  },
+)
