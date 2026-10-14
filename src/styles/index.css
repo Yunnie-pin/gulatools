@@ -136,6 +136,12 @@
   }
 }
 
+@keyframes orbit {
+  to {
+    rotate: 360deg;
+  }
+}
+
 @keyframes pop-in {
   from {
     opacity: 0;
