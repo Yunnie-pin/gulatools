@@ -109,3 +109,17 @@ test("markdown preview renders GFM and strips scripts and remote resources", asy
   expect(await page.evaluate(() => "pwned" in window)).toBe(false)
   await expect(preview.locator("img[onerror], script, [style], img[src^='https']")).toHaveCount(0)
 })
+
+test("SVG optimizer shrinks the sample and offers preview and download", async ({ page }) => {
+  await openWithSample(page, "/svg-optimizer")
+  await expect(page.getByText(/lebih kecil\)/)).toBeVisible()
+  await expect(editorOutput(page)).toContainText('<svg xmlns="http://www.w3.org/2000/svg"')
+  await expect(editorOutput(page)).not.toContainText("metadata")
+  await expectAccessible(page)
+
+  await page.getByText("Pratinjau", { exact: true }).click()
+  await expect(page.getByRole("img", { name: "Pratinjau SVG" })).toBeVisible()
+  const download = page.waitForEvent("download")
+  await page.getByRole("button", { name: "Unduh SVG" }).click()
+  expect((await download).suggestedFilename()).toBe("optimized.svg")
+})

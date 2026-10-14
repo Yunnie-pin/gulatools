@@ -106,3 +106,105 @@ test("lorem ipsum follows the chosen unit and count", async ({ page }) => {
   await page.getByLabel("Mulai dengan Lorem ipsum").uncheck()
   await expect(page.locator("main .cm-content")).not.toHaveText("Lorem ipsum dolor sit amet")
 })
+
+test("JSON schema validator lists every error and turns valid when fixed", async ({ page }) => {
+  await page.goto("/json-schema")
+  await page.getByRole("button", { name: "Contoh" }).click()
+  await expect(page.getByText("4 error")).toBeVisible()
+  await expect(page.getByText("JSON Schema 2020-12")).toBeVisible()
+  const issues = page.getByRole("list", { name: "Daftar error" })
+  await expect(issues).toContainText('/emailmust match format "email"')
+  await expect(issues).toContainText("/must NOT have additional properties: warna")
+  await expectAccessible(page)
+
+  await page.locator(".cm-content").nth(1).fill('{"name":"Gula","email":"gula@example.com","tags":["manis"]}')
+  await expect(page.getByText("Valid", { exact: true })).toBeVisible()
+  await expect(issues).toHaveCount(0)
+})
+
+test("X.509 decoder shows certificate details for a pasted chain", async ({ page }) => {
+  await page.goto("/x509")
+  const input = page.getByRole("textbox", { name: "Sertifikat" })
+  await input.fill(`-----BEGIN CERTIFICATE-----
+MIICEjCCAbigAwIBAgIDGis8MAoGCCqGSM49BAMCMDoxCzAJBgNVBAYTAklEMRMw
+EQYDVQQKDApHdWxhIFRvb2xzMRYwFAYDVQQDDA1ndWxhdG9vbHMuZGV2MB4XDTI2
+MTAxNDE0MjEwMVoXDTM2MTAxMTE0MjEwMVowOjELMAkGA1UEBhMCSUQxEzARBgNV
+BAoMCkd1bGEgVG9vbHMxFjAUBgNVBAMMDWd1bGF0b29scy5kZXYwWTATBgcqhkjO
+PQIBBggqhkjOPQMBBwNCAATGnZ0eF547IwlXeoWD7sq+hIfSnkteuG1AaedxQT+r
+r+aWruZIbSzDcPRV7E4yrgZQtyTMom/mg6qv+12ZEv+do4GsMIGpMB0GA1UdDgQW
+BBSUr/NHRPNs5xhYu6yHT6JB9aViZTAfBgNVHSMEGDAWgBSUr/NHRPNs5xhYu6yH
+T6JB9aViZTBDBgNVHREEPDA6gg1ndWxhdG9vbHMuZGV2gg8qLmd1bGF0b29scy5k
+ZXaHBH8AAAGBEmhhbG9AZ3VsYXRvb2xzLmRldjASBgNVHRMBAf8ECDAGAQH/AgEA
+MA4GA1UdDwEB/wQEAwIBhjAKBggqhkjOPQQDAgNIADBFAiEAr5dFPiJcTh7EJMMr
+jTiD7PNJMLsI2tZLkDgdpKq6cWQCIDmJGJaumx6WT6JTkTkM8ZUej8n03NIYQDGj
+wa4nf7FP
+-----END CERTIFICATE-----`)
+  await expect(page.getByText("Berlaku", { exact: true })).toBeVisible()
+  await expect(page.locator("main")).toContainText("CN=gulatools.dev, O=Gula Tools, C=ID")
+  await expect(page.locator("main")).toContainText("DNS:gulatools.dev, DNS:*.gulatools.dev, IP:127.0.0.1")
+  await expect(page.locator("main")).toContainText("ED:93:3D:F8:75:53:02:19")
+  await expectAccessible(page)
+
+  await input.fill(`-----BEGIN CERTIFICATE-----
+MIICEjCCAbigAwIBAgIDGis8MAoGCCqGSM49BAMCMDoxCzAJBgNVBAYTAklEMRMw
+EQYDVQQKDApHdWxhIFRvb2xzMRYwFAYDVQQDDA1ndWxhdG9vbHMuZGV2MB4XDTI2
+MTAxNDE0MjEwMVoXDTM2MTAxMTE0MjEwMVowOjELMAkGA1UEBhMCSUQxEzARBgNV
+BAoMCkd1bGEgVG9vbHMxFjAUBgNVBAMMDWd1bGF0b29scy5kZXYwWTATBgcqhkjO
+PQIBBggqhkjOPQMBBwNCAATGnZ0eF547IwlXeoWD7sq+hIfSnkteuG1AaedxQT+r
+r+aWruZIbSzDcPRV7E4yrgZQtyTMom/mg6qv+12ZEv+do4GsMIGpMB0GA1UdDgQW
+BBSUr/NHRPNs5xhYu6yHT6JB9aViZTAfBgNVHSMEGDAWgBSUr/NHRPNs5xhYu6yH
+T6JB9aViZTBDBgNVHREEPDA6gg1ndWxhdG9vbHMuZGV2gg8qLmd1bGF0b29scy5k
+ZXaHBH8AAAGBEmhhbG9AZ3VsYXRvb2xzLmRldjASBgNVHRMBAf8ECDAGAQH/AgEA
+MA4GA1UdDwEB/wQEAwIBhjAKBggqhkjOPQQDAgNIADBFAiEAr5dFPiJcTh7EJMMr
+jTiD7PNJMLsI2tZLkDgdpKq6cWQCIDmJGJaumx6WT6JTkTkM8ZUej8n03NIYQDGj
+wa4nf7FP
+-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----
+MIIDLTCCAhWgAwIBAgIUduOKnS+k+KFrmODenzUde/AmPD4wDQYJKoZIhvcNAQEL
+BQAwJjETMBEGA1UEAwwKS29waSBQYWhpdDEPMA0GA1UECgwGV2FydW5nMB4XDTI2
+MTAxNDE0MjEwMVoXDTI2MTExMzE0MjEwMVowJjETMBEGA1UEAwwKS29waSBQYWhp
+dDEPMA0GA1UECgwGV2FydW5nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+AQEA2tCGuo5eMSZDMHvPXbILhwM/K9B+YN8l6wcuk7lvWD3lfeSx9dENhnDIPKLe
+DdjDqt4mwyysTwfAdwEbkTA3KG24bOOHkoTlLAN+nIJycuNPI8Y0pZkK7WzamTSE
+yDcfeZfklOhzGz6YAxuaGUuQxfcf6GHEwsr0M9H567pXVWC3YkMaM+E21EW6jFhe
+Hr7QYBD1jKimsCmEVKVLGOi7dCKDttVJj0lrJXlSBeHu3OEoXr+zdo/xwEo6dNbS
+fmN6gzKNUf5rtQb5D9Anv+ZAqeBVQb58IEJXjPjy0gxpWxxLi4gaC0D33yawhZFu
+UamAltCD0FxzAqqE//crXE6QewIDAQABo1MwUTAdBgNVHQ4EFgQU6MiIcdCQh8jb
+llhlavW6410+DTwwHwYDVR0jBBgwFoAU6MiIcdCQh8jbllhlavW6410+DTwwDwYD
+VR0TAQH/BAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEAlx7p4SKltPm+XJRy4T7W
+XCjpzzLFg9wu+6hE0ZHZSk8/eNTEiFEJSXrsjK8E0AYm8E8pCDyFdoOm5uiRigg+
+o0crue/MBckPhIkQssSUG9MkIt8M7OcBLqDFAz7eQTV/KHAM19YbeAsF2kbbxb8V
+c2DFkHlBGDoDlCx+gp07Em/UbhYANpxbtnTcEjBVsRAJoIjUR5NtHHKrTxv801QR
+llvr8Az6jLm+Zgb4o1WpfU5xiEU4Wbm7VcaBiBIVk0bbkH4OvVZsQHVOWV2RuxeX
+E6Sz5lLCxfYyQpw2pR6W4M9RW1ji2Juy3G8MGUw3l4yuASFCiaXyePj5J8sohqg2
+FQ==
+-----END CERTIFICATE-----`)
+  await expect(page.getByRole("heading", { name: "Sertifikat 2 dari 2" })).toBeVisible()
+  await expect(page.locator("main")).toContainText("RSA · 2048 bit · e=65537")
+  const stored = await page.evaluate(() => JSON.stringify({ ...localStorage }))
+  expect(stored).not.toContain("BEGIN CERTIFICATE")
+})
+
+test("image compressor resizes and converts to JPEG for download", async ({ page }) => {
+  await page.goto("/image-tools")
+  const chooser = page.waitForEvent("filechooser")
+  await page.getByRole("button", { name: "Pilih gambar" }).click()
+  await (await chooser).setFiles({
+    name: "ikon.png",
+    mimeType: "image/png",
+    buffer: await readFile("public/pwa-512.png"),
+  })
+  await expect(page.getByText("ikon.png · ")).toContainText("512 × 512 px")
+
+  await page.getByText("JPEG", { exact: true }).click()
+  await page.getByLabel("Lebar (px)").fill("256")
+  await expect(page.getByText("256 × 256 px")).toBeVisible()
+  await expect(page.getByRole("img", { name: "Hasil" })).toBeVisible()
+  await expectAccessible(page)
+
+  const download = page.waitForEvent("download")
+  await page.getByRole("button", { name: "Unduh" }).click()
+  expect((await download).suggestedFilename()).toBe("ikon.jpg")
+  const jpeg = await readFile((await (await download).path()) ?? "")
+  expect([...jpeg.subarray(0, 2)]).toEqual([0xff, 0xd8])
+})

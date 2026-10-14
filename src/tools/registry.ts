@@ -16,7 +16,9 @@ import { hash } from "./hash"
 import { hmac } from "./hmac"
 import { htmlEntity } from "./html-entity"
 import { imageBase64 } from "./image-base64"
+import { imageTools } from "./image-tools"
 import { jsonFormatter } from "./json-formatter"
+import { jsonSchema } from "./json-schema"
 import { jsonToTs } from "./json-to-ts"
 import { jsonPath } from "./jsonpath"
 import { jwt } from "./jwt"
@@ -28,20 +30,24 @@ import { password } from "./password"
 import { qr } from "./qr"
 import { regex } from "./regex"
 import { sqlFormatter } from "./sql-formatter"
+import { svgOptimizer } from "./svg-optimizer"
 import { textEscape } from "./text-escape"
 import { textStats } from "./text-stats"
 import { timestamp } from "./timestamp"
 import { urlEncoder } from "./url-encoder"
 import { uuid } from "./uuid"
+import { x509 } from "./x509"
 
 export const tools: Tool[] = [
   jsonFormatter,
   codeFormatter,
   sqlFormatter,
   markdownPreview,
+  svgOptimizer,
   dataConverter,
   jsonToTs,
   jsonPath,
+  jsonSchema,
   timestamp,
   numberBase,
   chmod,
@@ -54,6 +60,7 @@ export const tools: Tool[] = [
   htmlEntity,
   textEscape,
   imageBase64,
+  imageTools,
   qr,
   jwt,
   bcrypt,
@@ -62,6 +69,7 @@ export const tools: Tool[] = [
   hmac,
   aes,
   keygen,
+  x509,
   password,
   uuid,
   lorem,

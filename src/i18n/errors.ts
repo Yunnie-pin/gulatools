@@ -46,6 +46,15 @@ const catalogs = defineMessages(
     invalidCidr: () => "Format tidak valid. Contoh: 192.168.1.0/24 atau 10.0.0.1 255.0.0.0",
     invalidNetmask: () => "Netmask harus berupa bit 1 yang berurutan, misalnya 255.255.255.0",
     invalidJsonString: () => "Bukan isi string JSON yang valid. Periksa escape sequence dan tanda kutip",
+    invalidSchemaJson: (detail: string) => `Schema bukan JSON yang valid: ${detail}`,
+    invalidDataJson: (detail: string) => `Data bukan JSON yang valid: ${detail}`,
+    invalidSchema: (detail: string) => `Schema tidak valid: ${detail}`,
+    invalidCertificate: () =>
+      "Bukan sertifikat X.509 yang valid. Tempel PEM (-----BEGIN CERTIFICATE-----) atau Base64 DER",
+    privateKeyNotCertificate: () => "Ini private key, bukan sertifikat. Jangan tempel private key di sini",
+    unreadableImage: () => "File ini tidak bisa dibaca sebagai gambar",
+    unsupportedImageFormat: (format: string) => `Browser ini tidak bisa menyimpan gambar sebagai ${format}`,
+    invalidSvg: (detail: string) => `SVG tidak valid: ${detail}`,
   },
   {
     invalidBase64: () => "Input is not valid Base64",
@@ -92,6 +101,14 @@ const catalogs = defineMessages(
     invalidCidr: () => "Invalid format. Examples: 192.168.1.0/24 or 10.0.0.1 255.0.0.0",
     invalidNetmask: () => "The netmask must be contiguous 1 bits, for example 255.255.255.0",
     invalidJsonString: () => "Not a valid JSON string body. Check escape sequences and quotes",
+    invalidSchemaJson: (detail) => `Schema is not valid JSON: ${detail}`,
+    invalidDataJson: (detail) => `Data is not valid JSON: ${detail}`,
+    invalidSchema: (detail) => `Invalid schema: ${detail}`,
+    invalidCertificate: () => "Not a valid X.509 certificate. Paste PEM (-----BEGIN CERTIFICATE-----) or Base64 DER",
+    privateKeyNotCertificate: () => "This is a private key, not a certificate. Do not paste private keys here",
+    unreadableImage: () => "This file cannot be read as an image",
+    unsupportedImageFormat: (format) => `This browser cannot save images as ${format}`,
+    invalidSvg: (detail) => `Invalid SVG: ${detail}`,
   },
 )
 

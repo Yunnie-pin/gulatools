@@ -1,0 +1,35 @@
+import { defineMessages } from "@/i18n/locale"
+import type { ImageFormat } from "./logic"
+
+export const messages = defineMessages(
+  {
+    image: "Gambar",
+    pickImage: "Pilih gambar",
+    dropHint: "Tarik gambar ke sini atau pilih file. Gambar diproses di browser dan tidak diunggah.",
+    original: "Asli",
+    result: "Hasil",
+    format: "Format",
+    formats: { webp: "WebP", jpeg: "JPEG", png: "PNG" } satisfies Record<ImageFormat, string>,
+    quality: "Kualitas",
+    width: "Lebar (px)",
+    smaller: (percent: number) => `${percent}% lebih kecil`,
+    larger: (percent: number) => `${percent}% lebih besar`,
+    download: "Unduh",
+    processing: "Memproses…",
+  },
+  {
+    image: "Image",
+    pickImage: "Pick an image",
+    dropHint: "Drop an image here or pick a file. Images are processed in your browser and never uploaded.",
+    original: "Original",
+    result: "Result",
+    format: "Format",
+    formats: { webp: "WebP", jpeg: "JPEG", png: "PNG" },
+    quality: "Quality",
+    width: "Width (px)",
+    smaller: (percent: number) => `${percent}% smaller`,
+    larger: (percent: number) => `${percent}% larger`,
+    download: "Download",
+    processing: "Processing…",
+  },
+)
