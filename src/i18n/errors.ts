@@ -40,6 +40,8 @@ const catalogs = defineMessages(
     dateOutOfRange: () => "Di luar rentang tanggal yang didukung",
     unknownDateFormat: () => "Format tidak dikenali. Contoh: 1760000000, 2026-10-13T08:00:00Z",
     invalidPercentEscape: () => "Input berisi escape sequence (%XX) yang tidak valid",
+    emptyNumber: () => "Masukkan bilangan",
+    invalidDigits: (base: number) => `Digit tidak valid untuk basis ${base}`,
   },
   {
     invalidBase64: () => "Input is not valid Base64",
@@ -80,6 +82,8 @@ const catalogs = defineMessages(
     dateOutOfRange: () => "Outside the supported date range",
     unknownDateFormat: () => "Unrecognized format. Examples: 1760000000, 2026-10-13T08:00:00Z",
     invalidPercentEscape: () => "Input contains an invalid escape sequence (%XX)",
+    emptyNumber: () => "Enter a number",
+    invalidDigits: (base) => `Invalid digits for base ${base}`,
   },
 )
 

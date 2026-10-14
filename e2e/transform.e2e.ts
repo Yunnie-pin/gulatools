@@ -63,6 +63,14 @@ test("Base64 and URL encoder produce expected output", async ({ page }) => {
   await expect(editorOutput(page)).toHaveText("q%3Dgula%20manis%26lang%3Did")
 })
 
+test("HTML entity decode resolves named and numeric entities without parsing tags", async ({ page }) => {
+  await openWithSample(page, "/html-entity")
+  await expect(editorOutput(page)).toHaveText("&lt;p class=&quot;note&quot;&gt;Gula &amp; kopi — © 2026&lt;/p&gt;")
+  await page.getByText("Decode", { exact: true }).click()
+  await page.getByRole("button", { name: "Contoh" }).click()
+  await expect(editorOutput(page)).toHaveText("<p>Gula & kopi — © 2026 🍬</p>")
+})
+
 test("TransformTool menu opens with keyboard and offers download", async ({ page }) => {
   await openWithSample(page, "/json-formatter")
   await page.getByRole("button", { name: "Opsi lain" }).click()

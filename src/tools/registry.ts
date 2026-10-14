@@ -11,12 +11,14 @@ import { dataConverter } from "./data-converter"
 import { diff } from "./diff"
 import { hash } from "./hash"
 import { hmac } from "./hmac"
+import { htmlEntity } from "./html-entity"
 import { imageBase64 } from "./image-base64"
 import { jsonFormatter } from "./json-formatter"
 import { jsonToTs } from "./json-to-ts"
 import { jsonPath } from "./jsonpath"
 import { jwt } from "./jwt"
 import { keygen } from "./keygen"
+import { numberBase } from "./number-base"
 import { password } from "./password"
 import { qr } from "./qr"
 import { regex } from "./regex"
@@ -33,10 +35,12 @@ export const tools: Tool[] = [
   jsonToTs,
   jsonPath,
   timestamp,
+  numberBase,
   cron,
   color,
   base64,
   urlEncoder,
+  htmlEntity,
   imageBase64,
   qr,
   jwt,

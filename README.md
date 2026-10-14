@@ -6,7 +6,7 @@ Live site: https://devtools.gulagulali.tech
 
 ## Features
 
-- 25 tools across formatting, conversion, encoding, cryptography, generation, and text processing
+- 27 tools across formatting, conversion, encoding, cryptography, generation, and text processing
 - Fully client-side: hashing, encryption, key generation, and parsing happen locally
 - Works offline as an installable PWA
 - Command palette (`Ctrl+K` / `Cmd+K`) for jumping between tools
