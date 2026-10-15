@@ -92,7 +92,7 @@ test("text escape quotes for SQL and round-trips JSON", async ({ page }) => {
   await expect(editorOutput(page)).toContainText('Say "hello"')
 })
 
-test("markdown preview renders GFM and strips scripts and remote resources", async ({ page }) => {
+test("markdown preview renders GFM and strips scripts and remote resources", async ({ page, guard }) => {
   await openWithSample(page, "/markdown")
   const preview = page.locator(".markdown-body")
   await expect(preview.getByRole("heading", { level: 1 })).toHaveText("GulaTools")
@@ -108,6 +108,9 @@ test("markdown preview renders GFM and strips scripts and remote resources", asy
   await expect(preview).toContainText("teks")
   expect(await page.evaluate(() => "pwned" in window)).toBe(false)
   await expect(preview.locator("img[onerror], script, [style], img[src^='https']")).toHaveCount(0)
+
+  // Under a CSP, Chrome reports (without running) inline handlers merely parsed by DOMPurify's DOMParser.
+  guard.errors = guard.errors.filter((error) => !error.includes("inline event handler"))
 })
 
 test("SVG optimizer shrinks the sample and offers preview and download", async ({ page }) => {
