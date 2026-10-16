@@ -4,7 +4,9 @@ import { GlassPanel } from "@/components/glass/GlassPanel"
 import { SectionHeading } from "@/components/SectionHeading"
 import { type Locale, localize, useLocale } from "@/i18n/locale"
 import { ui } from "@/i18n/ui"
+import { BACKGROUND_FOCUS, backgroundSrcSet, backgroundUrl } from "@/lib/backgrounds"
 import { usePageMeta } from "@/lib/meta"
+import { useTheme } from "@/lib/theme"
 import { CATEGORIES, CATEGORY_IDS, type Tool } from "@/lib/tool"
 import { useUsage } from "@/lib/usage"
 import { resolveTools, toolsByCategory } from "@/tools/registry"
@@ -22,13 +24,26 @@ export function Home() {
   const hasPersonal = favoriteTools.length > 0 || recent.length > 0
   const locale = useLocale()
   const t = ui[locale].home
+  const { background } = useTheme()
   usePageMeta()
 
   return (
     <div className="flex flex-col gap-10">
-      <GlassPanel className="px-6 py-8 sm:px-10">
-        <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{t.title}</h1>
-        <p className="mt-3 max-w-xl text-ink-soft">{t.lead}</p>
+      <GlassPanel className="relative overflow-hidden px-6 py-8 sm:px-10">
+        <img
+          key={background}
+          src={backgroundUrl(background)}
+          srcSet={backgroundSrcSet(background)}
+          sizes="100vw"
+          alt=""
+          decoding="async"
+          style={{ objectPosition: BACKGROUND_FOCUS[background] }}
+          className="pointer-events-none absolute inset-y-0 right-0 hidden h-full w-1/2 animate-[fade-in_.8s_var(--ease)] object-cover [mask-image:linear-gradient(to_right,transparent,black_45%)] md:block"
+        />
+        <div className="relative md:max-w-[52%]">
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{t.title}</h1>
+          <p className="mt-3 max-w-xl text-ink-soft">{t.lead}</p>
+        </div>
       </GlassPanel>
 
       {hasPersonal && (
