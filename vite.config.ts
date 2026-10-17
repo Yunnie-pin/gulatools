@@ -28,6 +28,8 @@ export default defineConfig({
         ],
       },
       workbox: {
+        skipWaiting: true,
+        clientsClaim: true,
         globPatterns: ["**/*.{js,css,html,svg,webp,png,woff2}"],
         globIgnores: ["background/*.png", "background/*.jpg", "gula-white.png"],
         maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,

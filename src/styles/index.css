@@ -81,6 +81,11 @@
       var(--glass-shadow);
   }
 
+  .glass:has([data-dropdown-open]) {
+    position: relative;
+    z-index: 20;
+  }
+
   .glass-strong {
     -webkit-backdrop-filter: blur(var(--glass-blur-lg)) saturate(var(--glass-saturate));
     backdrop-filter: blur(var(--glass-blur-lg)) saturate(var(--glass-saturate));

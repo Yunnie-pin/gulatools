@@ -38,5 +38,17 @@ createRoot(document.getElementById("root")!).render(
   </StrictMode>,
 )
 
+const UPDATE_CHECK_MS = 60 * 60 * 1000
+
 // autoUpdate: reload otomatis begitu service worker versi baru aktif
-registerSW({ immediate: true })
+registerSW({
+  immediate: true,
+  onRegisteredSW(_url, registration) {
+    if (!registration) return
+    const checkForUpdate = () => {
+      if (document.visibilityState === "visible" && navigator.onLine) registration.update().catch(() => {})
+    }
+    setInterval(checkForUpdate, UPDATE_CHECK_MS)
+    document.addEventListener("visibilitychange", checkForUpdate)
+  },
+})

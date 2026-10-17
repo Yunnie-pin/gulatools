@@ -187,3 +187,9 @@ test("dialogs close when clicking outside, but not when a drag ends outside", as
   await page.mouse.click(5, 5)
   await expect(palette).toBeHidden()
 })
+
+test("a new service worker takes over without waiting for every tab to close", async ({ request }) => {
+  const sw = await (await request.get("/sw.js")).text()
+  expect(sw).toContain("self.skipWaiting()")
+  expect(sw).toContain("clientsClaim()")
+})

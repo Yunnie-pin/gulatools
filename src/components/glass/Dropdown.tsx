@@ -102,7 +102,7 @@ export function Dropdown<T extends string>({ label, value, options, onChange, cl
   }
 
   return (
-    <div ref={rootRef} className={cx("relative inline-block", className)}>
+    <div ref={rootRef} data-dropdown-open={open || undefined} className={cx("relative inline-block", className)}>
       <button
         ref={triggerRef}
         type="button"

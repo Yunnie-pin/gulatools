@@ -208,3 +208,22 @@ test("image compressor resizes and converts to JPEG for download", async ({ page
   const jpeg = await readFile((await (await download).path()) ?? "")
   expect([...jpeg.subarray(0, 2)]).toEqual([0xff, 0xd8])
 })
+
+test("dropdown options stay above the panels below them", async ({ page }) => {
+  await page.goto("/keygen")
+  await page
+    .getByRole("button", { name: /Buat|Generate/ })
+    .first()
+    .click()
+  await expect(page.getByText("Public key (PEM)")).toBeVisible()
+  await page.locator("button[aria-haspopup='listbox']").click()
+  const option = page.getByRole("option").last()
+  await option.scrollIntoViewIfNeeded()
+  const box = await option.boundingBox()
+  if (!box) throw new Error("option has no box")
+  const onTop = await page.evaluate(({ x, y }) => document.elementFromPoint(x, y)?.closest("[role=option]") !== null, {
+    x: box.x + box.width / 2,
+    y: box.y + box.height / 2,
+  })
+  expect(onTop).toBe(true)
+})
