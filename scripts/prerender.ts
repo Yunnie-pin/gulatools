@@ -1,10 +1,11 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises"
+import { readFile, writeFile } from "node:fs/promises"
 import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
 import { ui } from "../src/i18n/ui"
 import { pageTitle, SITE_NAME } from "../src/lib/meta"
-import { CATEGORIES } from "../src/lib/tool"
-import { tools } from "../src/tools/registry"
+import { CATEGORIES, type Tool } from "../src/lib/tool"
+import { about } from "../src/tools/about"
+import { tools, toolsByCategory } from "../src/tools/registry"
 
 const DIST = join(dirname(fileURLToPath(import.meta.url)), "..", "dist")
 const SITE_URL = process.env.SITE_URL?.replace(/\/$/, "")
@@ -39,11 +40,29 @@ function render(template: string, page: Page) {
     .replace('<div id="root"></div>', `<div id="root">${page.body}</div>`)
 }
 
-const { site, home } = ui.id
+const { site, home, tool: toolText, folder } = ui.id
 
 const toolList = tools
   .map((tool) => `<li><a href="/${tool.id}">${escapeHtml(tool.name)}</a>: ${escapeHtml(tool.description.id)}</li>`)
   .join("")
+
+function toolBody(tool: Tool) {
+  const content = about[tool.id]?.id
+  const category = CATEGORIES[tool.category].name
+  const related = toolsByCategory[tool.category]
+    .filter(({ id }) => id !== tool.id)
+    .map((other) => `<li><a href="/${other.id}">${escapeHtml(other.name)}</a></li>`)
+    .join("")
+  return [
+    `<main class="sr-only"><p>${escapeHtml(category)}</p><h1>${escapeHtml(tool.name)}</h1><p>${escapeHtml(tool.description.id)}</p>`,
+    content &&
+      `<h2>${escapeHtml(toolText.about(tool.name))}</h2><p>${escapeHtml(content.intro)}</p><h3>${escapeHtml(toolText.uses)}</h3><ul>${content.uses.map((use) => `<li>${escapeHtml(use)}</li>`).join("")}</ul><p>${escapeHtml(toolText.privacy)}</p>`,
+    related && `<h2>${escapeHtml(folder.otherTools(category))}</h2><ul>${related}</ul>`,
+    "</main>",
+  ]
+    .filter(Boolean)
+    .join("")
+}
 
 const pages: Page[] = [
   {
@@ -56,15 +75,17 @@ const pages: Page[] = [
     path: `/${tool.id}`,
     title: pageTitle("id", tool.name),
     description: tool.description.id,
-    body: `<main class="sr-only"><p>${escapeHtml(CATEGORIES[tool.category].name)}</p><h1>${escapeHtml(tool.name)}</h1><p>${escapeHtml(tool.description.id)}</p></main>`,
+    body: toolBody(tool),
   })),
 ]
 
 const template = await readFile(join(DIST, "index.html"), "utf8")
 
+await writeFile(join(DIST, "404.html"), template)
+
+// GitHub Pages menyajikan /uuid dari uuid.html tanpa redirect, sesuai canonical; uuid/index.html memicu 301 ke /uuid/
 for (const page of pages) {
-  const file = page.path === "/" ? join(DIST, "index.html") : join(DIST, page.path, "index.html")
-  await mkdir(dirname(file), { recursive: true })
+  const file = page.path === "/" ? join(DIST, "index.html") : join(DIST, `${page.path}.html`)
   await writeFile(file, render(template, page))
 }
 

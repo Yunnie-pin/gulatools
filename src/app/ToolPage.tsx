@@ -1,5 +1,5 @@
 import { ChevronRight, Lock, Star } from "lucide-react"
-import { Suspense, useEffect } from "react"
+import { lazy, Suspense, useEffect } from "react"
 import { Link } from "react-router"
 import { Badge } from "@/components/Badge"
 import { glassButtonClass } from "@/components/glass/GlassButton"
@@ -73,8 +73,11 @@ export function ToolPage({ tool }: { tool: Tool }) {
       <ToolStateProvider value={tool.id}>
         <Suspense fallback={<ToolSkeleton />}>{painted ? <tool.Component /> : <ToolSkeleton />}</Suspense>
       </ToolStateProvider>
+      <Suspense>{painted && <ToolAbout tool={tool} />}</Suspense>
     </div>
   )
 }
+
+const ToolAbout = lazy(() => import("./ToolAbout"))
 
 const ToolSkeleton = () => <GlassPanel className="min-h-80 flex-1 animate-pulse" />

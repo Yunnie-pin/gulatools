@@ -81,6 +81,9 @@ export const ui = defineMessages(
       local: "Diproses lokal",
       addFavorite: "Tambah ke favorit",
       removeFavorite: "Hapus dari favorit",
+      about: (name: string) => `Tentang ${name}`,
+      uses: "Kapan dipakai",
+      privacy: "Semua proses berjalan di browser kamu. Input tidak pernah dikirim ke server.",
     },
     notFound: {
       meta: "Tidak ditemukan",
@@ -173,6 +176,9 @@ export const ui = defineMessages(
       local: "Processed locally",
       addFavorite: "Add to favorites",
       removeFavorite: "Remove from favorites",
+      about: (name: string) => `About ${name}`,
+      uses: "When to use it",
+      privacy: "Everything runs in your browser. Your input is never sent to a server.",
     },
     notFound: {
       meta: "Not found",
