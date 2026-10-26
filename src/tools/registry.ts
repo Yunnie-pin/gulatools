@@ -31,6 +31,8 @@ import { numberBase } from "./number-base"
 import { password } from "./password"
 import { qr } from "./qr"
 import { regex } from "./regex"
+import { slug } from "./slug"
+import { sortLines } from "./sort-lines"
 import { sqlFormatter } from "./sql-formatter"
 import { svgOptimizer } from "./svg-optimizer"
 import { textEscape } from "./text-escape"
@@ -38,6 +40,7 @@ import { textStats } from "./text-stats"
 import { timestamp } from "./timestamp"
 import { totp } from "./totp"
 import { urlEncoder } from "./url-encoder"
+import { urlParser } from "./url-parser"
 import { uuid } from "./uuid"
 import { x509 } from "./x509"
 
@@ -61,6 +64,7 @@ export const tools: Tool[] = [
   contrast,
   base64,
   urlEncoder,
+  urlParser,
   htmlEntity,
   textEscape,
   imageBase64,
@@ -82,7 +86,9 @@ export const tools: Tool[] = [
   diff,
   jsonDiff,
   caseConverter,
+  slug,
   textStats,
+  sortLines,
 ]
 
 export const toolsByCategory = Object.fromEntries(

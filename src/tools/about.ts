@@ -824,4 +824,64 @@ export const about: Record<string, ToolAbout> = {
       ],
     },
   },
+  "sort-lines": {
+    id: {
+      intro:
+        "Sort & Dedupe Lines mengurutkan baris teks secara alami, sehingga file2 muncul sebelum file10. Duplikat bisa dihapus dengan tetap mempertahankan kemunculan pertama, dan urutan bisa dibalik atau diacak.",
+      uses: [
+        "Merapikan daftar email, domain, atau ID yang berulang.",
+        "Mengurutkan import, dependency, atau entri konfigurasi.",
+        "Mengacak daftar nama untuk undian atau pembagian tugas.",
+      ],
+    },
+    en: {
+      intro:
+        "Sort & Dedupe Lines sorts text lines naturally, so file2 comes before file10. Duplicates can be removed while keeping the first occurrence, and the order can be reversed or shuffled.",
+      uses: [
+        "Cleaning up lists of emails, domains, or IDs with repeats.",
+        "Sorting imports, dependencies, or configuration entries.",
+        "Shuffling a list of names for a draw or task assignment.",
+      ],
+    },
+  },
+  slug: {
+    id: {
+      intro:
+        "Slug Generator mengubah judul menjadi slug URL yang hanya berisi huruf, angka, dan pemisah. Huruf beraksen ditransliterasi (é menjadi e, ß menjadi ss), dan setiap baris diproses terpisah.",
+      uses: [
+        "Membuat permalink artikel blog atau halaman produk yang ramah SEO.",
+        "Membuat nama file atau ID yang aman dari judul bebas.",
+        "Mengubah banyak judul sekaligus menjadi slug.",
+      ],
+    },
+    en: {
+      intro:
+        "Slug Generator turns titles into URL slugs made only of letters, digits, and a separator. Accented letters are transliterated (é becomes e, ß becomes ss), and each line is handled separately.",
+      uses: [
+        "Creating SEO-friendly permalinks for blog posts or product pages.",
+        "Deriving safe file names or IDs from free-form titles.",
+        "Converting many titles to slugs at once.",
+      ],
+    },
+  },
+  "url-parser": {
+    id: {
+      intro:
+        "URL Parser memecah URL menjadi protocol, username, host, port, path, query, dan fragment dalam bentuk yang sudah di-decode. Query param ditampilkan sebagai tabel yang bisa diedit, dan URL dibangun ulang dengan encoding yang benar.",
+      uses: [
+        "Membaca parameter tracking, redirect, atau callback dari URL yang panjang.",
+        "Mengubah atau menambah query param tanpa salah encoding.",
+        "Men-debug URL yang punya key berulang atau karakter khusus.",
+      ],
+    },
+    en: {
+      intro:
+        "URL Parser breaks a URL into its protocol, username, host, port, path, query, and fragment, all decoded. Query params appear as an editable table, and the URL is rebuilt with correct encoding.",
+      uses: [
+        "Reading tracking, redirect, or callback parameters from a long URL.",
+        "Changing or adding query params without encoding mistakes.",
+        "Debugging URLs with repeated keys or special characters.",
+      ],
+    },
+  },
 }

@@ -134,3 +134,18 @@ test("cURL converter turns the sample into fetch and Python", async ({ page }) =
   await expect(editorOutput(page)).toContainText("response = requests.post(")
   await expectAccessible(page)
 })
+
+test("sort lines sorts naturally and removes duplicates", async ({ page }) => {
+  await openWithSample(page, "/sort-lines")
+  await expect(editorOutput(page)).toHaveText(/^apple.*banana.*cherry.*file2\.txt.*file10\.txt$/)
+  await page.getByLabel("Abaikan huruf besar/kecil").check()
+  await expect(editorOutput(page)).toHaveText(/^Applebanana/)
+  await expectAccessible(page)
+})
+
+test("slug generator transliterates the sample titles", async ({ page }) => {
+  await openWithSample(page, "/slug")
+  await expect(editorOutput(page)).toContainText("cara-membuat-kue-brulee-yang-lezat")
+  await expect(editorOutput(page)).toContainText("strasse-nach-sao-paulo")
+  await expectAccessible(page)
+})

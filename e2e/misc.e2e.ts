@@ -237,3 +237,14 @@ test("JSON diff lists structural changes from the sample", async ({ page }) => {
   await expect(page.getByText("$.private")).toBeVisible()
   await expectAccessible(page)
 })
+
+test("URL parser splits the URL and rebuilds it when params are edited", async ({ page }) => {
+  await page.goto("/url-parser")
+  await page.getByRole("button", { name: "Contoh" }).click()
+  await expect(page.getByLabel("Nilai param 1")).toHaveValue("gula manis")
+  await page.getByLabel("Nilai param 1").fill("a&b")
+  await expect(page.getByLabel("URL", { exact: true })).toHaveValue(/\?q=a%26b&tag=json/)
+  await page.getByRole("button", { name: "Hapus param 4" }).click()
+  await expect(page.getByLabel("URL", { exact: true })).not.toHaveValue(/page=2/)
+  await expectAccessible(page)
+})

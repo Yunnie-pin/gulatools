@@ -65,6 +65,7 @@ const catalogs = defineMessages(
     invalidOtpauth: () => "Bukan URI otpauth://totp/ yang valid",
     invalidOriginalJson: (detail: string) => `JSON asli tidak valid: ${detail}`,
     invalidModifiedJson: (detail: string) => `JSON yang diubah tidak valid: ${detail}`,
+    invalidUrl: () => "Bukan URL absolut yang valid. Contoh: https://example.com/path?q=1",
   },
   {
     invalidBase64: () => "Input is not valid Base64",
@@ -129,6 +130,7 @@ const catalogs = defineMessages(
     invalidOtpauth: () => "Not a valid otpauth://totp/ URI",
     invalidOriginalJson: (detail) => `Original JSON is invalid: ${detail}`,
     invalidModifiedJson: (detail) => `Modified JSON is invalid: ${detail}`,
+    invalidUrl: () => "Not a valid absolute URL. Example: https://example.com/path?q=1",
   },
 )
 
