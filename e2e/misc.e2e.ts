@@ -267,3 +267,11 @@ test("glob tester splits paths and honours ! exclusions", async ({ page }) => {
   await page.getByLabel("Cocokkan dotfile (.env)").check()
   await expectAccessible(page)
 })
+
+test("user-agent parser reads this browser's own User-Agent", async ({ page }) => {
+  await page.goto("/user-agent")
+  await page.getByRole("button", { name: "Pakai User-Agent browser ini" }).click()
+  await expect(page.getByLabel("User-Agent", { exact: true })).not.toHaveValue("")
+  await expect(page.getByText(/^(Chrome|HeadlessChrome) \d+/)).toBeVisible()
+  await expectAccessible(page)
+})

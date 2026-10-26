@@ -13,6 +13,7 @@ import { cron } from "./cron"
 import { curl } from "./curl"
 import { dataConverter } from "./data-converter"
 import { diff } from "./diff"
+import { dockerCompose } from "./docker-compose"
 import { glob } from "./glob"
 import { gzip } from "./gzip"
 import { hash } from "./hash"
@@ -29,6 +30,7 @@ import { jwt } from "./jwt"
 import { keygen } from "./keygen"
 import { lorem } from "./lorem"
 import { markdownPreview } from "./markdown"
+import { minifier } from "./minifier"
 import { numberBase } from "./number-base"
 import { password } from "./password"
 import { qr } from "./qr"
@@ -44,17 +46,20 @@ import { timestamp } from "./timestamp"
 import { totp } from "./totp"
 import { urlEncoder } from "./url-encoder"
 import { urlParser } from "./url-parser"
+import { userAgent } from "./user-agent"
 import { uuid } from "./uuid"
 import { x509 } from "./x509"
 
 export const tools: Tool[] = [
   jsonFormatter,
   codeFormatter,
+  minifier,
   sqlFormatter,
   markdownPreview,
   svgOptimizer,
   dataConverter,
   curl,
+  dockerCompose,
   jsonToTs,
   jsonPath,
   jsonSchema,
@@ -95,6 +100,7 @@ export const tools: Tool[] = [
   sortLines,
   semver,
   glob,
+  userAgent,
 ]
 
 export const toolsByCategory = Object.fromEntries(

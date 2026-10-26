@@ -27,6 +27,7 @@ type TransformToolProps = {
   options?: ReactNode
   accept?: string
   outputFileName?: string
+  summary?: (input: string, output: string) => ReactNode
 }
 
 export function TransformTool({
@@ -37,6 +38,7 @@ export function TransformTool({
   options,
   accept,
   outputFileName = "output.txt",
+  summary,
 }: TransformToolProps) {
   const t = useMessages(ui).transform
   const [input, setInput] = usePersistentState("input", "")
@@ -119,7 +121,15 @@ export function TransformTool({
             />
           </Pane>
         </FileDrop>
-        <Pane title="Output" action={<CopyButton text={output} />}>
+        <Pane
+          title="Output"
+          action={
+            <div className="flex items-center gap-2">
+              {output && summary?.(input, output)}
+              <CopyButton text={output} />
+            </div>
+          }
+        >
           {result.ok ? (
             <Editor label="Output" value={result.value} language={outputLanguage} />
           ) : (

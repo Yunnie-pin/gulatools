@@ -158,3 +158,20 @@ test("gzip compresses and the sample decompresses back to text", async ({ page }
   await expect(editorOutput(page)).toContainText('"tool":"gzip"')
   await expectAccessible(page)
 })
+
+test("minifier shrinks JavaScript and CSS in the browser and shows the savings", async ({ page }) => {
+  await openWithSample(page, "/minifier")
+  await expect(editorOutput(page)).toContainText("export function total(")
+  await expect(page.getByText(/byte \(−\d+%\)/)).toBeVisible()
+  await page.getByText("CSS", { exact: true }).click()
+  await page.getByRole("button", { name: "Contoh" }).click()
+  await expect(editorOutput(page)).toHaveText(".card{background-color:#fff;border-radius:16px;padding:0 16px;margin:0}")
+  await expectAccessible(page)
+})
+
+test("docker run converts to compose with an external network", async ({ page }) => {
+  await openWithSample(page, "/docker-compose")
+  await expect(editorOutput(page)).toContainText("container_name: db")
+  await expect(editorOutput(page)).toContainText("external: true")
+  await expectAccessible(page)
+})

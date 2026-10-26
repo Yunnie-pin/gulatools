@@ -1,5 +1,6 @@
 import { LocalizedError } from "@/i18n/errors"
 import { bytesToBase64 } from "@/lib/bytes"
+import { tokenize } from "@/lib/shell"
 
 export type CurlTarget = "fetch" | "python" | "go"
 
@@ -8,63 +9,6 @@ export type CurlRequest = {
   url: string
   headers: [name: string, value: string][]
   body?: string
-}
-
-const ANSI_C_ESCAPES: Record<string, string> = { n: "\n", t: "\t", r: "\r", "\\": "\\", "'": "'", '"': '"' }
-
-export function tokenize(command: string): string[] {
-  const text = command.replace(/\\\r?\n/g, " ")
-  const tokens: string[] = []
-  let current: string | null = null
-  let i = 0
-
-  const append = (chunk: string) => {
-    current = (current ?? "") + chunk
-  }
-
-  while (i < text.length) {
-    const char = text[i]!
-    if (/\s/.test(char)) {
-      if (current !== null) tokens.push(current)
-      current = null
-      i++
-    } else if (char === "'") {
-      const end = text.indexOf("'", i + 1)
-      if (end < 0) throw new LocalizedError("curlUnclosedQuote")
-      append(text.slice(i + 1, end))
-      i = end + 1
-    } else if (char === "$" && text[i + 1] === "'") {
-      let chunk = ""
-      i += 2
-      while (i < text.length && text[i] !== "'") {
-        if (text[i] === "\\" && i + 1 < text.length) {
-          chunk += ANSI_C_ESCAPES[text[i + 1]!] ?? text[i + 1]
-          i += 2
-        } else chunk += text[i++]
-      }
-      if (i >= text.length) throw new LocalizedError("curlUnclosedQuote")
-      append(chunk)
-      i++
-    } else if (char === '"') {
-      let chunk = ""
-      i++
-      while (i < text.length && text[i] !== '"') {
-        if (text[i] === "\\" && /["\\$`]/.test(text[i + 1] ?? "")) i++
-        chunk += text[i++]
-      }
-      if (i >= text.length) throw new LocalizedError("curlUnclosedQuote")
-      append(chunk)
-      i++
-    } else if (char === "\\" && i + 1 < text.length) {
-      append(text[i + 1]!)
-      i += 2
-    } else {
-      append(char)
-      i++
-    }
-  }
-  if (current !== null) tokens.push(current)
-  return tokens
 }
 
 const VALUE_FLAGS: Record<string, string> = {
@@ -119,7 +63,7 @@ function* options(tokens: string[]): Generator<[flag: string, value?: string]> {
       if (!takesValue(flag)) yield [flag]
       else if (eq > 0) yield [flag, token.slice(eq + 1)]
       else {
-        if (i + 1 >= tokens.length) throw new LocalizedError("curlMissingValue", flag)
+        if (i + 1 >= tokens.length) throw new LocalizedError("missingFlagValue", flag)
         yield [flag, tokens[++i]]
       }
     } else if (token.startsWith("-") && token.length > 1) {
@@ -132,7 +76,7 @@ function* options(tokens: string[]): Generator<[flag: string, value?: string]> {
         const attached = token.slice(j + 1)
         if (attached) yield [long, attached]
         else if (i + 1 < tokens.length) yield [long, tokens[++i]]
-        else throw new LocalizedError("curlMissingValue", `-${token[j]}`)
+        else throw new LocalizedError("missingFlagValue", `-${token[j]}`)
         break
       }
     } else yield ["", token]

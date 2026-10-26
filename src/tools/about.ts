@@ -944,4 +944,64 @@ export const about: Record<string, ToolAbout> = {
       ],
     },
   },
+  "docker-compose": {
+    id: {
+      intro:
+        "Docker run → Compose mengubah perintah docker run menjadi service di compose.yaml. Port, volume, environment, restart policy, network, healthcheck, dan logging dipetakan ke key Compose yang sesuai, dan flag yang tidak bisa dikonversi dicantumkan sebagai komentar.",
+      uses: [
+        "Memindahkan container yang dijalankan manual ke Docker Compose.",
+        "Menyatukan beberapa perintah docker run menjadi satu file compose.",
+        "Mengubah contoh docker run dari README sebuah image menjadi konfigurasi yang bisa disimpan di repo.",
+      ],
+    },
+    en: {
+      intro:
+        "Docker run → Compose turns docker run commands into services in a compose.yaml. Ports, volumes, environment, restart policy, networks, healthchecks, and logging are mapped to the matching Compose keys, and flags that cannot be converted are listed in a comment.",
+      uses: [
+        "Moving manually started containers to Docker Compose.",
+        "Combining several docker run commands into one compose file.",
+        "Turning the docker run example from an image's README into config you can keep in a repo.",
+      ],
+    },
+  },
+  "user-agent": {
+    id: {
+      intro:
+        "User-Agent Parser membaca string User-Agent dan menampilkan browser, engine, sistem operasi, jenis perangkat, model, dan arsitektur CPU-nya, menggunakan ua-parser-js.",
+      uses: [
+        "Membaca User-Agent dari log server atau laporan bug.",
+        "Mengecek User-Agent browser sendiri saat men-debug masalah kompatibilitas.",
+        "Memahami kenapa deteksi perangkat di aplikasi memberi hasil yang salah.",
+      ],
+    },
+    en: {
+      intro:
+        "User-Agent Parser reads a User-Agent string and shows its browser, engine, operating system, device type, model, and CPU architecture, using ua-parser-js.",
+      uses: [
+        "Reading User-Agents from server logs or bug reports.",
+        "Checking your own browser's User-Agent while debugging compatibility issues.",
+        "Understanding why device detection in an app gives the wrong result.",
+      ],
+    },
+  },
+  minifier: {
+    id: {
+      intro:
+        "JS & CSS Minifier memperkecil JavaScript dengan Terser dan CSS dengan CSSO, dua minifier yang juga dipakai di banyak build tool. Komentar dan spasi dibuang, nama variabel lokal dipersingkat, dan rule CSS yang sama digabung.",
+      uses: [
+        "Memperkecil script atau stylesheet untuk ditanam inline di HTML.",
+        "Mengecek seberapa besar ukuran kode setelah di-minify.",
+        "Menyiapkan bookmarklet atau snippet kecil tanpa menyiapkan build tool.",
+      ],
+    },
+    en: {
+      intro:
+        "JS & CSS Minifier shrinks JavaScript with Terser and CSS with CSSO, two minifiers used by many build tools. Comments and whitespace are removed, local variable names are shortened, and identical CSS rules are merged.",
+      uses: [
+        "Shrinking a script or stylesheet to inline in HTML.",
+        "Checking how large code gets once minified.",
+        "Preparing a bookmarklet or small snippet without setting up a build tool.",
+      ],
+    },
+  },
 }

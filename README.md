@@ -6,7 +6,7 @@ Live site: https://devtools.gulagulali.tech
 
 ## Features
 
-- 47 tools across formatting, conversion, encoding, cryptography, generation, and text processing
+- 50 tools across formatting, conversion, encoding, cryptography, generation, and text processing
 - Fully client-side: hashing, encryption, key generation, and parsing happen locally
 - Works offline as an installable PWA
 - Command palette (`Ctrl+K` / `Cmd+K`) for jumping between tools
@@ -23,6 +23,7 @@ Live site: https://devtools.gulagulali.tech
 |---|---|---|
 | Formatter | JSON Formatter | Format, minify, and validate JSON |
 | | Code Formatter | Format JavaScript, TypeScript, CSS, HTML, Markdown, GraphQL, and YAML with Prettier |
+| | JS & CSS Minifier | Minify JavaScript with Terser and CSS with CSSO, with size savings |
 | | SQL Formatter | Format SQL for PostgreSQL, MySQL, SQLite, SQL Server, and more |
 | | Markdown Preview | Live GitHub Flavored Markdown preview with sanitized HTML output |
 | | SVG Optimizer | Shrink SVGs with SVGO, with precision control and a preview |
@@ -30,6 +31,7 @@ Live site: https://devtools.gulagulali.tech
 | Converter | Data Converter | Convert between JSON, YAML, TOML, XML, and CSV |
 | | JSON to TypeScript | Generate TypeScript interfaces or Zod schemas from sample JSON |
 | | cURL Converter | Convert curl commands to JavaScript fetch, Python requests, or Go net/http |
+| | Docker run → Compose | Turn docker run commands into a compose.yaml, reporting flags it cannot convert |
 | | JSONPath | Query JSON with JSONPath expressions |
 | | Timestamp | Convert Unix timestamps (seconds to nanoseconds) to dates and back |
 | | Number Base | Convert between binary, octal, decimal, and hex with BigInt precision and two's complement |
@@ -68,6 +70,7 @@ Live site: https://devtools.gulagulali.tech
 | | Sort & Dedupe Lines | Natural sort, remove duplicates, reverse, or shuffle lines |
 | | SemVer Checker | Check which versions satisfy an npm-style semver range |
 | | Glob Tester | Test glob patterns with ! exclusions against a list of paths |
+| | User-Agent Parser | Browser, engine, OS, device type, and CPU from a User-Agent string |
 
 ## Tech stack
 
