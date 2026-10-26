@@ -149,3 +149,12 @@ test("slug generator transliterates the sample titles", async ({ page }) => {
   await expect(editorOutput(page)).toContainText("strasse-nach-sao-paulo")
   await expectAccessible(page)
 })
+
+test("gzip compresses and the sample decompresses back to text", async ({ page }) => {
+  await openWithSample(page, "/gzip")
+  await expect(editorOutput(page)).toHaveText(/^H4sI/)
+  await page.getByText("Base64 → Dekompres", { exact: true }).click()
+  await page.getByRole("button", { name: "Contoh" }).click()
+  await expect(editorOutput(page)).toContainText('"tool":"gzip"')
+  await expectAccessible(page)
+})

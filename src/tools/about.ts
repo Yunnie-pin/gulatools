@@ -884,4 +884,64 @@ export const about: Record<string, ToolAbout> = {
       ],
     },
   },
+  semver: {
+    id: {
+      intro:
+        "SemVer Checker mengecek versi mana yang memenuhi sebuah range semver dengan library semver yang sama dengan yang dipakai npm. Range seperti ^1.2.0 atau ~2.3 diuraikan menjadi batas lengkapnya, dan versi tertinggi yang cocok ditampilkan.",
+      uses: [
+        "Memahami kenapa npm memasang versi tertentu dari sebuah dependency.",
+        "Mengecek apakah rilis baru akan ikut terpasang oleh range di package.json.",
+        "Mempelajari beda ^, ~, dan range eksplisit, termasuk perilaku khusus versi 0.x.",
+      ],
+    },
+    en: {
+      intro:
+        "SemVer Checker checks which versions satisfy a semver range using the same semver library npm uses. Ranges such as ^1.2.0 or ~2.3 are expanded into their full bounds, and the highest matching version is shown.",
+      uses: [
+        "Understanding why npm installed a particular version of a dependency.",
+        "Checking whether a new release will be picked up by a range in package.json.",
+        "Learning how ^, ~, and explicit ranges differ, including the special 0.x behavior.",
+      ],
+    },
+  },
+  glob: {
+    id: {
+      intro:
+        "Glob Tester menguji pola glob seperti src/**/*.ts terhadap daftar path dan memisahkan path yang cocok dan yang tidak. Pola berawalan ! mengecualikan path, dan regex hasil kompilasi setiap pola ikut ditampilkan.",
+      uses: [
+        "Menyusun pola include dan exclude untuk tsconfig, ESLint, Vite, atau CI.",
+        "Men-debug .gitignore atau .dockerignore yang tidak bekerja seperti yang diharapkan.",
+        "Memahami beda * dan ** serta penanganan dotfile.",
+      ],
+    },
+    en: {
+      intro:
+        "Glob Tester checks glob patterns such as src/**/*.ts against a list of paths and splits them into matches and non-matches. Patterns starting with ! exclude paths, and the compiled regex of each pattern is shown too.",
+      uses: [
+        "Writing include and exclude patterns for tsconfig, ESLint, Vite, or CI.",
+        "Debugging a .gitignore or .dockerignore that does not behave as expected.",
+        "Understanding the difference between * and ** and how dotfiles are handled.",
+      ],
+    },
+  },
+  gzip: {
+    id: {
+      intro:
+        "Gzip / Deflate mengompres teks dengan gzip, zlib, atau raw deflate menggunakan CompressionStream bawaan browser, lalu menampilkan hasilnya sebagai Base64. Saat dekompres, format dideteksi otomatis dari header data.",
+      uses: [
+        "Membaca payload terkompresi dari log, cookie, atau message queue.",
+        "Memperkirakan seberapa kecil sebuah payload setelah dikompres.",
+        "Menyiapkan data terkompresi untuk test atau fixture.",
+      ],
+    },
+    en: {
+      intro:
+        "Gzip / Deflate compresses text with gzip, zlib, or raw deflate using the browser's built-in CompressionStream and shows the result as Base64. When decompressing, the format is detected automatically from the data header.",
+      uses: [
+        "Reading compressed payloads from logs, cookies, or message queues.",
+        "Estimating how much smaller a payload gets once compressed.",
+        "Preparing compressed data for tests or fixtures.",
+      ],
+    },
+  },
 }

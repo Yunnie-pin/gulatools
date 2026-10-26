@@ -13,6 +13,8 @@ import { cron } from "./cron"
 import { curl } from "./curl"
 import { dataConverter } from "./data-converter"
 import { diff } from "./diff"
+import { glob } from "./glob"
+import { gzip } from "./gzip"
 import { hash } from "./hash"
 import { hmac } from "./hmac"
 import { htmlEntity } from "./html-entity"
@@ -31,6 +33,7 @@ import { numberBase } from "./number-base"
 import { password } from "./password"
 import { qr } from "./qr"
 import { regex } from "./regex"
+import { semver } from "./semver"
 import { slug } from "./slug"
 import { sortLines } from "./sort-lines"
 import { sqlFormatter } from "./sql-formatter"
@@ -63,6 +66,7 @@ export const tools: Tool[] = [
   color,
   contrast,
   base64,
+  gzip,
   urlEncoder,
   urlParser,
   htmlEntity,
@@ -89,6 +93,8 @@ export const tools: Tool[] = [
   slug,
   textStats,
   sortLines,
+  semver,
+  glob,
 ]
 
 export const toolsByCategory = Object.fromEntries(

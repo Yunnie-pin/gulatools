@@ -6,7 +6,7 @@ Live site: https://devtools.gulagulali.tech
 
 ## Features
 
-- 44 tools across formatting, conversion, encoding, cryptography, generation, and text processing
+- 47 tools across formatting, conversion, encoding, cryptography, generation, and text processing
 - Fully client-side: hashing, encryption, key generation, and parsing happen locally
 - Works offline as an installable PWA
 - Command palette (`Ctrl+K` / `Cmd+K`) for jumping between tools
@@ -40,6 +40,7 @@ Live site: https://devtools.gulagulali.tech
 | | Contrast Checker | WCAG AA/AAA contrast between any text and background color, with a preview |
 | | Image Compressor | Resize, compress, and convert images to WebP, JPEG, or PNG |
 | Encoder | Base64 | Encode and decode Base64, including the URL-safe variant |
+| | Gzip / Deflate | Compress text to Base64 with gzip, zlib, or raw deflate, and decompress with format detection |
 | | URL Encoder | Percent-encode and decode URLs and query strings |
 | | URL Parser | Split a URL into decoded parts and edit its query params as a table |
 | | HTML Entity | Escape HTML special characters and decode named or numeric entities |
@@ -65,6 +66,8 @@ Live site: https://devtools.gulagulali.tech
 | | Slug Generator | Turn titles into URL slugs, transliterating accented letters |
 | | Text Stats | Count characters, words, lines, and bytes, and find hidden characters such as zero-width spaces or bidi controls |
 | | Sort & Dedupe Lines | Natural sort, remove duplicates, reverse, or shuffle lines |
+| | SemVer Checker | Check which versions satisfy an npm-style semver range |
+| | Glob Tester | Test glob patterns with ! exclusions against a list of paths |
 
 ## Tech stack
 

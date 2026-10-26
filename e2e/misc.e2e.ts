@@ -248,3 +248,22 @@ test("URL parser splits the URL and rebuilds it when params are edited", async (
   await expect(page.getByLabel("URL", { exact: true })).not.toHaveValue(/page=2/)
   await expectAccessible(page)
 })
+
+test("semver checker expands the range and marks each version", async ({ page }) => {
+  await page.goto("/semver")
+  await page.getByRole("button", { name: "Contoh" }).click()
+  await expect(page.getByText(">=1.4.0 <2.0.0-0||>=2.1.0 <3.0.0-0")).toBeVisible()
+  await expect(page.getByText("Cocok", { exact: true })).toHaveCount(3)
+  await page.getByLabel("Sertakan prerelease (1.0.0-beta)").check()
+  await expect(page.getByText("Cocok", { exact: true })).toHaveCount(4)
+  await expectAccessible(page)
+})
+
+test("glob tester splits paths and honours ! exclusions", async ({ page }) => {
+  await page.goto("/glob")
+  await page.getByRole("button", { name: "Contoh" }).click()
+  await expect(page.getByText("src/lib/util.ts", { exact: true })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Tidak cocok" })).toBeVisible()
+  await page.getByLabel("Cocokkan dotfile (.env)").check()
+  await expectAccessible(page)
+})
