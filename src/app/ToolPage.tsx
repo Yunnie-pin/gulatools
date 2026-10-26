@@ -1,4 +1,4 @@
-import { ChevronRight, Lock, Star } from "lucide-react"
+import { ChevronRight, CodeXml, Lock, Star } from "lucide-react"
 import { lazy, Suspense, useEffect } from "react"
 import { Link } from "react-router"
 import { Badge } from "@/components/Badge"
@@ -12,6 +12,7 @@ import { ToolStateProvider } from "@/lib/persist"
 import { CATEGORIES, type Tool } from "@/lib/tool"
 import { recordVisit, toggleFavorite, useUsage } from "@/lib/usage"
 import { useAfterFirstPaint } from "@/lib/use-after-paint"
+import { REPO_URL } from "./AboutDialog"
 
 export function ToolPage({ tool }: { tool: Tool }) {
   const { favorites } = useUsage()
@@ -49,6 +50,16 @@ export function ToolPage({ tool }: { tool: Tool }) {
                 </Badge>
               </span>
             )}
+            <a
+              href={`${REPO_URL}/tree/main/src/tools/${tool.id}`}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={t.viewSource}
+              title={t.viewSource}
+              className={glassButtonClass("frost", "w-9 px-0")}
+            >
+              <CodeXml aria-hidden="true" className="size-4" />
+            </a>
             <button
               type="button"
               aria-pressed={favorite}

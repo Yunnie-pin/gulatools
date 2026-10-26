@@ -193,3 +193,10 @@ test("a new service worker takes over without waiting for every tab to close", a
   expect(sw).toContain("self.skipWaiting()")
   expect(sw).toContain("clientsClaim()")
 })
+
+test("tool page links to the tool's source folder on GitHub", async ({ page }) => {
+  await page.goto("/jwt")
+  const link = page.getByRole("link", { name: "Lihat kode tool ini di GitHub" })
+  await expect(link).toHaveAttribute("href", "https://github.com/Yunnie-pin/gulatools/tree/main/src/tools/jwt")
+  await expect(link).toHaveAttribute("target", "_blank")
+})
