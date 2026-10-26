@@ -10,6 +10,7 @@ import { codeFormatter } from "./code-formatter"
 import { color } from "./color"
 import { contrast } from "./contrast"
 import { cron } from "./cron"
+import { curl } from "./curl"
 import { dataConverter } from "./data-converter"
 import { diff } from "./diff"
 import { hash } from "./hash"
@@ -17,6 +18,7 @@ import { hmac } from "./hmac"
 import { htmlEntity } from "./html-entity"
 import { imageBase64 } from "./image-base64"
 import { imageTools } from "./image-tools"
+import { jsonDiff } from "./json-diff"
 import { jsonFormatter } from "./json-formatter"
 import { jsonSchema } from "./json-schema"
 import { jsonToTs } from "./json-to-ts"
@@ -34,6 +36,7 @@ import { svgOptimizer } from "./svg-optimizer"
 import { textEscape } from "./text-escape"
 import { textStats } from "./text-stats"
 import { timestamp } from "./timestamp"
+import { totp } from "./totp"
 import { urlEncoder } from "./url-encoder"
 import { uuid } from "./uuid"
 import { x509 } from "./x509"
@@ -45,6 +48,7 @@ export const tools: Tool[] = [
   markdownPreview,
   svgOptimizer,
   dataConverter,
+  curl,
   jsonToTs,
   jsonPath,
   jsonSchema,
@@ -70,11 +74,13 @@ export const tools: Tool[] = [
   aes,
   keygen,
   x509,
+  totp,
   password,
   uuid,
   lorem,
   regex,
   diff,
+  jsonDiff,
   caseConverter,
   textStats,
 ]

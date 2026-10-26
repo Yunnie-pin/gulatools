@@ -1,0 +1,78 @@
+import { describe, expect, it } from "vitest"
+import { base32Decode, base32Encode, buildOtpauth, parseOtpauth, type TotpConfig, totp } from "./logic"
+
+const ascii = (text: string) => base32Encode(new TextEncoder().encode(text))
+
+const config = (secret: string, algorithm: TotpConfig["algorithm"]): TotpConfig => ({
+  secret,
+  issuer: "",
+  account: "",
+  algorithm,
+  digits: 8,
+  period: 30,
+})
+
+describe("totp", () => {
+  // RFC 6238 Appendix B: codes must match authenticator apps exactly
+  it.each([
+    [59, "SHA-1", "12345678901234567890", "94287082"],
+    [1111111109, "SHA-1", "12345678901234567890", "07081804"],
+    [1234567890, "SHA-256", "12345678901234567890123456789012", "91819424"],
+    [20000000000, "SHA-512", "1234567890123456789012345678901234567890123456789012345678901234", "47863826"],
+  ] as const)("matches the RFC 6238 vector at %i with %s", async (seconds, algorithm, key, expected) => {
+    const { current } = await totp(config(ascii(key), algorithm), seconds * 1000)
+    expect(current).toBe(expected)
+  })
+
+  it("reports the next code and seconds left in the period", async () => {
+    const at = await totp(config(ascii("12345678901234567890"), "SHA-1"), 29_000)
+    const later = await totp(config(ascii("12345678901234567890"), "SHA-1"), 31_000)
+    expect(at.remaining).toBe(1)
+    expect(at.next).toBe(later.current)
+  })
+})
+
+describe("base32", () => {
+  it("round-trips and tolerates spaces, lowercase and padding as apps display them", () => {
+    expect(ascii("12345678901234567890")).toBe("GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ")
+    expect(new TextDecoder().decode(base32Decode("gezd gnbv gy3t qojq===="))).toBe("1234567890")
+  })
+
+  it("rejects characters outside the alphabet", () => {
+    expect(() => base32Decode("ABC1")).toThrow("Base32")
+  })
+})
+
+describe("otpauth", () => {
+  it("parses the label, issuer and parameters", () => {
+    expect(
+      parseOtpauth(
+        "otpauth://totp/Gula:arifin%40gula.id?secret=JBSWY3DPEHPK3PXP&issuer=Gula&algorithm=SHA256&digits=8",
+      ),
+    ).toEqual({
+      secret: "JBSWY3DPEHPK3PXP",
+      issuer: "Gula",
+      account: "arifin@gula.id",
+      algorithm: "SHA-256",
+      digits: 8,
+      period: 30,
+    })
+  })
+
+  it("round-trips through buildOtpauth", () => {
+    const original: TotpConfig = {
+      secret: "JBSWY3DPEHPK3PXP",
+      issuer: "Gula Tools",
+      account: "me@x.id",
+      algorithm: "SHA-1",
+      digits: 6,
+      period: 60,
+    }
+    expect(parseOtpauth(buildOtpauth(original))).toEqual(original)
+  })
+
+  it("rejects HOTP and malformed URIs", () => {
+    expect(() => parseOtpauth("otpauth://hotp/x?secret=AAAA")).toThrow("otpauth")
+    expect(() => parseOtpauth("not a uri")).toThrow("otpauth")
+  })
+})

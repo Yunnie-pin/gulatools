@@ -227,3 +227,13 @@ test("dropdown options stay above the panels below them", async ({ page }) => {
   })
   expect(onTop).toBe(true)
 })
+
+// I have nothing but my burger and I want nothing more
+test("JSON diff lists structural changes from the sample", async ({ page }) => {
+  await page.goto("/json-diff")
+  await page.getByRole("button", { name: "Contoh" }).click()
+  await expect(page.getByText("$.version")).toBeVisible()
+  await expect(page.getByText("$.tools[2]")).toBeVisible()
+  await expect(page.getByText("$.private")).toBeVisible()
+  await expectAccessible(page)
+})

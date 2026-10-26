@@ -126,3 +126,11 @@ test("SVG optimizer shrinks the sample and offers preview and download", async (
   await page.getByRole("button", { name: "Unduh SVG" }).click()
   expect((await download).suggestedFilename()).toBe("optimized.svg")
 })
+
+test("cURL converter turns the sample into fetch and Python", async ({ page }) => {
+  await openWithSample(page, "/curl")
+  await expect(editorOutput(page)).toContainText('await fetch("https://api.example.com/v1/users"')
+  await page.getByText("Python requests", { exact: true }).click()
+  await expect(editorOutput(page)).toContainText("response = requests.post(")
+  await expectAccessible(page)
+})

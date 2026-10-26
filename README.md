@@ -6,7 +6,7 @@ Live site: https://devtools.gulagulali.tech
 
 ## Features
 
-- 38 tools across formatting, conversion, encoding, cryptography, generation, and text processing
+- 41 tools across formatting, conversion, encoding, cryptography, generation, and text processing
 - Fully client-side: hashing, encryption, key generation, and parsing happen locally
 - Works offline as an installable PWA
 - Command palette (`Ctrl+K` / `Cmd+K`) for jumping between tools
@@ -29,6 +29,7 @@ Live site: https://devtools.gulagulali.tech
 | | JSON Schema Validator | Validate JSON against draft-07, 2019-09, or 2020-12 schemas and list every error |
 | Converter | Data Converter | Convert between JSON, YAML, TOML, XML, and CSV |
 | | JSON to TypeScript | Generate TypeScript interfaces or Zod schemas from sample JSON |
+| | cURL Converter | Convert curl commands to JavaScript fetch, Python requests, or Go net/http |
 | | JSONPath | Query JSON with JSONPath expressions |
 | | Timestamp | Convert Unix timestamps (seconds to nanoseconds) to dates and back |
 | | Number Base | Convert between binary, octal, decimal, and hex with BigInt precision and two's complement |
@@ -52,11 +53,13 @@ Live site: https://devtools.gulagulali.tech
 | | AES Encrypt | AES-256-GCM encryption with a PBKDF2-derived key |
 | | Key Generator | RSA, ECDSA, or Ed25519 key pairs in PEM and JWK |
 | | X.509 Decoder | Inspect PEM/DER certificates and chains: subject, validity, SAN, key usage, fingerprints |
+| | TOTP / 2FA | RFC 6238 one-time codes from a Base32 secret or otpauth:// URI, with a QR code |
 | Generator | Password Generator | Strong random passwords with an entropy estimate |
 | | UUID / ULID | Bulk UUID v4, UUID v7, or ULID |
 | | Lorem Ipsum | Placeholder text by paragraphs, sentences, or words |
 | Text | Regex Tester | Test JavaScript regular expressions with live matches and replacements |
 | | Text Diff | Compare two texts and copy the result as a unified patch |
+| | JSON Diff | Structural JSON comparison with paths, ignoring key order and formatting |
 | | Case Converter | camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE, and more |
 | | Text Stats | Count characters, words, lines, and bytes, and find hidden characters such as zero-width spaces or bidi controls |
 

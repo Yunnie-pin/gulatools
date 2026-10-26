@@ -105,6 +105,26 @@ export const about: Record<string, ToolAbout> = {
       ],
     },
   },
+  curl: {
+    id: {
+      intro:
+        "cURL Converter mengubah perintah curl menjadi kode JavaScript fetch, Python requests, atau Go net/http. Method, header, body, autentikasi Basic, dan cookie ikut diterjemahkan, termasuk format $'…' dari fitur Copy as cURL di DevTools.",
+      uses: [
+        "Memindahkan request dari DevTools browser atau dokumentasi API ke dalam kode.",
+        "Membuat contoh request untuk dokumentasi dalam beberapa bahasa.",
+        "Memahami apa saja yang dikirim oleh perintah curl yang panjang.",
+      ],
+    },
+    en: {
+      intro:
+        "cURL Converter turns curl commands into JavaScript fetch, Python requests, or Go net/http code. Method, headers, body, Basic auth, and cookies are carried over, including the $'…' quoting from DevTools Copy as cURL.",
+      uses: [
+        "Moving a request from browser DevTools or API docs into code.",
+        "Producing request examples for documentation in several languages.",
+        "Understanding what a long curl command actually sends.",
+      ],
+    },
+  },
   "data-converter": {
     id: {
       intro:
@@ -605,6 +625,26 @@ export const about: Record<string, ToolAbout> = {
       ],
     },
   },
+  totp: {
+    id: {
+      intro:
+        "TOTP / 2FA membuat kode one-time password sesuai RFC 6238, sama seperti Google Authenticator atau Authy. Tempel secret Base32 atau URI otpauth://, lalu lihat kode saat ini, kode berikutnya, dan QR code untuk dipindai.",
+      uses: [
+        "Menguji implementasi 2FA di aplikasi tanpa perlu ponsel.",
+        "Membuat secret dan QR code baru untuk akun uji.",
+        "Memeriksa isi URI otpauth:// dari QR code yang dipindai.",
+      ],
+    },
+    en: {
+      intro:
+        "TOTP / 2FA generates RFC 6238 one-time passwords, just like Google Authenticator or Authy. Paste a Base32 secret or an otpauth:// URI to see the current code, the next code, and a QR code to scan.",
+      uses: [
+        "Testing a 2FA implementation without reaching for a phone.",
+        "Creating a new secret and QR code for a test account.",
+        "Inspecting an otpauth:// URI taken from a scanned QR code.",
+      ],
+    },
+  },
   x509: {
     id: {
       intro:
@@ -721,6 +761,26 @@ export const about: Record<string, ToolAbout> = {
         "Comparing two versions of a configuration file.",
         "Seeing changes in text that is not under version control.",
         "Creating a patch to share with a colleague.",
+      ],
+    },
+  },
+  "json-diff": {
+    id: {
+      intro:
+        "JSON Diff membandingkan dua dokumen JSON berdasarkan strukturnya, bukan teksnya. Urutan key dan format diabaikan, dan setiap perbedaan ditampilkan dengan path seperti $.user.roles[1].",
+      uses: [
+        "Membandingkan response API sebelum dan sesudah perubahan backend.",
+        "Mencari perbedaan konfigurasi JSON antar environment.",
+        "Memeriksa snapshot test yang gagal tanpa terganggu urutan key.",
+      ],
+    },
+    en: {
+      intro:
+        "JSON Diff compares two JSON documents by structure rather than text. Key order and formatting are ignored, and every difference is shown with a path such as $.user.roles[1].",
+      uses: [
+        "Comparing API responses before and after a backend change.",
+        "Finding configuration differences between environments.",
+        "Checking failing snapshot tests without key-order noise.",
       ],
     },
   },

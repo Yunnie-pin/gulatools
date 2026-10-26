@@ -102,3 +102,15 @@ test("password and UUID generators regenerate", async ({ page }) => {
   const lines = (await page.locator(".cm-content").textContent()) ?? ""
   expect(lines.match(/[0-9a-f]{8}-[0-9a-f]{4}-7/g)).toHaveLength(3)
 })
+
+test("TOTP reads an otpauth URI and shows a code with its QR", async ({ page }) => {
+  await page.goto("/totp")
+  await page.getByLabel(/^Secret/).fill("otpauth://totp/Gula:me%40gula.id?secret=JBSWY3DPEHPK3PXP&issuer=Gula")
+  await expect(page.getByLabel(/^Secret/)).toHaveValue("JBSWY3DPEHPK3PXP")
+  await expect(page.getByLabel("Issuer")).toHaveValue("Gula")
+  await expect(page.getByLabel("Kode saat ini")).toHaveText(/^\d{3} \d{3}$/)
+  await expect(page.getByRole("img", { name: /QR code/ })).toBeVisible()
+  await expectAccessible(page)
+  await page.getByLabel(/^Secret/).fill("not-base32!")
+  await expect(page.getByRole("alert")).toContainText("Base32")
+})
