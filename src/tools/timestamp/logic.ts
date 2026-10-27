@@ -28,3 +28,44 @@ export function parseTimestamp(input: string): ParsedTimestamp {
   if (Number.isNaN(ms)) throw new LocalizedError("unknownDateFormat")
   return { date: new Date(ms), unit: "date" }
 }
+
+export function isTimeZone(zone: string): boolean {
+  try {
+    new Intl.DateTimeFormat("en", { timeZone: zone })
+    return true
+  } catch {
+    return false
+  }
+}
+
+export const zoneOffset = (date: Date, timeZone: string) =>
+  new Intl.DateTimeFormat("en", { timeZone, timeZoneName: "longOffset" })
+    .formatToParts(date)
+    .find((part) => part.type === "timeZoneName")
+    ?.value.replace(/^GMT$/, "GMT+00:00")
+    .replace("GMT", "UTC") ?? "UTC+00:00"
+
+export const formatInZone = (date: Date, timeZone: string, locale: string) =>
+  new Intl.DateTimeFormat(locale, { timeZone, dateStyle: "full", timeStyle: "medium" }).format(date)
+
+export type Duration = {
+  negative: boolean
+  days: number
+  hours: number
+  minutes: number
+  seconds: number
+  totalSeconds: number
+}
+
+export function durationBetween(from: Date, to: Date): Duration {
+  const totalSeconds = Math.round((to.getTime() - from.getTime()) / 1000)
+  const abs = Math.abs(totalSeconds)
+  return {
+    negative: totalSeconds < 0,
+    days: Math.floor(abs / 86400),
+    hours: Math.floor((abs % 86400) / 3600),
+    minutes: Math.floor((abs % 3600) / 60),
+    seconds: abs % 60,
+    totalSeconds,
+  }
+}

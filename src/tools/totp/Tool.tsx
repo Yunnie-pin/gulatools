@@ -12,10 +12,10 @@ import { useMessages } from "@/i18n/locale"
 import { qrMatrix } from "@/lib/qr"
 import { attempt, type Result, settle } from "@/lib/result"
 import {
-  base32Decode,
   buildOtpauth,
   parseOtpauth,
   randomSecret,
+  secretKey,
   TOTP_ALGORITHMS,
   type TotpAlgorithm,
   type TotpCodes,
@@ -71,7 +71,7 @@ export default function TotpTool() {
   const qr = useMemo(
     () =>
       attempt(() => {
-        base32Decode(config.secret)
+        secretKey(config.secret)
         return qrMatrix(buildOtpauth(config), "M")
       }),
     [config],

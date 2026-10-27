@@ -79,7 +79,7 @@ test("chmod checkboxes and the mode input stay in sync", async ({ page }) => {
 
 test("subnet calculator derives the host range", async ({ page }) => {
   await page.goto("/cidr")
-  await page.getByLabel("Alamat IPv4 dan prefix").fill("10.0.5.77/22")
+  await page.getByLabel("Alamat IPv4 atau IPv6 dan prefix").fill("10.0.5.77/22")
   await expect(page.locator("main code").first()).toHaveText("10.0.4.0/22")
   await expect(page.getByText("10.0.7.254")).toBeVisible()
 })
@@ -273,5 +273,28 @@ test("user-agent parser reads this browser's own User-Agent", async ({ page }) =
   await page.getByRole("button", { name: "Pakai User-Agent browser ini" }).click()
   await expect(page.getByLabel("User-Agent", { exact: true })).not.toHaveValue("")
   await expect(page.getByText(/^(Chrome|HeadlessChrome) \d+/)).toBeVisible()
+  await expectAccessible(page)
+})
+
+test("subnet calculator handles IPv6 prefixes", async ({ page }) => {
+  await page.goto("/cidr")
+  await page.getByLabel("Alamat IPv4 atau IPv6 dan prefix").fill("2001:db8:abcd:12::1/48")
+  await expect(page.getByText("2001:db8:abcd::/48")).toBeVisible()
+  await expect(page.getByText("Dokumentasi (2001:db8::/32)")).toBeVisible()
+  await expect(page.getByText("65,536").or(page.getByText("65.536"))).toBeVisible()
+  await expectAccessible(page)
+})
+
+test("timestamp shows other time zones and the gap to another date", async ({ page }) => {
+  await page.goto("/timestamp")
+  await page.getByLabel("Timestamp atau tanggal").fill("2026-01-15T12:00:00Z")
+  await expect(page.getByText("UTC+07:00")).toBeVisible()
+  await page.getByLabel("Tambah zona waktu").fill("Asia/Kolkata")
+  await page.getByRole("button", { name: "Tambah", exact: true }).click()
+  await expect(page.getByText("UTC+05:30")).toBeVisible()
+  await page.getByRole("button", { name: "Hapus Asia/Kolkata" }).click()
+  await expect(page.getByText("UTC+05:30")).toHaveCount(0)
+  await page.getByLabel("Tanggal pembanding").fill("2026-01-17T13:30:00Z")
+  await expect(page.getByText("2 hari 1 jam 30 menit sesudahnya")).toBeVisible()
   await expectAccessible(page)
 })

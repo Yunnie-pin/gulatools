@@ -1,12 +1,34 @@
 import { LocalizedError } from "@/i18n/errors"
-import { base64ToBytes, bytesToBase64 } from "@/lib/bytes"
+import {
+  base32ToBytes,
+  base58ToBytes,
+  base64ToBytes,
+  bytesToBase32,
+  bytesToBase58,
+  bytesToBase64,
+  bytesToHex,
+  hexToBytes,
+} from "@/lib/bytes"
 
-export function encodeBase64(text: string, urlSafe = false): string {
-  return bytesToBase64(new TextEncoder().encode(text), urlSafe)
+export type Encoding = "base64" | "base32" | "base58" | "hex"
+
+export function encodeText(text: string, encoding: Encoding, urlSafe = false): string {
+  const bytes = new TextEncoder().encode(text)
+  if (encoding === "base32") return bytesToBase32(bytes, true)
+  if (encoding === "base58") return bytesToBase58(bytes)
+  if (encoding === "hex") return bytesToHex(bytes)
+  return bytesToBase64(bytes, urlSafe)
 }
 
-export function decodeBase64(input: string): string {
-  const bytes = base64ToBytes(input)
+const DECODERS: Record<Encoding, (input: string) => Uint8Array> = {
+  base64: base64ToBytes,
+  base32: base32ToBytes,
+  base58: base58ToBytes,
+  hex: hexToBytes,
+}
+
+export function decodeText(input: string, encoding: Encoding): string {
+  const bytes = DECODERS[encoding](input)
   try {
     return new TextDecoder("utf-8", { fatal: true }).decode(bytes)
   } catch {

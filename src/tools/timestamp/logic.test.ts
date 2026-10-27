@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { parseTimestamp } from "./logic"
+import { durationBetween, formatInZone, isTimeZone, parseTimestamp, zoneOffset } from "./logic"
 
 const iso = (input: string) => parseTimestamp(input).date.toISOString()
 
@@ -32,5 +32,46 @@ describe("parseTimestamp", () => {
 
   it("rejects nonsense", () => {
     expect(() => parseTimestamp("kemarin sore")).toThrow("tidak dikenali")
+  })
+})
+
+describe("time zones", () => {
+  const date = new Date("2026-01-15T12:00:00Z")
+
+  it("validates IANA zone names", () => {
+    expect(isTimeZone("Asia/Jakarta")).toBe(true)
+    expect(isTimeZone("Mars/Olympus")).toBe(false)
+  })
+
+  it("reports the UTC offset in effect on that date, following daylight saving", () => {
+    expect(zoneOffset(date, "Asia/Jakarta")).toBe("UTC+07:00")
+    expect(zoneOffset(date, "America/New_York")).toBe("UTC-05:00")
+    expect(zoneOffset(new Date("2026-07-15T12:00:00Z"), "America/New_York")).toBe("UTC-04:00")
+    expect(zoneOffset(date, "UTC")).toBe("UTC+00:00")
+  })
+
+  it("formats the wall-clock time in the target zone", () => {
+    expect(formatInZone(date, "Asia/Kolkata", "en")).toContain("5:30:00 PM")
+  })
+})
+
+describe("durationBetween", () => {
+  it("breaks the gap into days, hours, minutes and seconds", () => {
+    expect(durationBetween(new Date("2026-01-01T00:00:00Z"), new Date("2026-01-03T04:05:06Z"))).toEqual({
+      negative: false,
+      days: 2,
+      hours: 4,
+      minutes: 5,
+      seconds: 6,
+      totalSeconds: 187506,
+    })
+  })
+
+  it("marks a target in the past as negative", () => {
+    expect(durationBetween(new Date(60_000), new Date(0))).toMatchObject({
+      negative: true,
+      minutes: 1,
+      totalSeconds: -60,
+    })
   })
 })

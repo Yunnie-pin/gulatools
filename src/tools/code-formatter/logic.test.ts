@@ -38,3 +38,22 @@ describe("formatCode", () => {
     await expect(formatCode("const = ;", options("javascript"))).rejects.toThrow()
   })
 })
+
+describe("xml", () => {
+  it("indents nested elements with the XML plugin", async () => {
+    const output = await formatCode('<a><b x="1"><c>teks</c></b></a>', {
+      language: "xml",
+      tabWidth: 2,
+      printWidth: 80,
+      semi: true,
+      singleQuote: false,
+    })
+    expect(output).toBe('<a>\n  <b x="1">\n    <c>teks</c>\n  </b>\n</a>\n')
+  })
+
+  it("rejects malformed XML instead of guessing", async () => {
+    await expect(
+      formatCode("<a><b></a>", { language: "xml", tabWidth: 2, printWidth: 80, semi: true, singleQuote: false }),
+    ).rejects.toThrow()
+  })
+})

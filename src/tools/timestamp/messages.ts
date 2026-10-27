@@ -1,5 +1,14 @@
 import { defineMessages } from "@/i18n/locale"
-import type { TimestampUnit } from "./logic"
+import type { Duration, TimestampUnit } from "./logic"
+
+const parts = (duration: Duration, units: [day: string, hour: string, minute: string, second: string]) => {
+  const values = [duration.days, duration.hours, duration.minutes, duration.seconds]
+  const text = values
+    .map((value, i) => (value ? `${value} ${units[i]}` : ""))
+    .filter(Boolean)
+    .join(" ")
+  return text || `0 ${units[3]}`
+}
 
 export const messages = defineMessages(
   {
@@ -18,6 +27,17 @@ export const messages = defineMessages(
     unixMillis: "Unix (milidetik)",
     local: (zone: string) => `Lokal (${zone})`,
     relative: "Relatif",
+    zones: "Zona waktu",
+    addZone: "Tambah zona waktu",
+    add: "Tambah",
+    removeZone: (zone: string) => `Hapus ${zone}`,
+    difference: "Selisih",
+    compareWith: "Tanggal pembanding",
+    duration: "Selisih",
+    formatDuration: (duration: Duration) =>
+      `${parts(duration, ["hari", "jam", "menit", "detik"])} ${duration.negative ? "sebelumnya" : "sesudahnya"}`,
+    totalSeconds: "Total detik",
+    totalDays: "Total hari",
   },
   {
     input: "Timestamp or date",
@@ -35,5 +55,16 @@ export const messages = defineMessages(
     unixMillis: "Unix (milliseconds)",
     local: (zone: string) => `Local (${zone})`,
     relative: "Relative",
+    zones: "Time zones",
+    addZone: "Add a time zone",
+    add: "Add",
+    removeZone: (zone: string) => `Remove ${zone}`,
+    difference: "Difference",
+    compareWith: "Date to compare with",
+    duration: "Difference",
+    formatDuration: (duration: Duration) =>
+      `${parts(duration, ["d", "h", "m", "s"])} ${duration.negative ? "earlier" : "later"}`,
+    totalSeconds: "Total seconds",
+    totalDays: "Total days",
   },
 )

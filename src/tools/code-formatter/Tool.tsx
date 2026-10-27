@@ -20,6 +20,7 @@ const EDITOR_LANGUAGES: Partial<Record<LanguageId, () => Promise<Extension>>> = 
   html: async () => (await import("@codemirror/lang-html")).html(),
   markdown: async () => (await import("@codemirror/lang-markdown")).markdown(),
   yaml: async () => (await import("@codemirror/lang-yaml")).yaml(),
+  xml: async () => (await import("@codemirror/lang-xml")).xml(),
 }
 
 function useEditorLanguage(language: LanguageId) {
@@ -48,6 +49,7 @@ const SAMPLES: Record<LanguageId, string> = {
   markdown: "# GulaTools\n* format\n* parse\n+ encode\n\n|tool|status|\n|-|-|\n|jwt|ok|",
   graphql: "query Tools($first:Int){tools(first:$first){id name category}}",
   yaml: "app:   gulatools\nfeatures: [json,   yaml]\ndb: {host: localhost, port: 5432}",
+  xml: '<?xml version="1.0"?><catalog><tool id="jwt" category="crypto"><name>JWT</name><tags><tag>decode</tag><tag>sign</tag></tags></tool></catalog>',
 }
 
 const LANGUAGE_OPTIONS = (Object.keys(LANGUAGES) as LanguageId[]).map((value) => ({

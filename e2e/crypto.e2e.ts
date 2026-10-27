@@ -114,3 +114,15 @@ test("TOTP reads an otpauth URI and shows a code with its QR", async ({ page }) 
   await page.getByLabel(/^Secret/).fill("not-base32!")
   await expect(page.getByRole("alert")).toContainText("Base32")
 })
+
+test("key generator converts a generated PEM to JWK", async ({ page }) => {
+  await page.goto("/keygen")
+  await page.getByRole("button", { name: "Generate key pair" }).click()
+  const pem = (await page.locator("pre").first().textContent()) ?? ""
+  expect(pem).toContain("BEGIN PUBLIC KEY")
+  await page.getByText("Konversi PEM ↔ JWK", { exact: true }).click()
+  await page.getByLabel("Kunci PEM atau JWK").fill(pem)
+  await expect(page.getByText('"kty": "EC"')).toBeVisible()
+  await expect(page.getByText("ES256", { exact: true })).toBeVisible()
+  await expectAccessible(page)
+})

@@ -7,8 +7,8 @@ export const codeFormatter: Tool = {
   name: "Code Formatter",
   short: "Prettier",
   description: {
-    id: "Rapikan JavaScript, TypeScript, CSS, HTML, Markdown, GraphQL, dan YAML dengan Prettier.",
-    en: "Format JavaScript, TypeScript, CSS, HTML, Markdown, GraphQL, and YAML with Prettier.",
+    id: "Rapikan JavaScript, TypeScript, CSS, HTML, Markdown, GraphQL, YAML, dan XML dengan Prettier.",
+    en: "Format JavaScript, TypeScript, CSS, HTML, Markdown, GraphQL, YAML, and XML with Prettier.",
   },
   category: "formatter",
   keywords: [
@@ -22,6 +22,8 @@ export const codeFormatter: Tool = {
     "html",
     "markdown",
     "graphql",
+    "yaml",
+    "xml",
   ],
   icon: Code,
   Component: lazy(() => import("./Tool")),

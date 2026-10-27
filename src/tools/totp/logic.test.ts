@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest"
-import { base32Decode, base32Encode, buildOtpauth, parseOtpauth, type TotpConfig, totp } from "./logic"
+import { bytesToBase32 } from "@/lib/bytes"
+import { buildOtpauth, parseOtpauth, secretKey, type TotpConfig, totp } from "./logic"
 
-const ascii = (text: string) => base32Encode(new TextEncoder().encode(text))
+const ascii = (text: string) => bytesToBase32(new TextEncoder().encode(text))
 
 const config = (secret: string, algorithm: TotpConfig["algorithm"]): TotpConfig => ({
   secret,
@@ -32,14 +33,13 @@ describe("totp", () => {
   })
 })
 
-describe("base32", () => {
-  it("round-trips and tolerates spaces, lowercase and padding as apps display them", () => {
-    expect(ascii("12345678901234567890")).toBe("GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ")
-    expect(new TextDecoder().decode(base32Decode("gezd gnbv gy3t qojq===="))).toBe("1234567890")
+describe("secretKey", () => {
+  it("accepts secrets the way authenticator apps display them", () => {
+    expect(new TextDecoder().decode(secretKey("gezd gnbv gy3t qojq===="))).toBe("1234567890")
   })
 
-  it("rejects characters outside the alphabet", () => {
-    expect(() => base32Decode("ABC1")).toThrow("Base32")
+  it("asks for a secret instead of generating codes from an empty key", () => {
+    expect(() => secretKey(" == ")).toThrow("secret")
   })
 })
 

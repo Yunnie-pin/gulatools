@@ -22,7 +22,7 @@ Live site: https://devtools.gulagulali.tech
 | Category | Tool | Description |
 |---|---|---|
 | Formatter | JSON Formatter | Format, minify, and validate JSON |
-| | Code Formatter | Format JavaScript, TypeScript, CSS, HTML, Markdown, GraphQL, and YAML with Prettier |
+| | Code Formatter | Format JavaScript, TypeScript, CSS, HTML, Markdown, GraphQL, YAML, and XML with Prettier |
 | | JS & CSS Minifier | Minify JavaScript with Terser and CSS with CSSO, with size savings |
 | | SQL Formatter | Format SQL for PostgreSQL, MySQL, SQLite, SQL Server, and more |
 | | Markdown Preview | Live GitHub Flavored Markdown preview with sanitized HTML output |
@@ -33,15 +33,15 @@ Live site: https://devtools.gulagulali.tech
 | | cURL Converter | Convert curl commands to JavaScript fetch, Python requests, or Go net/http |
 | | Docker run → Compose | Turn docker run commands into a compose.yaml, reporting flags it cannot convert |
 | | JSONPath | Query JSON with JSONPath expressions |
-| | Timestamp | Convert Unix timestamps (seconds to nanoseconds) to dates and back |
+| | Timestamp | Convert Unix timestamps to dates and back, compare time zones, and measure the gap between two dates |
 | | Number Base | Convert between binary, octal, decimal, and hex with BigInt precision and two's complement |
 | | Chmod Calculator | Unix permissions in octal and symbolic form, including setuid, setgid, and sticky |
-| | Subnet Calculator | IPv4 network, broadcast, netmask, and host range from CIDR or a netmask |
+| | Subnet Calculator | IPv4 and IPv6 network, range, and host count from CIDR or a netmask, with IPv6 type and reverse DNS |
 | | Cron Parser | Explain cron expressions in plain language and list the next runs |
 | | Color Converter | Convert between HEX, RGB, HSL, and OKLCH, with a WCAG contrast check |
 | | Contrast Checker | WCAG AA/AAA contrast between any text and background color, with a preview |
 | | Image Compressor | Resize, compress, and convert images to WebP, JPEG, or PNG |
-| Encoder | Base64 | Encode and decode Base64, including the URL-safe variant |
+| Encoder | Base64 | Encode and decode Base64 (including URL-safe), Base32, Base58, and Hex |
 | | Gzip / Deflate | Compress text to Base64 with gzip, zlib, or raw deflate, and decompress with format detection |
 | | URL Encoder | Percent-encode and decode URLs and query strings |
 | | URL Parser | Split a URL into decoded parts and edit its query params as a table |
@@ -55,7 +55,7 @@ Live site: https://devtools.gulagulali.tech
 | | Hash Generator | MD5, SHA-1, SHA-256, SHA-384, and SHA-512 of text or files |
 | | HMAC Generator | HMAC with SHA-1, SHA-256, SHA-384, or SHA-512 |
 | | AES Encrypt | AES-256-GCM encryption with a PBKDF2-derived key |
-| | Key Generator | RSA, ECDSA, or Ed25519 key pairs in PEM and JWK |
+| | Key Generator | RSA, ECDSA, or Ed25519 key pairs in PEM and JWK, and PEM ↔ JWK conversion with thumbprints |
 | | X.509 Decoder | Inspect PEM/DER certificates and chains: subject, validity, SAN, key usage, fingerprints |
 | | TOTP / 2FA | RFC 6238 one-time codes from a Base32 secret or otpauth:// URI, with a QR code |
 | Generator | Password Generator | Strong random passwords with an entropy estimate |

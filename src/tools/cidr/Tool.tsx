@@ -6,13 +6,13 @@ import { ValueRow } from "@/components/ValueRow"
 import { useMessages } from "@/i18n/locale"
 import { usePersistentState } from "@/lib/persist"
 import { attempt } from "@/lib/result"
-import { parseSubnet } from "./logic"
+import { type Ipv6Info, parseAnySubnet, type SubnetInfo } from "./logic"
 import { messages } from "./messages"
 
 export default function CidrTool() {
   const t = useMessages(messages)
   const [input, setInput] = usePersistentState("input", "192.168.1.0/24")
-  const parsed = useMemo(() => attempt(() => parseSubnet(input)), [input])
+  const parsed = useMemo(() => attempt(() => parseAnySubnet(input)), [input])
 
   return (
     <div className="flex flex-col gap-4">
@@ -30,17 +30,43 @@ export default function CidrTool() {
 
       {parsed.ok && (
         <GlassPanel variant="solid" className="px-4 py-1.5">
-          <ValueRow label={t.cidr} value={`${parsed.value.network}/${parsed.value.prefix}`} />
-          <ValueRow label={t.netmask} value={parsed.value.netmask} />
-          <ValueRow label={t.wildcard} value={parsed.value.wildcard} />
-          <ValueRow label={t.broadcast} value={parsed.value.broadcast} />
-          <ValueRow label={t.firstHost} value={parsed.value.firstHost} />
-          <ValueRow label={t.lastHost} value={parsed.value.lastHost} />
-          <ValueRow label={t.usableHosts} value={parsed.value.usableHosts.toLocaleString()} />
-          <ValueRow label={t.totalAddresses} value={parsed.value.totalAddresses.toLocaleString()} />
-          <ValueRow label={t.binaryNetmask} value={parsed.value.binaryNetmask} />
+          {parsed.value.version === 4 ? <Ipv4Rows info={parsed.value.info} /> : <Ipv6Rows info={parsed.value.info} />}
         </GlassPanel>
       )}
     </div>
+  )
+}
+
+function Ipv4Rows({ info }: { info: SubnetInfo }) {
+  const t = useMessages(messages)
+  return (
+    <>
+      <ValueRow label={t.cidr} value={`${info.network}/${info.prefix}`} />
+      <ValueRow label={t.netmask} value={info.netmask} />
+      <ValueRow label={t.wildcard} value={info.wildcard} />
+      <ValueRow label={t.broadcast} value={info.broadcast} />
+      <ValueRow label={t.firstHost} value={info.firstHost} />
+      <ValueRow label={t.lastHost} value={info.lastHost} />
+      <ValueRow label={t.usableHosts} value={info.usableHosts.toLocaleString()} />
+      <ValueRow label={t.totalAddresses} value={info.totalAddresses.toLocaleString()} />
+      <ValueRow label={t.binaryNetmask} value={info.binaryNetmask} />
+    </>
+  )
+}
+
+function Ipv6Rows({ info }: { info: Ipv6Info }) {
+  const t = useMessages(messages)
+  return (
+    <>
+      <ValueRow label={t.cidr} value={info.network} />
+      <ValueRow label={t.type} value={t.types[info.type]} />
+      <ValueRow label={t.address} value={info.address} />
+      <ValueRow label={t.expanded} value={info.expanded} />
+      <ValueRow label={t.firstAddress} value={info.firstAddress} />
+      <ValueRow label={t.lastAddress} value={info.lastAddress} />
+      <ValueRow label={t.totalAddresses} value={`2^${128 - info.prefix} = ${info.totalAddresses.toLocaleString()}`} />
+      {info.subnets64 !== null && <ValueRow label={t.subnets64} value={info.subnets64.toLocaleString()} />}
+      <ValueRow label={t.reverseDns} value={info.reverseDns} />
+    </>
   )
 }

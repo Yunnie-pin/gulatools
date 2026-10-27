@@ -43,7 +43,7 @@ const catalogs = defineMessages(
     emptyNumber: () => "Masukkan bilangan",
     invalidDigits: (base: number) => `Digit tidak valid untuk basis ${base}`,
     invalidChmod: () => "Mode tidak valid. Contoh: 755, 4755, rwxr-xr-x",
-    invalidCidr: () => "Format tidak valid. Contoh: 192.168.1.0/24 atau 10.0.0.1 255.0.0.0",
+    invalidCidr: () => "Format tidak valid. Contoh: 192.168.1.0/24, 10.0.0.1 255.0.0.0, atau 2001:db8::/32",
     invalidNetmask: () => "Netmask harus berupa bit 1 yang berurutan, misalnya 255.255.255.0",
     invalidJsonString: () => "Bukan isi string JSON yang valid. Periksa escape sequence dan tanda kutip",
     invalidSchemaJson: (detail: string) => `Schema bukan JSON yang valid: ${detail}`,
@@ -71,6 +71,12 @@ const catalogs = defineMessages(
     notDockerRun: () => "Perintah harus diawali dengan docker run",
     dockerNoImage: () => "Perintah docker run tidak berisi nama image",
     minifyFailed: (detail: string) => `Gagal minify: ${detail}`,
+    invalidBase58: () => "Bukan Base58 yang valid (tanpa 0, O, I, dan l)",
+    invalidHex: () => "Bukan hex yang valid. Contoh: 48656c6c6f atau 48 65 6c 6c 6f",
+    unsupportedKey: () =>
+      "Kunci tidak dikenali. Tempel PEM (PUBLIC KEY, PRIVATE KEY, atau CERTIFICATE) atau JWK RSA, EC P-256/384/521, atau Ed25519",
+    legacyPem: () =>
+      "Format PKCS#1/SEC1 belum didukung. Ubah dulu ke PKCS#8: openssl pkcs8 -topk8 -nocrypt -in key.pem",
   },
   {
     invalidBase64: () => "Input is not valid Base64",
@@ -114,7 +120,7 @@ const catalogs = defineMessages(
     emptyNumber: () => "Enter a number",
     invalidDigits: (base) => `Invalid digits for base ${base}`,
     invalidChmod: () => "Invalid mode. Examples: 755, 4755, rwxr-xr-x",
-    invalidCidr: () => "Invalid format. Examples: 192.168.1.0/24 or 10.0.0.1 255.0.0.0",
+    invalidCidr: () => "Invalid format. Examples: 192.168.1.0/24, 10.0.0.1 255.0.0.0, or 2001:db8::/32",
     invalidNetmask: () => "The netmask must be contiguous 1 bits, for example 255.255.255.0",
     invalidJsonString: () => "Not a valid JSON string body. Check escape sequences and quotes",
     invalidSchemaJson: (detail) => `Schema is not valid JSON: ${detail}`,
@@ -141,6 +147,12 @@ const catalogs = defineMessages(
     notDockerRun: () => "The command must start with docker run",
     dockerNoImage: () => "The docker run command has no image name",
     minifyFailed: (detail) => `Minify failed: ${detail}`,
+    invalidBase58: () => "Not valid Base58 (no 0, O, I, or l)",
+    invalidHex: () => "Not valid hex. Examples: 48656c6c6f or 48 65 6c 6c 6f",
+    unsupportedKey: () =>
+      "Unrecognized key. Paste a PEM (PUBLIC KEY, PRIVATE KEY, or CERTIFICATE) or an RSA, EC P-256/384/521, or Ed25519 JWK",
+    legacyPem: () =>
+      "PKCS#1/SEC1 keys are not supported yet. Convert to PKCS#8 first: openssl pkcs8 -topk8 -nocrypt -in key.pem",
   },
 )
 

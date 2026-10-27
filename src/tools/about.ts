@@ -28,19 +28,19 @@ export const about: Record<string, ToolAbout> = {
   "code-formatter": {
     id: {
       intro:
-        "Code Formatter memakai Prettier untuk merapikan JavaScript, TypeScript, CSS, HTML, Markdown, GraphQL, dan YAML dengan gaya yang konsisten. Hasilnya sama seperti menjalankan Prettier di proyek, tanpa perlu instalasi.",
+        "Code Formatter memakai Prettier untuk merapikan JavaScript, TypeScript, CSS, HTML, Markdown, GraphQL, YAML, dan XML dengan gaya yang konsisten. Hasilnya sama seperti menjalankan Prettier di proyek, tanpa perlu instalasi.",
       uses: [
         "Merapikan potongan kode dari Stack Overflow atau chat sebelum ditempel ke proyek.",
-        "Menyeragamkan indentasi file YAML atau HTML.",
+        "Menyeragamkan indentasi file YAML, HTML, atau XML seperti pom.xml dan SOAP response.",
         "Mengecek hasil Prettier tanpa membuka editor.",
       ],
     },
     en: {
       intro:
-        "Code Formatter uses Prettier to format JavaScript, TypeScript, CSS, HTML, Markdown, GraphQL, and YAML in a consistent style. The output matches running Prettier in a project, with nothing to install.",
+        "Code Formatter uses Prettier to format JavaScript, TypeScript, CSS, HTML, Markdown, GraphQL, YAML, and XML in a consistent style. The output matches running Prettier in a project, with nothing to install.",
       uses: [
         "Cleaning up snippets from Stack Overflow or chat before pasting them into a project.",
-        "Normalizing indentation in YAML or HTML files.",
+        "Normalizing indentation in YAML, HTML, or XML files such as pom.xml and SOAP responses.",
         "Checking Prettier output without opening an editor.",
       ],
     },
@@ -208,20 +208,20 @@ export const about: Record<string, ToolAbout> = {
   timestamp: {
     id: {
       intro:
-        "Timestamp mengonversi Unix timestamp dalam detik, milidetik, mikrodetik, atau nanodetik menjadi tanggal yang mudah dibaca, dan sebaliknya. Satuannya dideteksi otomatis dari jumlah digit.",
+        "Timestamp mengonversi Unix timestamp dalam detik, milidetik, mikrodetik, atau nanodetik menjadi tanggal yang mudah dibaca, dan sebaliknya. Satuannya dideteksi otomatis dari jumlah digit. Waktu yang sama bisa dilihat di beberapa zona waktu sekaligus beserta offset UTC-nya, termasuk daylight saving, dan selisihnya dengan tanggal lain bisa dihitung.",
       uses: [
         "Membaca waktu dari log, database, atau klaim exp pada JWT.",
-        "Membuat timestamp untuk tanggal tertentu saat menulis test atau query.",
-        "Membandingkan waktu UTC dengan zona waktu lokal.",
+        "Menjadwalkan rapat atau deploy untuk tim di beberapa zona waktu.",
+        "Menghitung berapa lama sebuah token, sertifikat, atau job berjalan.",
       ],
     },
     en: {
       intro:
-        "Timestamp converts Unix timestamps in seconds, milliseconds, microseconds, or nanoseconds into readable dates, and back. The unit is detected automatically from the number of digits.",
+        "Timestamp converts Unix timestamps in seconds, milliseconds, microseconds, or nanoseconds into readable dates, and back. The unit is detected automatically from the number of digits. The same moment can be shown in several time zones with their UTC offsets, including daylight saving, and the gap to another date can be measured.",
       uses: [
         "Reading times from logs, databases, or a JWT exp claim.",
-        "Producing a timestamp for a specific date when writing tests or queries.",
-        "Comparing UTC with your local time zone.",
+        "Scheduling a meeting or deploy for a team across time zones.",
+        "Working out how long a token, certificate, or job has been running.",
       ],
     },
   },
@@ -268,7 +268,7 @@ export const about: Record<string, ToolAbout> = {
   cidr: {
     id: {
       intro:
-        "Subnet Calculator menghitung alamat network, broadcast, netmask, wildcard, dan rentang host yang bisa dipakai dari notasi CIDR IPv4 seperti 192.168.1.0/24.",
+        "Subnet Calculator menghitung alamat network, broadcast, netmask, wildcard, dan rentang host yang bisa dipakai dari notasi CIDR IPv4 seperti 192.168.1.0/24. Untuk IPv6 seperti 2001:db8::/48, tool ini menampilkan rentang alamat, jumlah subnet /64, jenis alamat, bentuk ringkas dan lengkap, serta nama reverse DNS ip6.arpa.",
       uses: [
         "Merencanakan subnet untuk VPC, VLAN, atau jaringan kantor.",
         "Mengecek apakah sebuah IP masuk dalam rentang CIDR tertentu.",
@@ -277,7 +277,7 @@ export const about: Record<string, ToolAbout> = {
     },
     en: {
       intro:
-        "Subnet Calculator works out the network address, broadcast, netmask, wildcard, and usable host range from IPv4 CIDR notation such as 192.168.1.0/24.",
+        "Subnet Calculator works out the network address, broadcast, netmask, wildcard, and usable host range from IPv4 CIDR notation such as 192.168.1.0/24. For IPv6 such as 2001:db8::/48, it shows the address range, the number of /64 subnets, the address type, compressed and expanded forms, and the ip6.arpa reverse DNS name.",
       uses: [
         "Planning subnets for a VPC, VLAN, or office network.",
         "Checking whether an IP falls inside a given CIDR range.",
@@ -348,20 +348,20 @@ export const about: Record<string, ToolAbout> = {
   base64: {
     id: {
       intro:
-        "Base64 meng-encode teks menjadi Base64 dan men-decode-nya kembali, termasuk varian URL-safe tanpa padding. Teks Unicode seperti emoji dan aksara non-Latin ditangani dengan benar lewat UTF-8.",
+        "Base64 meng-encode teks menjadi Base64 dan men-decode-nya kembali, termasuk varian URL-safe tanpa padding. Base32 (RFC 4648), Base58 (alfabet Bitcoin), dan Hex juga tersedia. Teks Unicode seperti emoji dan aksara non-Latin ditangani dengan benar lewat UTF-8.",
       uses: [
         "Membaca isi header Authorization Basic atau payload yang di-encode.",
         "Menyiapkan nilai untuk Kubernetes Secret atau variabel lingkungan.",
-        "Men-decode bagian data dari URL atau token.",
+        "Membaca secret 2FA dalam Base32, ID Base58, atau hex dump.",
       ],
     },
     en: {
       intro:
-        "Base64 encodes text to Base64 and decodes it back, including the unpadded URL-safe variant. Unicode text such as emoji and non-Latin scripts is handled correctly via UTF-8.",
+        "Base64 encodes text to Base64 and decodes it back, including the unpadded URL-safe variant. Base32 (RFC 4648), Base58 (Bitcoin alphabet), and Hex are available too. Unicode text such as emoji and non-Latin scripts is handled correctly via UTF-8.",
       uses: [
         "Reading a Basic Authorization header or an encoded payload.",
         "Preparing values for a Kubernetes Secret or environment variable.",
-        "Decoding data embedded in a URL or token.",
+        "Reading a Base32 2FA secret, a Base58 ID, or a hex dump.",
       ],
     },
   },
@@ -608,20 +608,20 @@ export const about: Record<string, ToolAbout> = {
   keygen: {
     id: {
       intro:
-        "Key Generator membuat pasangan kunci RSA, ECDSA (P-256, P-384, P-521), atau Ed25519 dalam format PEM dan JWK. Kunci dibuat dengan Web Crypto API dan siap dipakai untuk menandatangani JWT.",
+        "Key Generator membuat pasangan kunci RSA, ECDSA (P-256, P-384, P-521), atau Ed25519 dalam format PEM dan JWK. Kunci dibuat dengan Web Crypto API dan siap dipakai untuk menandatangani JWT. Kunci yang sudah ada, termasuk public key dari sertifikat X.509, bisa dikonversi antara PEM dan JWK lengkap dengan JWK thumbprint-nya.",
       uses: [
         "Membuat kunci untuk menandatangani dan memverifikasi JWT.",
-        "Menyiapkan JWKS untuk server OAuth atau OpenID Connect.",
-        "Membuat kunci uji untuk development tanpa OpenSSL.",
+        "Mengubah PEM menjadi JWK untuk JWKS server OAuth atau OpenID Connect.",
+        "Mengambil public key dan kid dari sertifikat atau private key yang ada.",
       ],
     },
     en: {
       intro:
-        "Key Generator creates RSA, ECDSA (P-256, P-384, P-521), or Ed25519 key pairs in PEM and JWK formats. Keys are generated with the Web Crypto API and are ready to sign JWTs.",
+        "Key Generator creates RSA, ECDSA (P-256, P-384, P-521), or Ed25519 key pairs in PEM and JWK formats. Keys are generated with the Web Crypto API and are ready to sign JWTs. Existing keys, including the public key of an X.509 certificate, can be converted between PEM and JWK along with their JWK thumbprint.",
       uses: [
         "Creating keys to sign and verify JWTs.",
-        "Setting up a JWKS for an OAuth or OpenID Connect server.",
-        "Generating test keys for development without OpenSSL.",
+        "Turning a PEM into a JWK for an OAuth or OpenID Connect JWKS.",
+        "Extracting the public key and kid from an existing certificate or private key.",
       ],
     },
   },

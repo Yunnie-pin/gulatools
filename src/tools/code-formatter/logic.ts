@@ -8,6 +8,7 @@ const html = () => import("prettier/plugins/html")
 const markdown = () => import("prettier/plugins/markdown")
 const graphql = () => import("prettier/plugins/graphql")
 const yaml = () => import("prettier/plugins/yaml")
+const xml = async () => (await import("@prettier/plugin-xml")).default as Plugin
 
 type PluginLoader = () => Promise<Plugin>
 
@@ -21,7 +22,11 @@ export const LANGUAGES = {
   markdown: { label: "Markdown", parser: "markdown", plugins: [markdown] },
   graphql: { label: "GraphQL", parser: "graphql", plugins: [graphql] },
   yaml: { label: "YAML", parser: "yaml", plugins: [yaml] },
-} as const satisfies Record<string, { label: string; parser: string; plugins: PluginLoader[] }>
+  xml: { label: "XML", parser: "xml", plugins: [xml], options: { xmlWhitespaceSensitivity: "ignore" } },
+} as const satisfies Record<
+  string,
+  { label: string; parser: string; plugins: PluginLoader[]; options?: Record<string, unknown> }
+>
 
 export type LanguageId = keyof typeof LANGUAGES
 
@@ -34,10 +39,11 @@ export type CodeOptions = {
 }
 
 export async function formatCode(input: string, { language, ...options }: CodeOptions): Promise<string> {
-  const { parser, plugins } = LANGUAGES[language]
+  const spec = LANGUAGES[language]
+  const { parser, plugins } = spec
   const [{ format }, loaded] = await Promise.all([
     import("prettier/standalone"),
     Promise.all(plugins.map((load) => load())),
   ])
-  return format(input, { parser, plugins: loaded, ...options })
+  return format(input, { parser, plugins: loaded, ...options, ...("options" in spec ? spec.options : {}) })
 }

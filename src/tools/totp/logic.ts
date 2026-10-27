@@ -1,4 +1,5 @@
 import { LocalizedError } from "@/i18n/errors"
+import { base32ToBytes, bytesToBase32 } from "@/lib/bytes"
 
 export const TOTP_ALGORITHMS = [
   { value: "SHA-1", label: "SHA-1" },
@@ -17,44 +18,12 @@ export type TotpConfig = {
   period: number
 }
 
-const BASE32 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"
-
-export function base32Decode(input: string): Uint8Array<ArrayBuffer> {
-  const clean = input.replace(/[\s-]/g, "").replace(/=+$/, "").toUpperCase()
-  if (!clean) throw new LocalizedError("emptyTotpSecret")
-  const bytes: number[] = []
-  let buffer = 0
-  let bits = 0
-  for (const char of clean) {
-    const value = BASE32.indexOf(char)
-    if (value < 0) throw new LocalizedError("invalidBase32")
-    buffer = (buffer << 5) | value
-    bits += 5
-    if (bits >= 8) {
-      bits -= 8
-      bytes.push((buffer >> bits) & 0xff)
-    }
-  }
-  return new Uint8Array(bytes)
+export function secretKey(secret: string): Uint8Array<ArrayBuffer> {
+  if (!secret.replace(/[\s=-]/g, "")) throw new LocalizedError("emptyTotpSecret")
+  return base32ToBytes(secret)
 }
 
-export function base32Encode(bytes: Uint8Array): string {
-  let output = ""
-  let buffer = 0
-  let bits = 0
-  for (const byte of bytes) {
-    buffer = (buffer << 8) | byte
-    bits += 8
-    while (bits >= 5) {
-      bits -= 5
-      output += BASE32[(buffer >> bits) & 31]
-    }
-  }
-  if (bits > 0) output += BASE32[(buffer << (5 - bits)) & 31]
-  return output
-}
-
-export const randomSecret = () => base32Encode(crypto.getRandomValues(new Uint8Array(20)))
+export const randomSecret = () => bytesToBase32(crypto.getRandomValues(new Uint8Array(20)))
 
 export async function hotp(key: Uint8Array<ArrayBuffer>, counter: number, algorithm: TotpAlgorithm, digits: number) {
   const message = new DataView(new ArrayBuffer(8))
@@ -69,7 +38,7 @@ export async function hotp(key: Uint8Array<ArrayBuffer>, counter: number, algori
 export type TotpCodes = { current: string; next: string; remaining: number }
 
 export async function totp(config: TotpConfig, now: number): Promise<TotpCodes> {
-  const key = base32Decode(config.secret)
+  const key = secretKey(config.secret)
   const step = Math.floor(now / 1000 / config.period)
   const [current, next] = await Promise.all([
     hotp(key, step, config.algorithm, config.digits),
