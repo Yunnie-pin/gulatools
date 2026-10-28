@@ -106,11 +106,7 @@ function Preview({ mode, declarations, label }: { mode: Mode; declarations: Decl
     >
       <div
         style={toStyle(declarations)}
-        className={cx(
-          "size-40",
-          mode === "shadow" && "rounded-glass bg-white",
-          mode === "gradient" && "rounded-glass",
-        )}
+        className={cx("size-40", mode === "shadow" && "rounded-glass bg-white", mode === "gradient" && "rounded-glass")}
       />
     </div>
   )
