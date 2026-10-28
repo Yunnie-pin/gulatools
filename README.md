@@ -6,7 +6,7 @@ Live site: https://devtools.gulagulali.tech
 
 ## Features
 
-- 50 tools across formatting, conversion, encoding, cryptography, generation, and text processing
+- 51 tools across formatting, conversion, encoding, cryptography, generation, and text processing
 - Fully client-side: hashing, encryption, key generation, and parsing happen locally
 - Works offline as an installable PWA
 - Command palette (`Ctrl+K` / `Cmd+K`) for jumping between tools
@@ -61,6 +61,7 @@ Live site: https://devtools.gulagulali.tech
 | Generator | Password Generator | Strong random passwords with an entropy estimate |
 | | UUID / ULID | Bulk UUID v4, UUID v7, or ULID |
 | | Lorem Ipsum | Placeholder text by paragraphs, sentences, or words |
+| | CSS Generator | Gradients, layered box-shadows, and glassmorphism with a live preview |
 | Text | Regex Tester | Test JavaScript regular expressions with live matches and replacements |
 | | Text Diff | Compare two texts and copy the result as a unified patch |
 | | JSON Diff | Structural JSON comparison with paths, ignoring key order and formatting |

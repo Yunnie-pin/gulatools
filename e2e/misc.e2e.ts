@@ -298,3 +298,24 @@ test("timestamp shows other time zones and the gap to another date", async ({ pa
   await expect(page.getByText("2 hari 1 jam 30 menit sesudahnya")).toBeVisible()
   await expectAccessible(page)
 })
+
+test("CSS generator builds gradient, shadow, and glass CSS with a live preview", async ({ page }) => {
+  await page.goto("/css-generator")
+  const css = page.locator("pre")
+  await expect(css).toHaveText("background: linear-gradient(135deg, #ff6b5e 0%, #7c5cff 100%);")
+  await page.getByRole("button", { name: "Tambah titik warna" }).click()
+  await expect(css).toContainText("#ffd166 50%")
+  await expectAccessible(page)
+
+  await page.getByText("Box shadow", { exact: true }).click()
+  await page.getByRole("button", { name: "Tambah lapisan" }).click()
+  await page.getByLabel("Inset").nth(1).check()
+  await expect(css).toContainText(", inset 0px 12px 32px -8px rgba(0, 0, 0, 0.3)")
+  await expectAccessible(page)
+
+  await page.getByText("Glassmorphism", { exact: true }).click()
+  await expect(css).toContainText("-webkit-backdrop-filter: blur(16px) saturate(180%);")
+  const preview = page.getByRole("img", { name: "Pratinjau" }).locator("div")
+  await expect(preview).toHaveCSS("backdrop-filter", "blur(16px) saturate(1.8)")
+  await expectAccessible(page)
+})

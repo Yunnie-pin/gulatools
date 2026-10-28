@@ -7,3 +7,4 @@ playwright-report
 *.local
 Dockerfile
 compose.yaml
+planning

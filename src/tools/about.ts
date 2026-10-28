@@ -1004,4 +1004,24 @@ export const about: Record<string, ToolAbout> = {
       ],
     },
   },
+  "css-generator": {
+    id: {
+      intro:
+        "CSS Generator membuat kode CSS untuk gradient linear atau radial, box-shadow berlapis, dan efek glassmorphism dengan backdrop-filter. Setiap perubahan langsung terlihat di pratinjau, dan kodenya siap disalin, termasuk prefix -webkit- yang masih dibutuhkan Safari.",
+      uses: [
+        "Membuat latar gradient untuk hero section atau tombol.",
+        "Menyusun bayangan berlapis yang terlihat lebih natural daripada satu box-shadow.",
+        "Membuat kartu atau panel kaca transparan untuk UI modern.",
+      ],
+    },
+    en: {
+      intro:
+        "CSS Generator builds CSS for linear or radial gradients, layered box-shadows, and glassmorphism with backdrop-filter. Every change shows up in the live preview, and the code is ready to copy, including the -webkit- prefix Safari still needs.",
+      uses: [
+        "Creating gradient backgrounds for hero sections or buttons.",
+        "Stacking shadow layers that look more natural than a single box-shadow.",
+        "Making frosted glass cards or panels for a modern UI.",
+      ],
+    },
+  },
 }

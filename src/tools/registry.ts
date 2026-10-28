@@ -10,6 +10,7 @@ import { codeFormatter } from "./code-formatter"
 import { color } from "./color"
 import { contrast } from "./contrast"
 import { cron } from "./cron"
+import { cssGenerator } from "./css-generator"
 import { curl } from "./curl"
 import { dataConverter } from "./data-converter"
 import { diff } from "./diff"
@@ -91,6 +92,7 @@ export const tools: Tool[] = [
   password,
   uuid,
   lorem,
+  cssGenerator,
   regex,
   diff,
   jsonDiff,
