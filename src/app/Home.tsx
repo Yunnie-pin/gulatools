@@ -12,8 +12,10 @@ import { useUsage } from "@/lib/usage"
 import { resolveTools, toolsByCategory } from "@/tools/registry"
 import { ContinueStrip } from "./ContinueStrip"
 
-const FOLDER_WIDTH = 300
-const FOLDER_GRID = "flex flex-wrap justify-center gap-x-8 gap-y-4 lg:justify-start"
+const FOLDER_WIDTH = 260
+const FOLDER_GAP = 32
+const FOLDER_GRID = "flex flex-wrap justify-center gap-y-4 lg:justify-start"
+const folderGridStyle = { columnGap: FOLDER_GAP, maxWidth: 3 * FOLDER_WIDTH + 2 * FOLDER_GAP }
 
 const toFiles = (tools: Tool[], locale: Locale) =>
   tools.map((tool) => ({ name: tool.name, meta: localize(tool.short, locale), to: `/${tool.id}`, icon: tool.icon }))
@@ -53,7 +55,7 @@ export function Home() {
           </SectionHeading>
           <ContinueStrip />
           {favoriteTools.length > 0 && (
-            <div className={FOLDER_GRID}>
+            <div className={FOLDER_GRID} style={folderGridStyle}>
               <GlassFolder
                 label={ui[locale].shell.favorites}
                 icon={Star}
@@ -70,13 +72,14 @@ export function Home() {
         <SectionHeading id="categories-heading" icon={LayoutGrid}>
           {t.categories}
         </SectionHeading>
-        <div className={FOLDER_GRID}>
+        <div className={FOLDER_GRID} style={folderGridStyle}>
           {CATEGORY_IDS.map((id, i) => {
             const tools = toolsByCategory[id]
             return (
               <GlassFolder
                 key={id}
                 label={CATEGORIES[id].name}
+                icon={CATEGORIES[id].icon}
                 meta={tools.length ? undefined : t.comingSoon}
                 width={FOLDER_WIDTH}
                 appearDelay={i * 80}
