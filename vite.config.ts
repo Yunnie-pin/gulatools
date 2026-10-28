@@ -33,8 +33,19 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,svg,webp,png,woff2}"],
         globIgnores: ["background/*.png", "background/*.jpg", "gula-white.png"],
         maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
-        navigateFallback: "index.html",
-        navigateFallbackDenylist: [/\/[^/]+\.[^/]+$/],
+        navigateFallback: null,
+        runtimeCaching: [
+          {
+            urlPattern: ({ request }) => request.mode === "navigate",
+            handler: "NetworkFirst",
+            options: {
+              cacheName: "pages",
+              networkTimeoutSeconds: 3,
+              fetchOptions: { cache: "no-cache" },
+              precacheFallback: { fallbackURL: "index.html" },
+            },
+          },
+        ],
       },
     }),
   ],
