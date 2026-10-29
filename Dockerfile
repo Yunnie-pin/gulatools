@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # I have nothing but my burger and I want nothing more
-FROM node:26.10.0-alpine AS build
+FROM node:26.12.0-alpine AS build
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --ignore-scripts
