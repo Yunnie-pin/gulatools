@@ -13,8 +13,6 @@ const SEPARATORS = [
   { value: ".", label: "." },
 ] as const satisfies readonly { value: SlugSeparator; label: string }[]
 
-const SAMPLE = "Cara Membuat Kue Brûlée yang Lezat!\n10 Tips & Trik TypeScript untuk 2026\nStraße nach São Paulo"
-
 export default function SlugGenerator() {
   const t = useMessages(messages)
   const [separator, setSeparator] = usePersistentState<SlugSeparator>("separator", "-", isOption(SEPARATORS))
@@ -24,7 +22,7 @@ export default function SlugGenerator() {
   return (
     <TransformTool
       transform={transform}
-      sample={SAMPLE}
+      sample={t.sample}
       outputFileName="slugs.txt"
       options={
         <>

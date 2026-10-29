@@ -7,7 +7,7 @@ import { messages } from "./messages"
 const language = yaml()
 
 const SAMPLE = `docker run -d --name db \\
-  -e POSTGRES_PASSWORD=rahasia -v pgdata:/var/lib/postgresql/data \\
+  -e POSTGRES_PASSWORD=change-me -v pgdata:/var/lib/postgresql/data \\
   --restart unless-stopped --network backend postgres:17
 docker run -d --name api -p 8080:3000 --env-file .env \\
   --health-cmd "curl -f http://localhost:3000/health" --health-interval 30s \\

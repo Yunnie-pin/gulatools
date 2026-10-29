@@ -15,15 +15,13 @@ import { runInWorker } from "./runner"
 
 const DEBOUNCE_MS = 150
 
-const SAMPLE_TEXT = "Contact jane@example.com or team@gulatools.dev\nold address: admin@example.co.uk"
-
 const isNullableString = (value: unknown) => value === null || typeof value === "string"
 
 export default function RegexTool() {
   const t = useMessages(messages)
   const [pattern, setPattern] = usePersistentState("pattern", "(?<user>[\\w.]+)@(?<domain>[\\w.]+)")
   const [flags, setFlags] = usePersistentState("flags", "g")
-  const [text, setText] = usePersistentState("text", SAMPLE_TEXT)
+  const [text, setText] = usePersistentState("text", t.sample)
   const [replacement, setReplacement] = usePersistentState<string | null>("replacement", null, isNullableString)
   const [result, setResult] = useState<Result<RegexResult> | null>(null)
 

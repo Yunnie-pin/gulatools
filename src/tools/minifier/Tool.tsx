@@ -16,15 +16,9 @@ const LANGUAGES = [
 
 const EDITOR_LANGUAGES = { js: javascript(), css: css() }
 
-const SAMPLES: Record<MinifyLanguage, string> = {
-  js: `// Hitung total belanja
-export function total(items, discount = 0) {
-  const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0)
-  const afterDiscount = subtotal - subtotal * discount
-  return Math.round(afterDiscount)
-}
-`,
-  css: `/* Kartu kaca */
+const sampleFor = (language: MinifyLanguage, comments: { jsComment: string; cssComment: string }) =>
+  language === "css"
+    ? `/* ${comments.cssComment} */
 .card {
   background-color: #ffffff;
   border-radius: 16px;
@@ -34,8 +28,14 @@ export function total(items, discount = 0) {
 .card {
   margin: 0px;
 }
-`,
+`
+    : `// ${comments.jsComment}
+export function total(items, discount = 0) {
+  const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0)
+  const afterDiscount = subtotal - subtotal * discount
+  return Math.round(afterDiscount)
 }
+`
 
 export default function Minifier() {
   const t = useMessages(messages)
@@ -53,7 +53,7 @@ export default function Minifier() {
       transform={transform}
       inputLanguage={EDITOR_LANGUAGES[language]}
       outputFileName={language === "css" ? "style.min.css" : "script.min.js"}
-      sample={SAMPLES[language]}
+      sample={sampleFor(language, t)}
       summary={summary}
       options={
         <Segmented<MinifyLanguage> label={t.language} value={language} options={LANGUAGES} onChange={setLanguage} />

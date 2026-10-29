@@ -2,6 +2,7 @@ import { defineMessages } from "@/i18n/locale"
 
 export const messages = defineMessages(
   {
+    sample: "Gula\u200b itu\u00a0manis dan kopi itu pahit.\nSebuah keluarga: 👨\u200d👩\u200d👧",
     textLabel: "Teks",
     placeholder: "Tempel teks untuk dihitung dan diperiksa…",
     graphemes: "Karakter",
@@ -17,6 +18,7 @@ export const messages = defineMessages(
     position: (line: number, column: number, count: number) => `baris ${line}:${column} · ${count}×`,
   },
   {
+    sample: "Sugar\u200b is\u00a0sweet and coffee is bitter.\nA family: 👨\u200d👩\u200d👧",
     textLabel: "Text",
     placeholder: "Paste text to count and inspect…",
     graphemes: "Characters",
@@ -32,6 +34,7 @@ export const messages = defineMessages(
     position: (line: number, column: number, count: number) => `line ${line}:${column} · ${count}×`,
   },
   {
+    sample: "砂糖\u200bは\u00a0甘く、コーヒーは苦い。\n家族: 👨\u200d👩\u200d👧",
     textLabel: "テキスト",
     placeholder: "数えたり調べたりするテキストを貼り付け…",
     graphemes: "文字数",

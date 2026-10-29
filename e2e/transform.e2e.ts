@@ -58,17 +58,17 @@ test("JSONPath filters with expressions", async ({ page }) => {
 
 test("Base64 and URL encoder produce expected output", async ({ page }) => {
   await openWithSample(page, "/base64")
-  await expect(editorOutput(page)).toHaveText("U3VnYXIgaXMgc3dlZXQg4oCUIMO8bsOvY8O2ZMOp")
+  await expect(editorOutput(page)).toHaveText("R3VsYSBpdHUgbWFuaXMg4oCUIMO8bsOvY8O2ZMOp")
   await openWithSample(page, "/url-encoder")
-  await expect(editorOutput(page)).toHaveText("q%3Dsweet%20sugar%26lang%3Den")
+  await expect(editorOutput(page)).toHaveText("q%3Dgula%20manis%26lang%3Did")
 })
 
 test("HTML entity decode resolves named and numeric entities without parsing tags", async ({ page }) => {
   await openWithSample(page, "/html-entity")
-  await expect(editorOutput(page)).toHaveText("&lt;p class=&quot;note&quot;&gt;Sugar &amp; spice — © 2026&lt;/p&gt;")
+  await expect(editorOutput(page)).toHaveText("&lt;p class=&quot;note&quot;&gt;Gula &amp; rempah — © 2026&lt;/p&gt;")
   await page.getByText("Decode", { exact: true }).click()
   await page.getByRole("button", { name: "Contoh" }).click()
-  await expect(editorOutput(page)).toHaveText("<p>Sugar & spice — © 2026 🍬</p>")
+  await expect(editorOutput(page)).toHaveText("<p>Gula & rempah — © 2026 🍬</p>")
 })
 
 test("TransformTool menu opens with keyboard and offers download", async ({ page }) => {
@@ -181,10 +181,10 @@ test("base64 tool also decodes Base58 and Hex", async ({ page }) => {
   await page.getByText("Decode", { exact: true }).click()
   await page.getByText("Base58", { exact: true }).click()
   await page.getByRole("button", { name: "Contoh" }).click()
-  await expect(editorOutput(page)).toHaveText("Sugar is sweet — ünïcödé")
+  await expect(editorOutput(page)).toHaveText("Gula itu manis — ünïcödé")
   await page.getByText("Hex", { exact: true }).click()
   await page.getByRole("button", { name: "Contoh" }).click()
-  await expect(editorOutput(page)).toHaveText("Sugar is sweet — ünïcödé")
+  await expect(editorOutput(page)).toHaveText("Gula itu manis — ünïcödé")
   await expectAccessible(page)
 })
 

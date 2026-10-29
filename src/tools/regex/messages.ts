@@ -3,6 +3,7 @@ import type { RegexFlag } from "./logic"
 
 export const messages = defineMessages(
   {
+    sample: "Hubungi jane@example.com atau team@gulatools.dev\nalamat lama: admin@example.co.uk",
     pattern: "Pola regex",
     flags: {
       g: "global",
@@ -20,6 +21,7 @@ export const messages = defineMessages(
     empty: "(kosong)",
   },
   {
+    sample: "Contact jane@example.com or team@gulatools.dev\nold address: admin@example.co.uk",
     pattern: "Regex pattern",
     flags: { g: "global", i: "ignore case", m: "multiline", s: "dotAll", u: "unicode" },
     replacement: "Replacement",
@@ -32,6 +34,7 @@ export const messages = defineMessages(
     empty: "(empty)",
   },
   {
+    sample: "連絡先: jane@example.com または team@gulatools.dev\n旧アドレス: admin@example.co.uk",
     pattern: "正規表現パターン",
     flags: { g: "global", i: "大文字小文字を無視", m: "複数行", s: "dotAll", u: "unicode" },
     replacement: "置換文字列",

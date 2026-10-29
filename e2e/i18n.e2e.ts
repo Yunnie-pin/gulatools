@@ -1,4 +1,4 @@
-import { expect, expectAccessible, test } from "./fixtures"
+import { editorOutput, expect, expectAccessible, test } from "./fixtures"
 
 test("English pages live under /en with English UI, metadata, and errors", async ({ page }) => {
   await page.goto("/en/")
@@ -72,4 +72,14 @@ test("Japanese pages live under /ja with Japanese UI and errors", async ({ page 
   await page.getByRole("button", { name: /サイドバー.*固定/ }).click()
   await page.locator("aside").getByText("English", { exact: true }).click()
   await expect(page).toHaveURL(/\/en\/base64$/)
+})
+
+test("samples follow the page language", async ({ page }) => {
+  await page.goto("/ja/slug")
+  await page.getByRole("button", { name: "サンプル" }).click()
+  await expect(editorOutput(page)).toContainText("kyoto-no-cafe-e-yokoso")
+
+  await page.goto("/en/text-stats")
+  await page.getByRole("button", { name: "Sample" }).click()
+  await expect(page.getByLabel("Text", { exact: true })).toHaveValue(/^Sugar/)
 })

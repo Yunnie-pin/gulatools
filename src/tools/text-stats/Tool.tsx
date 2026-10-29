@@ -10,8 +10,6 @@ import { usePersistentState } from "@/lib/persist"
 import { analyzeText, formatCodePoint, type TextStats } from "./logic"
 import { messages } from "./messages"
 
-const SAMPLE = `Sugar${String.fromCodePoint(0x200b)} is${String.fromCodePoint(0xa0)}sweet and coffee is bitter.\nA family: ${String.fromCodePoint(0x1f468, 0x200d, 0x1f469, 0x200d, 0x1f467)}`
-
 const COUNTS = [
   "graphemes",
   "words",
@@ -39,7 +37,7 @@ export default function TextStatsTool() {
           className="font-sans"
         />
         <div className="flex gap-2">
-          <SampleButton onClick={() => setText(SAMPLE)} />
+          <SampleButton onClick={() => setText(t.sample)} />
           <ClearButton onClick={() => setText("")} disabled={!text} />
         </div>
       </GlassPanel>

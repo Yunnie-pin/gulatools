@@ -17,11 +17,7 @@ export default function HtmlEntityTool() {
   return (
     <TransformTool
       transform={transform}
-      sample={
-        mode === "decode"
-          ? "&lt;p&gt;Sugar &amp; spice &mdash; &copy; 2026 &#x1F36C;&lt;/p&gt;"
-          : '<p class="note">Sugar & spice — © 2026</p>'
-      }
+      sample={mode === "decode" ? t.encodedSample : t.sample}
       options={<Segmented<EntityMode> label="Mode" value={mode} options={labeled(MODES, t.modes)} onChange={setMode} />}
     />
   )

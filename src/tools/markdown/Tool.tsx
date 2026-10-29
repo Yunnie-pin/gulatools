@@ -19,30 +19,6 @@ const VIEWS = ["preview", "html"] as const satisfies readonly View[]
 const MARKDOWN = markdown()
 const HTML = htmlLanguage()
 
-const SAMPLE = `# GulaTools
-
-**Sweet** developer tools that run _entirely_ in your browser.
-
-## Features
-
-- [x] Format JSON and SQL
-- [x] Decode JWT
-- [ ] Free coffee
-
-| Tool | Category |
-| ---- | -------- |
-| Base64 | Encoder |
-| UUID | Generator |
-
-> Your data never leaves this device.
-
-\`\`\`ts
-const sugar = "sweet"
-\`\`\`
-
-Visit [GitHub](https://github.com) for the source.
-`
-
 export default function MarkdownTool() {
   const t = useMessages(messages)
   const [input, setInput] = usePersistentState("input", "")
@@ -54,7 +30,7 @@ export default function MarkdownTool() {
       <GlassPanel className="flex flex-wrap items-center gap-3 px-4 py-3">
         <Segmented<View> label={t.view} value={view} options={labeled(VIEWS, t.views)} onChange={setView} />
         <div className="ml-auto flex gap-2">
-          <SampleButton onClick={() => setInput(SAMPLE)} />
+          <SampleButton onClick={() => setInput(t.sample)} />
           <ClearButton onClick={() => setInput("")} disabled={!input} />
         </div>
       </GlassPanel>
