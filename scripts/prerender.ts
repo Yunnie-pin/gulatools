@@ -11,7 +11,7 @@ import { tools, toolsByCategory } from "../src/tools/registry"
 const DIST = join(dirname(fileURLToPath(import.meta.url)), "..", "dist")
 const SITE_URL = process.env.SITE_URL?.replace(/\/$/, "")
 
-const OG_LOCALES: Record<Locale, string> = { id: "id_ID", en: "en_US" }
+const OG_LOCALES: Record<Locale, string> = { id: "id_ID", en: "en_US", ja: "ja_JP" }
 
 const escapeHtml = (text: string) =>
   text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;")

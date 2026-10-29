@@ -9,6 +9,7 @@ export const codeFormatter: Tool = {
   description: {
     id: "Rapikan JavaScript, TypeScript, CSS, HTML, Markdown, GraphQL, YAML, dan XML dengan Prettier.",
     en: "Format JavaScript, TypeScript, CSS, HTML, Markdown, GraphQL, YAML, and XML with Prettier.",
+    ja: "Prettier で JavaScript、TypeScript、CSS、HTML、Markdown、GraphQL、YAML、XML を整形します。",
   },
   category: "formatter",
   keywords: [

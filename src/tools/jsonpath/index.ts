@@ -9,6 +9,7 @@ export const jsonPath: Tool = {
   description: {
     id: "Ambil data dari JSON dengan ekspresi JSONPath, termasuk wildcard, recursive descent, dan filter.",
     en: "Query JSON with JSONPath expressions, including wildcards, recursive descent, and filters.",
+    ja: "JSONPath 式で JSON からデータを取り出します。ワイルドカード、再帰下降、フィルターに対応。",
   },
   category: "converter",
   keywords: ["jsonpath", "json", "query", "filter", "select", "jq", "path"],

@@ -9,6 +9,7 @@ export const urlParser: Tool = {
   description: {
     id: "Pecah URL menjadi protocol, host, port, path, dan fragment, lalu edit query param-nya dalam bentuk tabel.",
     en: "Break a URL into protocol, host, port, path, and fragment, then edit its query params as a table.",
+    ja: "URL をプロトコル、ホスト、ポート、パス、フラグメントに分解し、クエリパラメーターを表形式で編集できます。",
   },
   category: "encoder",
   keywords: ["url", "parse", "parser", "query", "params", "querystring", "host", "path", "uri"],

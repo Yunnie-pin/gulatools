@@ -9,6 +9,7 @@ export const base64: Tool = {
   description: {
     id: "Encode dan decode Base64 (termasuk URL-safe), Base32, Base58, dan Hex. Aman untuk teks Unicode.",
     en: "Encode and decode Base64 (including URL-safe), Base32, Base58, and Hex. Safe for Unicode text.",
+    ja: "Base64（URL セーフ版を含む）、Base32、Base58、Hex のエンコードとデコード。Unicode テキストにも対応。",
   },
   category: "encoder",
   keywords: ["base64", "encode", "decode", "btoa", "atob", "base64url", "base32", "base58", "hex", "bitcoin"],

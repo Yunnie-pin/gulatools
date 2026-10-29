@@ -11,7 +11,7 @@ const variants: Record<Variant, string> = {
 
 export const glassButtonClass = (variant: Variant = "frost", className?: string) =>
   cx(
-    "inline-flex h-9 cursor-pointer items-center justify-center gap-2 rounded-glass-sm px-3.5 text-sm font-medium transition duration-300 ease-spring active:scale-95 disabled:pointer-events-none disabled:opacity-50",
+    "inline-flex h-9 cursor-pointer items-center justify-center gap-2 rounded-glass-sm px-3.5 text-sm font-medium whitespace-nowrap transition duration-300 ease-spring active:scale-95 disabled:pointer-events-none disabled:opacity-50",
     variants[variant],
     className,
   )

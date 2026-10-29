@@ -23,4 +23,15 @@ export const messages = defineMessages(
     hashing: "Hashing…",
     pickFile: "Choose file",
   },
+  {
+    source: "入力元",
+    sources: { text: "テキスト", file: "ファイル" },
+    letterCase: "大文字・小文字",
+    textLabel: "ハッシュ化するテキスト",
+    textPlaceholder: "テキストを入力または貼り付け…",
+    fileLabel: "ハッシュ化するファイル",
+    dropHint: "ここにファイルをドロップ（サイズ制限なし）",
+    hashing: "ハッシュ化中…",
+    pickFile: "ファイルを選択",
+  },
 )

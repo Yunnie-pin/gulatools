@@ -15,4 +15,11 @@ export const messages = defineMessages(
     indent: "Indentation",
     spaces: (n: number) => `${n} spaces`,
   },
+  {
+    dialect: "方言",
+    keywordCase: "キーワードの大文字・小文字",
+    cases: { upper: "大文字", lower: "小文字", preserve: "元のまま" },
+    indent: "インデント",
+    spaces: (n) => `スペース ${n} 個`,
+  },
 )

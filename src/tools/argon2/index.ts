@@ -9,6 +9,7 @@ export const argon2: Tool = {
   description: {
     id: "Hash password dengan Argon2id, Argon2i, Argon2d, atau scrypt, lalu verifikasi hash Argon2.",
     en: "Hash passwords with Argon2id, Argon2i, Argon2d, or scrypt, then verify Argon2 hashes.",
+    ja: "Argon2id、Argon2i、Argon2d、scrypt でパスワードをハッシュ化し、Argon2 ハッシュを検証します。",
   },
   category: "crypto",
   keywords: ["argon2", "argon2id", "scrypt", "kdf", "password", "hash", "verify"],

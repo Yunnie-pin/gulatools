@@ -10,8 +10,9 @@ import { type Mode, useTheme } from "@/lib/theme"
 const MODE_ICONS = { light: Sun, system: Monitor, dark: Moon } as const satisfies Record<Mode, LucideIcon>
 
 const LANGUAGES: readonly SegmentedOption<Locale>[] = [
-  { value: "id", label: "Indonesia" },
   { value: "en", label: "English" },
+  { value: "id", label: "Indonesia" },
+  { value: "ja", label: "日本語" },
 ]
 
 export function ThemeSwitcher({ className }: { className?: string }) {
@@ -58,7 +59,7 @@ export function LanguageSwitcher() {
       value={locale}
       options={LANGUAGES}
       onChange={switchLocale}
-      className="w-full [&>label]:flex-1 [&>label]:justify-center"
+      className="w-full [&>label]:flex-1 [&>label]:justify-center [&>label]:px-2"
     />
   )
 }

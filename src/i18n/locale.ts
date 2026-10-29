@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from "react"
 
-export const LOCALES = ["id", "en"] as const
+export const LOCALES = ["id", "en", "ja"] as const
 
 export type Locale = (typeof LOCALES)[number]
 
@@ -8,24 +8,33 @@ export type Localized = Record<Locale, string>
 
 export type Text = string | Localized
 
-export const LOCALE_NAMES: Record<Locale, string> = { id: "Bahasa Indonesia", en: "English" }
+export const LOCALE_NAMES: Record<Locale, string> = { id: "Bahasa Indonesia", en: "English", ja: "日本語" }
 
 export const DEFAULT_LOCALE: Locale = "id"
 
-const EN_PREFIX = /^\/en(?=\/|$)/
+const PREFIXED = LOCALES.filter((locale) => locale !== DEFAULT_LOCALE)
 
-export const localeFromPath = (pathname: string): Locale => (EN_PREFIX.test(pathname) ? "en" : DEFAULT_LOCALE)
+const PREFIX = new RegExp(`^/(${PREFIXED.join("|")})(?=/|$)`)
 
-export const routerBasename = (locale: Locale) => (locale === "en" ? "/en" : undefined)
+const isLocale = (value: string | undefined): value is Locale => LOCALES.some((locale) => locale === value)
 
-export function localizePath(pathname: string, locale: Locale): string {
-  const path = pathname.replace(EN_PREFIX, "") || "/"
-  if (locale === DEFAULT_LOCALE) return path
-  return path === "/" ? "/en/" : `/en${path}`
+export function localeFromPath(pathname: string): Locale {
+  const prefix = PREFIX.exec(pathname)?.[1]
+  return isLocale(prefix) ? prefix : DEFAULT_LOCALE
 }
 
-export const browserLocale = (): Locale =>
-  globalThis.navigator?.language?.toLowerCase().startsWith("id") ? "id" : "en"
+export const routerBasename = (locale: Locale) => (locale === DEFAULT_LOCALE ? undefined : `/${locale}`)
+
+export function localizePath(pathname: string, locale: Locale): string {
+  const path = pathname.replace(PREFIX, "") || "/"
+  if (locale === DEFAULT_LOCALE) return path
+  return path === "/" ? `/${locale}/` : `/${locale}${path}`
+}
+
+export function browserLocale(): Locale {
+  const language = globalThis.navigator?.language?.toLowerCase().slice(0, 2)
+  return language === "id" || language === "ja" ? language : "en"
+}
 
 let current: Locale = typeof location === "undefined" ? DEFAULT_LOCALE : localeFromPath(location.pathname)
 const listeners = new Set<() => void>()
@@ -63,8 +72,8 @@ export function useLocalize() {
   return (text: Text) => localize(text, locale)
 }
 
-export function defineMessages<T>(id: T, en: NoInfer<T>): Record<Locale, T> {
-  return { id, en }
+export function defineMessages<T>(id: T, en: NoInfer<T>, ja: NoInfer<T>): Record<Locale, T> {
+  return { id, en, ja }
 }
 
 export function useMessages<T>(messages: Record<Locale, T>): T {

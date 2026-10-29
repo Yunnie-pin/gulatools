@@ -19,4 +19,13 @@ export const messages = defineMessages(
     results: { encrypt: "Encrypted result", decrypt: "Decrypted result" },
     formatHint: "Output format: Base64 of salt (16 bytes) + IV (12 bytes) + AES-GCM ciphertext.",
   },
+  {
+    modes: { encrypt: "暗号化", decrypt: "復号" },
+    text: "テキスト",
+    ciphertext: "暗号化データ（Base64）",
+    keyHint: (iterations) => `AES-256 の鍵は PBKDF2-SHA256（${iterations} 回）で導出します。`,
+    processing: "処理中…",
+    results: { encrypt: "暗号化の結果", decrypt: "復号の結果" },
+    formatHint: "出力形式: salt（16 バイト）+ IV（12 バイト）+ AES-GCM 暗号文を Base64 にしたもの。",
+  },
 )

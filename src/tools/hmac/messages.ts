@@ -13,4 +13,10 @@ export const messages = defineMessages(
     secret: "Secret key",
     secretHint: "The key is only used in this browser and is never stored.",
   },
+  {
+    algorithm: "アルゴリズム",
+    message: "メッセージ",
+    secret: "秘密鍵",
+    secretHint: "鍵はこのブラウザ内でのみ使用され、保存されません。",
+  },
 )

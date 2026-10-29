@@ -19,4 +19,13 @@ export const messages = defineMessages(
     semi: "Semicolons",
     singleQuote: "Single quotes",
   },
+  {
+    language: "言語",
+    indent: "インデント",
+    spaces: (n) => `スペース ${n} 個`,
+    printWidth: "行の幅",
+    columns: (n) => `${n} 文字`,
+    semi: "セミコロン",
+    singleQuote: "シングルクォート",
+  },
 )

@@ -31,4 +31,17 @@ export const messages = defineMessages(
     },
     excludeAmbiguous: "Avoid look-alike characters (O 0 l 1 I |)",
   },
+  {
+    strength: { weak: "弱い", fair: "普通", strong: "強い", veryStrong: "非常に強い" },
+    entropy: (bits) => `エントロピー約 ${bits} ビット`,
+    length: "長さ",
+    characters: (n) => `${n} 文字`,
+    charsets: {
+      lower: "小文字（a-z）",
+      upper: "大文字（A-Z）",
+      digits: "数字（0-9）",
+      symbols: "記号（!@#…）",
+    },
+    excludeAmbiguous: "紛らわしい文字を避ける（O 0 l 1 I |）",
+  },
 )

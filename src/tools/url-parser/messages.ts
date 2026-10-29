@@ -21,4 +21,14 @@ export const messages = defineMessages(
     removeN: (n) => `Remove param ${n}`,
     result: "URL",
   },
+  {
+    parts: "URL の構成要素",
+    params: (n) => `クエリパラメーター（${n}）`,
+    add: "追加",
+    noParams: "この URL にはクエリパラメーターがありません。",
+    keyN: (n) => `パラメーター ${n} のキー`,
+    valueN: (n) => `パラメーター ${n} の値`,
+    removeN: (n) => `パラメーター ${n} を削除`,
+    result: "URL",
+  },
 )

@@ -21,4 +21,14 @@ export const messages = defineMessages(
     unmatched: "Not matched",
     regex: "Compiled regex",
   },
+  {
+    dot: "ドットファイル（.env）も対象にする",
+    nocase: "大文字と小文字を区別しない",
+    patterns: "glob パターン",
+    patternsHint: "1 行に 1 パターン。先頭に ! を付けると除外します。",
+    paths: "パス（1 行に 1 つ）",
+    matched: "一致",
+    unmatched: "不一致",
+    regex: "コンパイル後の正規表現",
+  },
 )

@@ -31,4 +31,15 @@ export const messages = defineMessages(
     replaced: "Replace result",
     empty: "(empty)",
   },
+  {
+    pattern: "正規表現パターン",
+    flags: { g: "global", i: "大文字小文字を無視", m: "複数行", s: "dotAll", u: "unicode" },
+    replacement: "置換文字列",
+    replacementPlaceholder: "例: $<user> at $2",
+    testText: "テスト用テキスト",
+    result: "結果",
+    matches: (count, truncated) => `${count}${truncated ? "+" : ""} 件のマッチ`,
+    replaced: "置換結果",
+    empty: "（空）",
+  },
 )

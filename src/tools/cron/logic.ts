@@ -3,6 +3,7 @@ import cronstrue from "cronstrue"
 import { LocalizedError } from "@/i18n/errors"
 import type { Locale } from "@/i18n/locale"
 import "cronstrue/locales/id"
+import "cronstrue/locales/ja"
 import { errorMessage } from "@/lib/result"
 
 export const PRESETS = ["* * * * *", "*/5 * * * *", "0 * * * *", "0 0 * * *", "0 9 * * 1-5", "0 0 1 * *"] as const

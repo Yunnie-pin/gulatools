@@ -9,6 +9,7 @@ export const color: Tool = {
   description: {
     id: "Konversi warna antar HEX, RGB, HSL, dan OKLCH, lengkap dengan cek kontras WCAG.",
     en: "Convert colors between HEX, RGB, HSL, and OKLCH, with a WCAG contrast check.",
+    ja: "HEX、RGB、HSL、OKLCH 間で色を変換し、WCAG のコントラストも確認できます。",
   },
   category: "converter",
   keywords: ["color", "warna", "hex", "rgb", "hsl", "oklch", "contrast", "wcag"],

@@ -9,6 +9,7 @@ export const cssGenerator: Tool = {
   description: {
     id: "Buat CSS gradient, box-shadow berlapis, dan efek glassmorphism dengan pratinjau langsung, lalu salin kodenya.",
     en: "Build CSS gradients, layered box-shadows, and glassmorphism effects with a live preview, then copy the code.",
+    ja: "CSS のグラデーション、重ねがけの box-shadow、グラスモーフィズムをライブプレビューで作成し、コードをコピーできます。",
   },
   category: "generator",
   keywords: ["css", "gradient", "box-shadow", "shadow", "glassmorphism", "glass", "backdrop-filter", "generator"],

@@ -25,4 +25,15 @@ export const messages = defineMessages(
     download: "Download SVG",
     preview: "SVG preview",
   },
+  {
+    placeholder: "SVG を貼り付けるか、.svg ファイルを開く…",
+    precision: "数値の精度",
+    multipass: "マルチパス",
+    pretty: "整形して出力",
+    view: "表示",
+    views: { code: "コード", preview: "プレビュー" },
+    size: (before, after, percent) => `${before} → ${after}（${percent}% 削減）`,
+    download: "SVG をダウンロード",
+    preview: "SVG のプレビュー",
+  },
 )

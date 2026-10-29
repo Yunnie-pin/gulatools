@@ -9,6 +9,7 @@ export const contrast: Tool = {
   description: {
     id: "Cek rasio kontras warna teks dan latar terhadap standar WCAG AA dan AAA, lengkap dengan pratinjau.",
     en: "Check the contrast ratio between text and background colors against WCAG AA and AAA, with a preview.",
+    ja: "文字色と背景色のコントラスト比を WCAG AA / AAA 基準で判定し、プレビューも表示します。",
   },
   category: "converter",
   keywords: ["contrast", "kontras", "wcag", "a11y", "accessibility", "aksesibilitas", "color", "warna", "aa", "aaa"],

@@ -13,4 +13,9 @@ export const messages = defineMessages(
     views: { preview: "Preview", html: "HTML" },
     placeholder: "Write or paste Markdown…",
   },
+  {
+    view: "表示",
+    views: { preview: "プレビュー", html: "HTML" },
+    placeholder: "Markdown を入力または貼り付け…",
+  },
 )

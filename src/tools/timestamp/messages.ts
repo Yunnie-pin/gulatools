@@ -67,4 +67,43 @@ export const messages = defineMessages(
     totalSeconds: "Total seconds",
     totalDays: "Total days",
   },
+  {
+    input: "タイムスタンプまたは日付",
+    placeholder: "1760000000 または 2026-10-13T08:00:00Z",
+    now: "現在",
+    readAs: (unit: string) => `${unit}として解釈`,
+    units: {
+      seconds: "秒",
+      milliseconds: "ミリ秒",
+      microseconds: "マイクロ秒",
+      nanoseconds: "ナノ秒",
+      date: "日付",
+    },
+    unixSeconds: "Unix（秒）",
+    unixMillis: "Unix（ミリ秒）",
+    local: (zone: string) => `ローカル（${zone}）`,
+    relative: "相対時間",
+    zones: "タイムゾーン",
+    addZone: "タイムゾーンを追加",
+    add: "追加",
+    removeZone: (zone: string) => `${zone} を削除`,
+    difference: "差",
+    compareWith: "比較する日付",
+    duration: "差",
+    formatDuration: (duration: Duration) => {
+      const units: [number, string][] = [
+        [duration.days, "日"],
+        [duration.hours, "時間"],
+        [duration.minutes, "分"],
+        [duration.seconds, "秒"],
+      ]
+      const text = units
+        .filter(([value]) => value)
+        .map(([value, unit]) => `${value}${unit}`)
+        .join("")
+      return `${text || "0秒"}${duration.negative ? "前" : "後"}`
+    },
+    totalSeconds: "合計秒数",
+    totalDays: "合計日数",
+  },
 )

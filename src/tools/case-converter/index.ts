@@ -9,6 +9,7 @@ export const caseConverter: Tool = {
   description: {
     id: "Ubah teks ke camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE, dan lainnya.",
     en: "Convert text to camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE, and more.",
+    ja: "テキストを camelCase、PascalCase、snake_case、kebab-case、CONSTANT_CASE などに変換します。",
   },
   category: "text",
   keywords: ["case", "camel", "pascal", "snake", "kebab", "constant", "title", "uppercase", "lowercase"],

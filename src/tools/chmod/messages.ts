@@ -22,4 +22,14 @@ export const messages = defineMessages(
     symbolic: "Symbolic",
     command: "Command",
   },
+  {
+    input: "モード",
+    placeholder: "755、4755、rwxr-xr-x など",
+    classes: { owner: "所有者", group: "グループ", others: "その他" },
+    actions: { read: "読み取り", write: "書き込み", execute: "実行" },
+    specials: "特殊ビット",
+    octal: "8 進数",
+    symbolic: "記号表記",
+    command: "コマンド",
+  },
 )

@@ -16,4 +16,11 @@ export const messages = defineMessages(
     classic: "Start with Lorem ipsum",
     result: "Lorem ipsum",
   },
+  {
+    unit: "単位",
+    units: { paragraphs: "段落", sentences: "文", words: "単語" },
+    count: "数",
+    classic: "Lorem ipsum で始める",
+    result: "Lorem ipsum",
+  },
 )

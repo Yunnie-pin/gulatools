@@ -42,4 +42,21 @@ export const messages = defineMessages<{
     reducedHint:
       "Modern browsers reduce the User-Agent, so Windows 11 still reports Windows 10 and Chrome's minor version is always 0.0.0.",
   },
+  {
+    useMine: "このブラウザの User-Agent を使う",
+    os: "OS",
+    device: "デバイス",
+    deviceType: "デバイスの種類",
+    deviceTypes: {
+      desktop: "デスクトップ",
+      mobile: "モバイル",
+      tablet: "タブレット",
+      smarttv: "スマートテレビ",
+      wearable: "ウェアラブル",
+      console: "ゲーム機",
+      embedded: "組み込み機器",
+    },
+    reducedHint:
+      "最近のブラウザは User-Agent を簡略化しているため、Windows 11 でも Windows 10 と表示され、Chrome のマイナーバージョンは常に 0.0.0 になります。",
+  },
 )

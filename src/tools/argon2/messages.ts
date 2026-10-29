@@ -40,4 +40,23 @@ export const messages = defineMessages(
     match: "Password matches",
     mismatch: "Password does not match",
   },
+  {
+    createHash: "ハッシュを作成",
+    algorithm: "アルゴリズム",
+    scryptHint: "r = 8、p = 1。メモリを約 128 × N × r バイト使います。",
+    memory: "メモリ",
+    memoryHint: "OWASP は Argon2id に 19 MiB 以上を推奨しています。",
+    iterations: "反復回数",
+    parallelism: "並列度",
+    hashing: "ハッシュ化中…",
+    generate: "ハッシュを生成",
+    doneIn: (seconds) => `${seconds.toFixed(2)} 秒で完了`,
+    verify: "Argon2 を検証",
+    hashInfo: (info) =>
+      `${info.variant} · ${info.memoryMiB} MiB · 反復 ${info.iterations} 回 · 並列度 ${info.parallelism}`,
+    checking: "確認中…",
+    check: "一致を確認",
+    match: "パスワードが一致しました",
+    mismatch: "パスワードが一致しません",
+  },
 )

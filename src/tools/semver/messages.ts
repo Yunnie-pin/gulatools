@@ -23,4 +23,15 @@ export const messages = defineMessages(
     notSatisfies: "Does not satisfy",
     invalid: "Not semver",
   },
+  {
+    range: "範囲",
+    versions: "バージョン（1 行に 1 つ）",
+    includePrerelease: "プレリリースを含める（1.0.0-beta）",
+    normalized: "展開した範囲",
+    min: "最小バージョン",
+    best: "一致する最大のバージョン",
+    satisfies: "一致",
+    notSatisfies: "不一致",
+    invalid: "semver ではありません",
+  },
 )

@@ -29,4 +29,18 @@ export const messages = defineMessages(
     fileName: "image",
     downloadImage: "Download image",
   },
+  {
+    modes: { encode: "画像 → Base64", decode: "Base64 → 画像" },
+    preview: "プレビュー",
+    image: "画像",
+    dropHint: "ここに画像をドロップ",
+    pickImage: "画像を選択",
+    dataInput: "データ URI または Base64",
+    rawType: "生の Base64 の種類",
+    imageType: "画像の種類",
+    previewHint: "ここにプレビューが表示されます。",
+    broken: "このデータは画像として表示できません",
+    fileName: "image",
+    downloadImage: "画像をダウンロード",
+  },
 )

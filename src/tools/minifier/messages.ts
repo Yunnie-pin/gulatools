@@ -9,4 +9,8 @@ export const messages = defineMessages(
     language: "Language",
     saved: (before, after, percent) => `${before} → ${after} bytes (−${percent}%)`,
   },
+  {
+    language: "言語",
+    saved: (before, after, percent) => `${before} → ${after} バイト（−${percent}%）`,
+  },
 )

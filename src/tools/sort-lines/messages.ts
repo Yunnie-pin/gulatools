@@ -17,4 +17,12 @@ export const messages = defineMessages(
     trim: "Trim whitespace",
     removeEmpty: "Remove empty lines",
   },
+  {
+    order: "並び順",
+    orders: { keep: "元の順", asc: "A → Z", desc: "Z → A", reverse: "逆順", shuffle: "シャッフル" },
+    unique: "重複を削除",
+    ignoreCase: "大文字と小文字を区別しない",
+    trim: "前後の空白を除去",
+    removeEmpty: "空行を削除",
+  },
 )

@@ -9,6 +9,7 @@ export const urlEncoder: Tool = {
   description: {
     id: "Percent-encode dan decode URL atau query string.",
     en: "Percent-encode and decode URLs or query strings.",
+    ja: "URL やクエリ文字列をパーセントエンコード・デコードします。",
   },
   category: "encoder",
   keywords: ["url", "uri", "percent", "encode", "decode", "query", "escape"],

@@ -9,6 +9,7 @@ export const textEscape: Tool = {
   description: {
     id: "Escape teks agar aman dipakai sebagai string JSON, pola regex, argumen shell, atau literal SQL.",
     en: "Escape text so it is safe to use as a JSON string, regex pattern, shell argument, or SQL literal.",
+    ja: "テキストを JSON 文字列、正規表現パターン、シェル引数、SQL リテラルとして安全に使えるようエスケープします。",
   },
   category: "encoder",
   keywords: ["escape", "unescape", "json", "string", "regex", "shell", "bash", "sql", "quote", "kutip"],

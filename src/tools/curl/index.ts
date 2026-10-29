@@ -9,6 +9,7 @@ export const curl: Tool = {
   description: {
     id: "Ubah perintah cURL menjadi kode JavaScript fetch, Python requests, atau Go net/http.",
     en: "Convert cURL commands into JavaScript fetch, Python requests, or Go net/http code.",
+    ja: "cURL コマンドを JavaScript fetch、Python requests、Go net/http のコードに変換します。",
   },
   category: "converter",
   keywords: ["curl", "fetch", "python", "requests", "go", "http", "request", "api", "convert"],

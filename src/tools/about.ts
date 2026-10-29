@@ -24,6 +24,15 @@ export const about: Record<string, ToolAbout> = {
         "Shrinking a JSON payload before storing or sending it.",
       ],
     },
+    ja: {
+      intro:
+        "JSON Formatter は、読みにくい JSON をインデント付きの見やすい形に整形するか、1 行に圧縮します。構文エラーは正確な位置とともに表示します。",
+      uses: [
+        "1 行で返ってきた API レスポンスを読むとき。",
+        "設定ファイルで抜けているカンマや括弧を探すとき。",
+        "保存や送信の前に JSON ペイロードを小さくするとき。",
+      ],
+    },
   },
   "code-formatter": {
     id: {
@@ -42,6 +51,15 @@ export const about: Record<string, ToolAbout> = {
         "Cleaning up snippets from Stack Overflow or chat before pasting them into a project.",
         "Normalizing indentation in YAML, HTML, or XML files such as pom.xml and SOAP responses.",
         "Checking Prettier output without opening an editor.",
+      ],
+    },
+    ja: {
+      intro:
+        "Code Formatter は Prettier を使って、JavaScript、TypeScript、CSS、HTML、Markdown、GraphQL、YAML、XML を一貫したスタイルに整形します。プロジェクトで Prettier を実行したときと同じ結果を、インストールなしで得られます。",
+      uses: [
+        "Stack Overflow やチャットから拾ったコードを、プロジェクトに貼る前に整えるとき。",
+        "YAML、HTML、または pom.xml や SOAP レスポンスのような XML のインデントをそろえるとき。",
+        "エディターを開かずに Prettier の出力を確認するとき。",
       ],
     },
   },
@@ -64,6 +82,15 @@ export const about: Record<string, ToolAbout> = {
         "Understanding deeply nested JOINs and subqueries.",
       ],
     },
+    ja: {
+      intro:
+        "SQL Formatter は、長いクエリを読みやすい改行とインデントに整形します。PostgreSQL、MySQL、SQLite、SQL Server などの方言に対応し、キーワードを大文字にしてクエリの構造を目立たせることもできます。",
+      uses: [
+        "ORM が生成したクエリやログに 1 行で出力されたクエリを読むとき。",
+        "コードレビューやドキュメントの前にクエリを整えるとき。",
+        "深くネストした JOIN やサブクエリを理解するとき。",
+      ],
+    },
   },
   markdown: {
     id: {
@@ -82,6 +109,15 @@ export const about: Record<string, ToolAbout> = {
         "Drafting a README or pull request description and seeing the result before posting.",
         "Turning Markdown notes into HTML that is safe to paste into a CMS.",
         "Checking the layout of complex Markdown tables.",
+      ],
+    },
+    ja: {
+      intro:
+        "Markdown Preview は、GitHub Flavored Markdown を入力と同時にプレビューします。表、タスクリスト、コードブロックにも対応し、サニタイズ済みの HTML をコピーできます。",
+      uses: [
+        "README やプルリクエストの説明を、投稿前に見た目を確認しながら書くとき。",
+        "Markdown のメモを CMS に安全に貼れる HTML に変換するとき。",
+        "複雑な Markdown の表のレイアウトを確認するとき。",
       ],
     },
   },
@@ -104,6 +140,15 @@ export const about: Record<string, ToolAbout> = {
         "Cutting asset size so pages load faster.",
       ],
     },
+    ja: {
+      intro:
+        "SVG Optimizer は SVGO を使って、SVG からエディターのメタデータ、不要な属性、過剰な数値精度を取り除きます。最適化前後のサイズとプレビューを並べて表示します。",
+      uses: [
+        "Figma、Illustrator、Inkscape から書き出したアイコンを軽くするとき。",
+        "SVG を HTML や React コンポーネントにインラインで埋め込む準備をするとき。",
+        "アセットを小さくしてページの読み込みを速くするとき。",
+      ],
+    },
   },
   curl: {
     id: {
@@ -122,6 +167,15 @@ export const about: Record<string, ToolAbout> = {
         "Moving a request from browser DevTools or API docs into code.",
         "Producing request examples for documentation in several languages.",
         "Understanding what a long curl command actually sends.",
+      ],
+    },
+    ja: {
+      intro:
+        "cURL Converter は、curl コマンドを JavaScript fetch、Python requests、Go net/http のコードに変換します。メソッド、ヘッダー、ボディ、Basic 認証、Cookie を引き継ぎ、DevTools の「Copy as cURL」で使われる $'…' 形式の引用符にも対応しています。",
+      uses: [
+        "ブラウザの DevTools や API ドキュメントのリクエストをコードに移すとき。",
+        "複数の言語でドキュメント用のリクエスト例を作るとき。",
+        "長い curl コマンドが実際に何を送っているかを把握するとき。",
       ],
     },
   },
@@ -144,6 +198,15 @@ export const about: Record<string, ToolAbout> = {
         "Reading legacy XML responses as more compact JSON.",
       ],
     },
+    ja: {
+      intro:
+        "Data Converter は、JSON、YAML、TOML、XML、CSV の間でデータを相互に変換します。変換先の形式が対応する範囲で、ネストした構造を保ちます。",
+      uses: [
+        "設定を YAML から JSON や TOML に移すとき。",
+        "CSV のエクスポートをコードで扱うために JSON に変換するとき。",
+        "古い XML レスポンスを簡潔な JSON として読むとき。",
+      ],
+    },
   },
   "json-to-ts": {
     id: {
@@ -162,6 +225,15 @@ export const about: Record<string, ToolAbout> = {
         "Typing third-party API responses without writing them by hand.",
         "Setting up a Zod schema for runtime data validation.",
         "Documenting the shape of data from a sample payload.",
+      ],
+    },
+    ja: {
+      intro:
+        "JSON to TypeScript は、サンプル JSON から TypeScript のインターフェースや Zod スキーマを生成します。常には存在しないフィールドは省略可能に、null の値は null 許容の型になります。",
+      uses: [
+        "サードパーティ API のレスポンスに、手書きせずに型を付けるとき。",
+        "実行時のデータ検証用に Zod スキーマを用意するとき。",
+        "サンプルのペイロードからデータの形をドキュメント化するとき。",
       ],
     },
   },
@@ -184,6 +256,15 @@ export const about: Record<string, ToolAbout> = {
         "Filtering array elements by the value of a field.",
       ],
     },
+    ja: {
+      intro:
+        "JSONPath は、$.store.book[*].author のような式で JSON ドキュメントの一部を取り出します。ワイルドカード、再帰下降（..）、スライス、?() フィルターに対応し、結果はリアルタイムで更新されます。",
+      uses: [
+        "コード、Postman、Kubernetes で使う前に JSONPath 式を試すとき。",
+        "大きな API レスポンスから特定のフィールドを取り出すとき。",
+        "フィールドの値で配列の要素を絞り込むとき。",
+      ],
+    },
   },
   "json-schema": {
     id: {
@@ -202,6 +283,15 @@ export const about: Record<string, ToolAbout> = {
         "Making sure an API payload matches its contract before sending it.",
         "Testing a new schema against valid and invalid sample data.",
         "Tracking down validation errors raised by a backend.",
+      ],
+    },
+    ja: {
+      intro:
+        "JSON Schema Validator は、Ajv を使って JSON を draft-07、2019-09、2020-12 の JSON Schema で検証します。すべてのエラーを位置のパスと失敗したキーワードとともに表示します。",
+      uses: [
+        "API のペイロードが仕様どおりか、送信前に確認するとき。",
+        "新しいスキーマを、有効なデータと無効なデータでテストするとき。",
+        "バックエンドで発生した検証エラーの原因を探すとき。",
       ],
     },
   },
@@ -224,6 +314,15 @@ export const about: Record<string, ToolAbout> = {
         "Working out how long a token, certificate, or job has been running.",
       ],
     },
+    ja: {
+      intro:
+        "Timestamp は、秒、ミリ秒、マイクロ秒、ナノ秒の Unix タイムスタンプを読みやすい日付に変換し、その逆も行います。単位は桁数から自動で判別します。同じ時刻を複数のタイムゾーンで UTC オフセット（夏時間を含む）とともに表示でき、別の日付との差も計算できます。",
+      uses: [
+        "ログ、データベース、JWT の exp クレームに含まれる時刻を読むとき。",
+        "複数のタイムゾーンにまたがるチームの会議やデプロイを予定するとき。",
+        "トークン、証明書、ジョブがどれくらいの時間有効・稼働しているかを調べるとき。",
+      ],
+    },
   },
   "number-base": {
     id: {
@@ -242,6 +341,15 @@ export const about: Record<string, ToolAbout> = {
         "Reading hex values from a memory dump or register.",
         "Working out bitmasks and flags in binary.",
         "Converting numbers too large for an ordinary calculator.",
+      ],
+    },
+    ja: {
+      intro:
+        "Number Base は、2 進数、8 進数、10 進数、16 進数の間で数値を精度の制限なく変換します。負の数の 2 の補数表現も表示します。",
+      uses: [
+        "メモリダンプやレジスタの 16 進数の値を読むとき。",
+        "ビットマスクやフラグを 2 進数で考えるとき。",
+        "普通の電卓では扱えないほど大きな数を変換するとき。",
       ],
     },
   },
@@ -264,6 +372,15 @@ export const about: Record<string, ToolAbout> = {
         "Understanding what setuid or the sticky bit does before applying it.",
       ],
     },
+    ja: {
+      intro:
+        "Chmod Calculator は、Unix のファイルパーミッションを 8 進数（755）と記号表記（rwxr-xr-x）の間で変換します。特殊ビットの setuid、setgid、スティッキービットも設定できます。",
+      uses: [
+        "スクリプト、ディレクトリ、SSH 鍵に適した chmod の値を選ぶとき。",
+        "ls -l の出力に表示されるパーミッションの意味を読むとき。",
+        "setuid やスティッキービットを適用する前に、その効果を理解するとき。",
+      ],
+    },
   },
   cidr: {
     id: {
@@ -282,6 +399,15 @@ export const about: Record<string, ToolAbout> = {
         "Planning subnets for a VPC, VLAN, or office network.",
         "Checking whether an IP falls inside a given CIDR range.",
         "Writing firewall rules or security groups with the correct range.",
+      ],
+    },
+    ja: {
+      intro:
+        "Subnet Calculator は、192.168.1.0/24 のような IPv4 の CIDR 表記から、ネットワークアドレス、ブロードキャスト、ネットマスク、ワイルドカード、利用可能なホスト範囲を計算します。2001:db8::/48 のような IPv6 では、アドレス範囲、/64 サブネットの数、アドレスの種類、省略形と完全形、ip6.arpa の逆引き DNS 名を表示します。",
+      uses: [
+        "VPC、VLAN、社内ネットワークのサブネットを設計するとき。",
+        "ある IP が特定の CIDR 範囲に含まれるか確認するとき。",
+        "正しい範囲でファイアウォールやセキュリティグループのルールを書くとき。",
       ],
     },
   },
@@ -304,6 +430,15 @@ export const about: Record<string, ToolAbout> = {
         "Building a new schedule and seeing its run times immediately.",
       ],
     },
+    ja: {
+      intro:
+        "Cron Parser は、*/15 9-17 * * 1-5 のような cron 式を自然な文章に変換し、次の 10 回の実行日時を一覧表示します。",
+      uses: [
+        "cron ジョブや GitHub Actions のスケジュールが意図した時刻に動くか確認するとき。",
+        "他の人が書いた cron 式を理解するとき。",
+        "新しいスケジュールを作り、実行日時をすぐに確認するとき。",
+      ],
+    },
   },
   color: {
     id: {
@@ -322,6 +457,15 @@ export const about: Record<string, ToolAbout> = {
         "Translating a color from a design file into the format your CSS uses.",
         "Moving to OKLCH for more perceptually consistent palettes.",
         "Checking legibility before using a color for text.",
+      ],
+    },
+    ja: {
+      intro:
+        "Color Converter は、色を HEX、RGB、HSL、OKLCH に一度に変換し、白と黒に対する WCAG のコントラスト比も表示します。",
+      uses: [
+        "デザインファイルの色を CSS で使う形式に変換するとき。",
+        "知覚的に均一なパレットを作るために OKLCH に移行するとき。",
+        "文字色として使う前に読みやすさを確認するとき。",
       ],
     },
   },
@@ -344,6 +488,15 @@ export const about: Record<string, ToolAbout> = {
         "Checking dark mode color pairs.",
       ],
     },
+    ja: {
+      intro:
+        "Contrast Checker は、文字色と背景色のコントラスト比を計算し、通常のテキストと大きなテキストについて WCAG AA と AAA の基準で判定します。",
+      uses: [
+        "デザインがアクセシビリティの要件を満たしているか確認するとき。",
+        "ブランドカラーの上でも読みやすい文字色を選ぶとき。",
+        "ダークモードの配色を確認するとき。",
+      ],
+    },
   },
   base64: {
     id: {
@@ -362,6 +515,15 @@ export const about: Record<string, ToolAbout> = {
         "Reading a Basic Authorization header or an encoded payload.",
         "Preparing values for a Kubernetes Secret or environment variable.",
         "Reading a Base32 2FA secret, a Base58 ID, or a hex dump.",
+      ],
+    },
+    ja: {
+      intro:
+        "Base64 は、テキストを Base64 にエンコードし、元に戻します。パディングなしの URL セーフ版にも対応しています。Base32（RFC 4648）、Base58（Bitcoin のアルファベット）、Hex も使えます。絵文字や非ラテン文字などの Unicode テキストも UTF-8 で正しく扱います。",
+      uses: [
+        "Basic 認証の Authorization ヘッダーやエンコードされたペイロードを読むとき。",
+        "Kubernetes の Secret や環境変数に入れる値を用意するとき。",
+        "Base32 の 2 段階認証シークレット、Base58 の ID、16 進ダンプを読むとき。",
       ],
     },
   },
@@ -384,6 +546,15 @@ export const about: Record<string, ToolAbout> = {
         "Debugging URLs broken by double encoding.",
       ],
     },
+    ja: {
+      intro:
+        "URL Encoder は、テキストを URL で安全に使えるようパーセントエンコードし、%20 などを元のテキストに戻します。クエリのコンポーネント用と URL 全体用のモードがあります。",
+      uses: [
+        "スペース、&、非 ASCII 文字を含むクエリ文字列を組み立てるとき。",
+        "エンコードされたリダイレクトやコールバックのパラメーターを読むとき。",
+        "二重エンコードで壊れた URL をデバッグするとき。",
+      ],
+    },
   },
   "html-entity": {
     id: {
@@ -402,6 +573,15 @@ export const about: Record<string, ToolAbout> = {
         "Showing HTML snippets as text on a web page.",
         "Reading text from feeds or databases full of entities.",
         "Keeping special characters from breaking markup.",
+      ],
+    },
+    ja: {
+      intro:
+        "HTML Entity は、<、>、&、引用符などの特殊文字を HTML エンティティにし、名前付き（&amp;）や数値（&#39;）のエンティティをテキストに戻します。",
+      uses: [
+        "HTML のコード片を Web ページ上でテキストとして表示するとき。",
+        "エンティティだらけのフィードやデータベースのテキストを読むとき。",
+        "特殊文字でマークアップが壊れるのを防ぐとき。",
       ],
     },
   },
@@ -424,6 +604,15 @@ export const about: Record<string, ToolAbout> = {
         "Building shell commands with arguments that contain spaces or quotes.",
       ],
     },
+    ja: {
+      intro:
+        "Text Escape は、テキストを JSON 文字列、正規表現パターン、シェル引数、SQL リテラルとして安全に使えるようエスケープします。文脈ごとに異なるエスケープ規則を正しく適用します。",
+      uses: [
+        "複数行のテキストを JSON 文字列に入れるとき。",
+        "ドット、括弧、アスタリスクを含むテキストを正規表現で検索するとき。",
+        "スペースや引用符を含む引数でシェルコマンドを組み立てるとき。",
+      ],
+    },
   },
   "image-base64": {
     id: {
@@ -442,6 +631,15 @@ export const about: Record<string, ToolAbout> = {
         "Embedding small icons directly in CSS or HTML email.",
         "Viewing an image returned as a Base64 string by an API.",
         "Preparing placeholder images without a separate file.",
+      ],
+    },
+    ja: {
+      intro:
+        "Image & Base64 は、画像をそのまま使える CSS・HTML スニペット付きの Base64 データ URI に変換するか、Base64 文字列を画像として表示します。",
+      uses: [
+        "小さなアイコンを CSS や HTML メールに直接埋め込むとき。",
+        "API が Base64 文字列で返した画像を確認するとき。",
+        "別ファイルなしでプレースホルダー画像を用意するとき。",
       ],
     },
   },
@@ -464,6 +662,15 @@ export const about: Record<string, ToolAbout> = {
         "Resizing screenshots for documentation.",
       ],
     },
+    ja: {
+      intro:
+        "Image Compressor は、画像を圧縮・リサイズし、WebP、JPEG、PNG に変換します。画像は自分の端末で処理され、どこにもアップロードされません。",
+      uses: [
+        "サイトやアプリにアップロードする前に写真を小さくするとき。",
+        "Web を速くするために PNG や JPEG を WebP に変換するとき。",
+        "ドキュメント用にスクリーンショットをリサイズするとき。",
+      ],
+    },
   },
   qr: {
     id: {
@@ -482,6 +689,15 @@ export const about: Record<string, ToolAbout> = {
         "Making QR codes for links, Wi-Fi, or contacts that will be printed.",
         "Checking what a QR code contains before scanning it with a phone.",
         "Creating SVG QR codes that stay sharp at any size.",
+      ],
+    },
+    ja: {
+      intro:
+        "QR Code は、テキストや URL から QR コードを作成し、PNG または SVG で書き出します。画像から QR コードの内容を読み取ることもできます。",
+      uses: [
+        "印刷するリンク、Wi-Fi、連絡先の QR コードを作るとき。",
+        "スマートフォンで読み取る前に QR コードの中身を確認するとき。",
+        "どのサイズでもくっきり表示される SVG の QR コードを作るとき。",
       ],
     },
   },
@@ -504,6 +720,15 @@ export const about: Record<string, ToolAbout> = {
         "Creating test tokens for development or automated tests.",
       ],
     },
+    ja: {
+      intro:
+        "JWT は、JSON Web Token のヘッダーとペイロードをデコードし、有効期限を表示して、シークレットや公開鍵で署名を検証します。HMAC、RSA、ECDSA、EdDSA で新しいトークンに署名することもできます。",
+      uses: [
+        "認証のデバッグ中にクレームや有効期限を確認するとき。",
+        "トークンが正しい鍵で署名されているか確かめるとき。",
+        "開発や自動テスト用のトークンを作るとき。",
+      ],
+    },
   },
   bcrypt: {
     id: {
@@ -522,6 +747,15 @@ export const about: Record<string, ToolAbout> = {
         "Generating password hashes for database seeds or admin accounts.",
         "Checking whether a password matches a stored hash.",
         "Seeing how the cost factor affects hashing time.",
+      ],
+    },
+    ja: {
+      intro:
+        "Bcrypt は、コスト係数を調整してパスワードのハッシュを作成し、既存の bcrypt ハッシュとパスワードが一致するか確認します。",
+      uses: [
+        "データベースのシードや管理者アカウント用のパスワードハッシュを作るとき。",
+        "パスワードが保存済みのハッシュと一致するか確認するとき。",
+        "コスト係数がハッシュ化の時間にどう影響するか確かめるとき。",
       ],
     },
   },
@@ -544,6 +778,15 @@ export const about: Record<string, ToolAbout> = {
         "Verifying Argon2 hashes taken from a database.",
       ],
     },
+    ja: {
+      intro:
+        "Argon2 & scrypt は、Argon2id、Argon2i、Argon2d、scrypt でパスワードをハッシュ化します。メモリ、反復回数、並列度は調整でき、既存の Argon2 ハッシュの検証もできます。",
+      uses: [
+        "OWASP のパスワード保存ガイドラインに沿った Argon2id ハッシュを作るとき。",
+        "サーバーで使う前にメモリと反復回数のパラメーターを調整するとき。",
+        "データベースから取り出した Argon2 ハッシュを検証するとき。",
+      ],
+    },
   },
   hash: {
     id: {
@@ -562,6 +805,15 @@ export const about: Record<string, ToolAbout> = {
         "Verifying a download against its published checksum.",
         "Producing hashes for cache keys or data deduplication.",
         "Comparing two files without opening them.",
+      ],
+    },
+    ja: {
+      intro:
+        "Hash Generator は、テキストやファイルの MD5、SHA-1、SHA-256、SHA-384、SHA-512 チェックサムを一度に計算します。ファイルはブラウザ内で読み込むため、大きなファイルもアップロード不要です。",
+      uses: [
+        "ダウンロードしたファイルを公開されているチェックサムと照合するとき。",
+        "キャッシュキーやデータの重複排除のためにハッシュを作るとき。",
+        "中身を開かずに 2 つのファイルを比較するとき。",
       ],
     },
   },
@@ -584,6 +836,15 @@ export const about: Record<string, ToolAbout> = {
         "Producing test signatures for a new integration.",
       ],
     },
+    ja: {
+      intro:
+        "HMAC Generator は、メッセージと秘密鍵から SHA-1、SHA-256、SHA-384、SHA-512 の HMAC を計算し、16 進数または Base64 で表示します。",
+      uses: [
+        "Stripe、GitHub などから届く Webhook の署名を検証するとき。",
+        "サーバーに拒否された API リクエストの署名をデバッグするとき。",
+        "新しい連携のテスト用署名を作るとき。",
+      ],
+    },
   },
   aes: {
     id: {
@@ -602,6 +863,15 @@ export const about: Record<string, ToolAbout> = {
         "Sharing a secret note that only opens with a password.",
         "Encrypting sensitive text before storing it somewhere less secure.",
         "Learning how AES-GCM and PBKDF2 work.",
+      ],
+    },
+    ja: {
+      intro:
+        "AES Encrypt は、Web Crypto API を使って AES-256-GCM でテキストを暗号化・復号します。鍵はパスワードから PBKDF2 で導出し、salt と IV は暗号文に含めます。",
+      uses: [
+        "パスワードでしか開けない秘密のメモを共有するとき。",
+        "安全とはいえない場所に保存する前に機密テキストを暗号化するとき。",
+        "AES-GCM と PBKDF2 の仕組みを学ぶとき。",
       ],
     },
   },
@@ -624,6 +894,15 @@ export const about: Record<string, ToolAbout> = {
         "Extracting the public key and kid from an existing certificate or private key.",
       ],
     },
+    ja: {
+      intro:
+        "Key Generator は、RSA、ECDSA（P-256、P-384、P-521）、Ed25519 の鍵ペアを PEM と JWK の形式で作成します。鍵は Web Crypto API で生成され、そのまま JWT の署名に使えます。X.509 証明書の公開鍵を含む既存の鍵も、JWK サムプリント付きで PEM と JWK の間で変換できます。",
+      uses: [
+        "JWT の署名と検証に使う鍵を作るとき。",
+        "OAuth や OpenID Connect の JWKS 用に PEM を JWK に変換するとき。",
+        "既存の証明書や秘密鍵から公開鍵と kid を取り出すとき。",
+      ],
+    },
   },
   totp: {
     id: {
@@ -642,6 +921,15 @@ export const about: Record<string, ToolAbout> = {
         "Testing a 2FA implementation without reaching for a phone.",
         "Creating a new secret and QR code for a test account.",
         "Inspecting an otpauth:// URI taken from a scanned QR code.",
+      ],
+    },
+    ja: {
+      intro:
+        "TOTP / 2FA は、Google Authenticator や Authy と同じ RFC 6238 のワンタイムパスワードを生成します。Base32 のシークレットか otpauth:// URI を貼り付けると、現在のコード、次のコード、読み取り用の QR コードが表示されます。",
+      uses: [
+        "スマートフォンを使わずにアプリの 2 段階認証の実装をテストするとき。",
+        "テスト用アカウントの新しいシークレットと QR コードを作るとき。",
+        "読み取った QR コードの otpauth:// URI の中身を確認するとき。",
       ],
     },
   },
@@ -664,6 +952,15 @@ export const about: Record<string, ToolAbout> = {
         "Matching certificate fingerprints when setting up mTLS or pinning.",
       ],
     },
+    ja: {
+      intro:
+        "X.509 Decoder は、PEM または DER 形式の証明書を読み込み、subject、issuer、有効期間、サブジェクト代替名、鍵用途、SHA-1 と SHA-256 のフィンガープリントを表示します。",
+      uses: [
+        "TLS 証明書の有効期限を確認するとき。",
+        "SAN に含まれるドメインを確認するとき。",
+        "mTLS や証明書ピンニングの設定で証明書のフィンガープリントを照合するとき。",
+      ],
+    },
   },
   password: {
     id: {
@@ -684,6 +981,15 @@ export const about: Record<string, ToolAbout> = {
         "Seeing how strong a password is from its entropy.",
       ],
     },
+    ja: {
+      intro:
+        "Password Generator は、暗号学的に安全な乱数生成器である crypto.getRandomValues を使って強力なランダムパスワードを作ります。長さと文字の種類は調整でき、エントロピーの目安も表示します。",
+      uses: [
+        "新しいアカウントやパスワードマネージャー用に固有のパスワードを作るとき。",
+        "データベース、API、環境変数用のシークレットを生成するとき。",
+        "エントロピーからパスワードの強さを確認するとき。",
+      ],
+    },
   },
   uuid: {
     id: {
@@ -701,6 +1007,14 @@ export const about: Record<string, ToolAbout> = {
         "Creating primary keys for seed data or test fixtures.",
         "Choosing UUID v7 or ULID to keep database indexes ordered.",
         "Generating unique IDs for requests, files, or resources.",
+      ],
+    },
+    ja: {
+      intro: "UUID / ULID は、ランダムな UUID v4、時刻順の UUID v7、ULID を 1 つずつ、またはまとめて生成します。",
+      uses: [
+        "シードデータやテストのフィクスチャ用に主キーを作るとき。",
+        "データベースのインデックスを順序よく保つために UUID v7 や ULID を選ぶとき。",
+        "リクエスト、ファイル、リソースに一意の ID を付けるとき。",
       ],
     },
   },
@@ -723,6 +1037,14 @@ export const about: Record<string, ToolAbout> = {
         "Producing dummy data for databases or tests.",
       ],
     },
+    ja: {
+      intro: "Lorem Ipsum は、段落、文、単語の数を指定して、定番のダミーテキストを生成します。",
+      uses: [
+        "本物のコンテンツができる前に、モックアップやプロトタイプを埋めるとき。",
+        "短いテキストと長いテキストでレイアウトを試すとき。",
+        "データベースやテスト用のダミーデータを作るとき。",
+      ],
+    },
   },
   regex: {
     id: {
@@ -741,6 +1063,15 @@ export const about: Record<string, ToolAbout> = {
         "Building patterns to validate emails, phone numbers, or other formats.",
         "Debugging a regex that does not match as expected.",
         "Trying a replace pattern before running it in code or an editor.",
+      ],
+    },
+    ja: {
+      intro:
+        "Regex Tester は、JavaScript の正規表現をリアルタイムでテストします。すべてのマッチがハイライトされ、キャプチャグループ（名前付きグループを含む）が一覧表示され、置換結果もすぐに確認できます。",
+      uses: [
+        "メールアドレス、電話番号などの形式を検証するパターンを作るとき。",
+        "思ったとおりにマッチしない正規表現をデバッグするとき。",
+        "コードやエディターで実行する前に置換パターンを試すとき。",
       ],
     },
   },
@@ -763,6 +1094,15 @@ export const about: Record<string, ToolAbout> = {
         "Creating a patch to share with a colleague.",
       ],
     },
+    ja: {
+      intro:
+        "Text Diff は、2 つのテキストを行、単語、文字の単位で比較し、追加・削除された部分をハイライトします。結果は unified パッチとしてコピーできます。",
+      uses: [
+        "設定ファイルの 2 つのバージョンを比較するとき。",
+        "バージョン管理されていないテキストの変更点を確認するとき。",
+        "同僚と共有するパッチを作るとき。",
+      ],
+    },
   },
   "json-diff": {
     id: {
@@ -781,6 +1121,15 @@ export const about: Record<string, ToolAbout> = {
         "Comparing API responses before and after a backend change.",
         "Finding configuration differences between environments.",
         "Checking failing snapshot tests without key-order noise.",
+      ],
+    },
+    ja: {
+      intro:
+        "JSON Diff は、2 つの JSON ドキュメントをテキストではなく構造で比較します。キーの順序や書式は無視し、違いを $.user.roles[1] のようなパスとともに表示します。",
+      uses: [
+        "バックエンドの変更前後で API レスポンスを比較するとき。",
+        "環境ごとの JSON 設定の違いを探すとき。",
+        "キーの順序に惑わされずに失敗したスナップショットテストを確認するとき。",
       ],
     },
   },
@@ -803,6 +1152,15 @@ export const about: Record<string, ToolAbout> = {
         "Producing kebab-case URL slugs or file names.",
       ],
     },
+    ja: {
+      intro:
+        "Case Converter は、テキストを camelCase、PascalCase、snake_case、kebab-case、CONSTANT_CASE などの命名スタイルに一度に変換します。",
+      uses: [
+        "言語間でコードを移植するときに変数名を変えるとき。",
+        "snake_case のデータベースのカラムを camelCase のプロパティに対応させるとき。",
+        "kebab-case の URL スラッグやファイル名を作るとき。",
+      ],
+    },
   },
   "text-stats": {
     id: {
@@ -821,6 +1179,15 @@ export const about: Record<string, ToolAbout> = {
         "Checking character limits for meta descriptions, posts, or database columns.",
         "Finding hidden characters that break code or string comparisons.",
         "Spotting bidi controls that can be abused in Trojan Source attacks.",
+      ],
+    },
+    ja: {
+      intro:
+        "Text Stats は、テキストの文字数、単語数、行数、UTF-8 のバイト数を数え、ゼロ幅スペース、ノーブレークスペース、双方向制御文字などの見えない文字を検出します。",
+      uses: [
+        "meta description、投稿、データベースのカラムの文字数制限を確認するとき。",
+        "コードや文字列比較を壊している見えない文字を探すとき。",
+        "Trojan Source 攻撃に悪用されうる双方向制御文字を見つけるとき。",
       ],
     },
   },
@@ -843,6 +1210,15 @@ export const about: Record<string, ToolAbout> = {
         "Shuffling a list of names for a draw or task assignment.",
       ],
     },
+    ja: {
+      intro:
+        "Sort & Dedupe Lines は、テキストの行を自然順に並べ替えるので、file2 は file10 より前に来ます。最初に出てきたものを残して重複を削除でき、並び順を逆にしたりシャッフルしたりもできます。",
+      uses: [
+        "重複のあるメールアドレス、ドメイン、ID の一覧を整理するとき。",
+        "import、依存関係、設定項目を並べ替えるとき。",
+        "抽選や担当決めのために名前の一覧をシャッフルするとき。",
+      ],
+    },
   },
   slug: {
     id: {
@@ -861,6 +1237,15 @@ export const about: Record<string, ToolAbout> = {
         "Creating SEO-friendly permalinks for blog posts or product pages.",
         "Deriving safe file names or IDs from free-form titles.",
         "Converting many titles to slugs at once.",
+      ],
+    },
+    ja: {
+      intro:
+        "Slug Generator は、タイトルを英数字と区切り文字だけの URL スラッグに変換します。アクセント付きの文字は置き換え（é は e、ß は ss）、各行を個別に処理します。",
+      uses: [
+        "ブログ記事や商品ページの SEO に適したパーマリンクを作るとき。",
+        "自由なタイトルから安全なファイル名や ID を作るとき。",
+        "たくさんのタイトルをまとめてスラッグにするとき。",
       ],
     },
   },
@@ -883,6 +1268,15 @@ export const about: Record<string, ToolAbout> = {
         "Debugging URLs with repeated keys or special characters.",
       ],
     },
+    ja: {
+      intro:
+        "URL Parser は、URL をプロトコル、ユーザー名、ホスト、ポート、パス、クエリ、フラグメントに分解し、すべてデコードして表示します。クエリパラメーターは編集可能な表で表示され、正しいエンコードで URL を組み立て直します。",
+      uses: [
+        "長い URL からトラッキング、リダイレクト、コールバックのパラメーターを読むとき。",
+        "エンコードを間違えずにクエリパラメーターを変更・追加するとき。",
+        "キーの重複や特殊文字を含む URL をデバッグするとき。",
+      ],
+    },
   },
   semver: {
     id: {
@@ -901,6 +1295,15 @@ export const about: Record<string, ToolAbout> = {
         "Understanding why npm installed a particular version of a dependency.",
         "Checking whether a new release will be picked up by a range in package.json.",
         "Learning how ^, ~, and explicit ranges differ, including the special 0.x behavior.",
+      ],
+    },
+    ja: {
+      intro:
+        "SemVer Checker は、npm と同じ semver ライブラリを使って、semver の範囲を満たすバージョンを確認します。^1.2.0 や ~2.3 のような範囲を完全な上下限に展開し、一致する最大のバージョンを表示します。",
+      uses: [
+        "npm が依存関係の特定のバージョンをインストールした理由を理解するとき。",
+        "新しいリリースが package.json の範囲で取り込まれるか確認するとき。",
+        "0.x 特有の挙動を含め、^、~、明示的な範囲の違いを学ぶとき。",
       ],
     },
   },
@@ -923,6 +1326,15 @@ export const about: Record<string, ToolAbout> = {
         "Understanding the difference between * and ** and how dotfiles are handled.",
       ],
     },
+    ja: {
+      intro:
+        "Glob Tester は、src/**/*.ts のような glob パターンをパスの一覧に対して試し、一致したものとしなかったものに分けます。! で始まるパターンは除外として扱い、各パターンをコンパイルした正規表現も表示します。",
+      uses: [
+        "tsconfig、ESLint、Vite、CI の include / exclude パターンを書くとき。",
+        "思ったとおりに動かない .gitignore や .dockerignore をデバッグするとき。",
+        "* と ** の違いや、ドットファイルの扱いを理解するとき。",
+      ],
+    },
   },
   gzip: {
     id: {
@@ -941,6 +1353,15 @@ export const about: Record<string, ToolAbout> = {
         "Reading compressed payloads from logs, cookies, or message queues.",
         "Estimating how much smaller a payload gets once compressed.",
         "Preparing compressed data for tests or fixtures.",
+      ],
+    },
+    ja: {
+      intro:
+        "Gzip / Deflate は、ブラウザ標準の CompressionStream を使って gzip、zlib、raw deflate でテキストを圧縮し、結果を Base64 で表示します。展開するときは、データのヘッダーから形式を自動で判別します。",
+      uses: [
+        "ログ、Cookie、メッセージキューに含まれる圧縮されたペイロードを読むとき。",
+        "ペイロードが圧縮でどれだけ小さくなるかを見積もるとき。",
+        "テストやフィクスチャ用の圧縮データを用意するとき。",
       ],
     },
   },
@@ -963,6 +1384,15 @@ export const about: Record<string, ToolAbout> = {
         "Turning the docker run example from an image's README into config you can keep in a repo.",
       ],
     },
+    ja: {
+      intro:
+        "Docker run → Compose は、docker run コマンドを compose.yaml のサービスに変換します。ポート、ボリューム、環境変数、再起動ポリシー、ネットワーク、ヘルスチェック、ログ設定を対応する Compose のキーに割り当て、変換できなかったオプションはコメントとして残します。",
+      uses: [
+        "手動で起動しているコンテナを Docker Compose に移すとき。",
+        "複数の docker run コマンドを 1 つの compose ファイルにまとめるとき。",
+        "イメージの README にある docker run の例を、リポジトリで管理できる設定にするとき。",
+      ],
+    },
   },
   "user-agent": {
     id: {
@@ -981,6 +1411,15 @@ export const about: Record<string, ToolAbout> = {
         "Reading User-Agents from server logs or bug reports.",
         "Checking your own browser's User-Agent while debugging compatibility issues.",
         "Understanding why device detection in an app gives the wrong result.",
+      ],
+    },
+    ja: {
+      intro:
+        "User-Agent Parser は、ua-parser-js を使って User-Agent 文字列を読み取り、ブラウザ、エンジン、OS、デバイスの種類、モデル、CPU アーキテクチャを表示します。",
+      uses: [
+        "サーバーログやバグ報告にある User-Agent を読むとき。",
+        "互換性の問題をデバッグしながら自分のブラウザの User-Agent を確認するとき。",
+        "アプリのデバイス判定が誤っている理由を調べるとき。",
       ],
     },
   },
@@ -1003,6 +1442,15 @@ export const about: Record<string, ToolAbout> = {
         "Preparing a bookmarklet or small snippet without setting up a build tool.",
       ],
     },
+    ja: {
+      intro:
+        "JS & CSS Minifier は、多くのビルドツールでも使われている Terser で JavaScript を、CSSO で CSS を圧縮します。コメントと空白を取り除き、ローカル変数名を短くし、同じ CSS ルールをまとめます。",
+      uses: [
+        "HTML にインラインで埋め込むスクリプトやスタイルシートを小さくするとき。",
+        "圧縮後のコードのサイズを確認するとき。",
+        "ビルドツールを用意せずにブックマークレットや小さなスニペットを作るとき。",
+      ],
+    },
   },
   "css-generator": {
     id: {
@@ -1021,6 +1469,15 @@ export const about: Record<string, ToolAbout> = {
         "Creating gradient backgrounds for hero sections or buttons.",
         "Stacking shadow layers that look more natural than a single box-shadow.",
         "Making frosted glass cards or panels for a modern UI.",
+      ],
+    },
+    ja: {
+      intro:
+        "CSS Generator は、線形・放射状のグラデーション、重ねがけの box-shadow、backdrop-filter を使ったグラスモーフィズムの CSS を作成します。変更はすぐにライブプレビューに反映され、Safari でまだ必要な -webkit- プレフィックスを含むコードをそのままコピーできます。",
+      uses: [
+        "ヒーローセクションやボタンのグラデーション背景を作るとき。",
+        "1 つの box-shadow より自然に見える重ねがけの影を作るとき。",
+        "モダンな UI 向けにすりガラス風のカードやパネルを作るとき。",
       ],
     },
   },

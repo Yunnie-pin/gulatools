@@ -27,4 +27,17 @@ export const messages = defineMessages(
     algorithm: "JWT algorithm",
     thumbprint: "JWK thumbprint (kid)",
   },
+  {
+    modes: { generate: "生成", convert: "PEM ↔ JWK 変換" },
+    keyType: "鍵の種類",
+    generating: "生成中…",
+    generate: "鍵ペアを生成",
+    jwtAlg: (alg) => `JWT アルゴリズム: ${alg}`,
+    keyInput: "PEM または JWK の鍵",
+    keyPlaceholder: '-----BEGIN PUBLIC KEY-----\n…\n-----END PUBLIC KEY-----\n\nまたは {"kty": "EC", …}',
+    keyHint:
+      "PUBLIC KEY、PRIVATE KEY（PKCS#8）、CERTIFICATE、JWK に対応しています。鍵はこのブラウザ内でのみ処理され、保存されません。",
+    algorithm: "JWT アルゴリズム",
+    thumbprint: "JWK サムプリント（kid）",
+  },
 )

@@ -32,4 +32,20 @@ export const messages = defineMessages(
     download: "Download",
     processing: "Processing…",
   },
+  {
+    image: "画像",
+    pickImage: "画像を選択",
+    dropHint:
+      "ここに画像をドロップするか、ファイルを選択してください。画像はブラウザ内で処理され、アップロードされることはありません。",
+    original: "元画像",
+    result: "結果",
+    format: "形式",
+    formats: { webp: "WebP", jpeg: "JPEG", png: "PNG" },
+    quality: "品質",
+    width: "幅（px）",
+    smaller: (percent) => `${percent}% 小さくなりました`,
+    larger: (percent) => `${percent}% 大きくなりました`,
+    download: "ダウンロード",
+    processing: "処理中…",
+  },
 )

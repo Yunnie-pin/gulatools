@@ -29,4 +29,18 @@ export const messages = defineMessages(
     contents: "QR code contents",
     nothingScanned: "No image scanned yet.",
   },
+  {
+    modes: { create: "作成", scan: "読み取り" },
+    textOrUrl: "テキストまたは URL",
+    errorCorrection: "誤り訂正",
+    levelHint: "レベルが高いほど汚れや欠けに強くなりますが、コードは細かくなります。",
+    qrFor: (text) => `${text} の QR コード`,
+    qrImage: "QR コード画像",
+    scannedImage: "読み取った画像",
+    dropHint: "QR コードを含む画像をここにドロップ",
+    reading: "読み取り中…",
+    pickImage: "画像を選択",
+    contents: "QR コードの内容",
+    nothingScanned: "まだ画像を読み取っていません。",
+  },
 )

@@ -29,4 +29,18 @@ export const messages = defineMessages(
     match: "Password matches",
     mismatch: "Password does not match",
   },
+  {
+    tooLong: "72 バイトを超えています。bcrypt は先頭の 72 バイトしか使いません。",
+    createHash: "ハッシュを作成",
+    costHint: "1 増やすごとにハッシュ化の時間が 2 倍になります。10〜12 が一般的です。",
+    hashing: "ハッシュ化中…",
+    generate: "ハッシュを生成",
+    doneIn: (seconds) => `${seconds.toFixed(2)} 秒で完了`,
+    verify: "検証",
+    hashInfo: (version, cost, salt) => `バージョン $${version}$ · コスト ${cost} · salt ${salt}`,
+    checking: "確認中…",
+    check: "一致を確認",
+    match: "パスワードが一致しました",
+    mismatch: "パスワードが一致しません",
+  },
 )

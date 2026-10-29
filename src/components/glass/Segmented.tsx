@@ -31,7 +31,7 @@ export function Segmented<T extends string | number>({
           key={String(option.value)}
           title={iconOnly ? option.label : undefined}
           className={cx(
-            "inline-flex cursor-pointer items-center gap-1.5 rounded-[7px] px-3 py-1 text-sm text-ink-soft transition duration-300 ease-glass hover:text-ink has-checked:bg-white has-checked:text-ink has-checked:shadow-sm has-focus-visible:outline-2 has-focus-visible:outline-focus dark:has-checked:bg-white/15",
+            "inline-flex cursor-pointer items-center gap-1.5 rounded-[7px] px-3 py-1 text-sm whitespace-nowrap text-ink-soft transition duration-300 ease-glass hover:text-ink has-checked:bg-white has-checked:text-ink has-checked:shadow-sm has-focus-visible:outline-2 has-focus-visible:outline-focus dark:has-checked:bg-white/15",
             iconOnly && "flex-1 justify-center px-0 py-1.5",
           )}
         >

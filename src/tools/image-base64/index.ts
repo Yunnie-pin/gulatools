@@ -9,6 +9,7 @@ export const imageBase64: Tool = {
   description: {
     id: "Ubah gambar jadi data URI/Base64 (plus snippet CSS & HTML), atau tampilkan Base64 sebagai gambar.",
     en: "Turn images into data URIs/Base64 (plus CSS & HTML snippets), or preview Base64 as an image.",
+    ja: "画像をデータ URI / Base64 に変換（CSS・HTML スニペット付き）するか、Base64 を画像としてプレビューします。",
   },
   category: "encoder",
   keywords: ["image", "gambar", "base64", "data uri", "datauri", "png", "jpg", "svg", "inline"],

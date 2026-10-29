@@ -16,6 +16,10 @@ describe("explainCron", () => {
     )
   })
 
+  it("describes the schedule in Japanese once the cronstrue locale is loaded", () => {
+    expect(explainCron("0 9 * * 1-5", { locale: "ja", count: 1, from }).description).toContain("月曜日 から 金曜日")
+  })
+
   it("lists upcoming runs in order", () => {
     const runs = explainCron("*/15 * * * *", { count: 3, from }).nextRuns.map((d) => d.toTimeString().slice(0, 5))
     expect(runs).toEqual(["10:15", "10:30", "10:45"])

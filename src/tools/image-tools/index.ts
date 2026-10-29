@@ -9,6 +9,7 @@ export const imageTools: Tool = {
   description: {
     id: "Kompres, ubah ukuran, dan konversi gambar ke WebP, JPEG, atau PNG langsung di browser tanpa unggah.",
     en: "Compress, resize, and convert images to WebP, JPEG, or PNG right in your browser, with no upload.",
+    ja: "画像を圧縮・リサイズし、WebP、JPEG、PNG に変換します。アップロード不要でブラウザ内で完結。",
   },
   category: "converter",
   keywords: ["image", "gambar", "compress", "kompres", "resize", "webp", "jpeg", "png", "convert", "foto"],

@@ -57,3 +57,19 @@ test.describe("English browser on an Indonesian page", () => {
     await expect(hint).toHaveCount(0)
   })
 })
+
+test("Japanese pages live under /ja with Japanese UI and errors", async ({ page }) => {
+  await page.goto("/ja/base64")
+  await expect(page.locator("html")).toHaveAttribute("lang", "ja")
+  await expect(page.getByRole("button", { name: "お気に入りに追加" })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Base64 について" })).toBeVisible()
+  await page.getByText("Decode", { exact: true }).click()
+  await page.locator(".cm-content").first().click()
+  await page.keyboard.type("%%%")
+  await expect(page.getByRole("alert")).toHaveText("有効な Base64 ではありません")
+  await expectAccessible(page)
+
+  await page.getByRole("button", { name: /サイドバー.*固定/ }).click()
+  await page.locator("aside").getByText("English", { exact: true }).click()
+  await expect(page).toHaveURL(/\/en\/base64$/)
+})

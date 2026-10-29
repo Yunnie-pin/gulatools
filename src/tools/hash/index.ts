@@ -9,6 +9,7 @@ export const hash: Tool = {
   description: {
     id: "Hitung MD5, SHA-1, SHA-256, SHA-384, dan SHA-512 dari teks atau file.",
     en: "Compute MD5, SHA-1, SHA-256, SHA-384, and SHA-512 of text or files.",
+    ja: "テキストやファイルの MD5、SHA-1、SHA-256、SHA-384、SHA-512 を計算します。",
   },
   category: "crypto",
   keywords: ["hash", "md5", "sha1", "sha256", "sha512", "checksum", "digest"],

@@ -22,8 +22,17 @@ describe("locale paths", () => {
     expect(localizePath("/jwt", "id")).toBe("/jwt")
   })
 
-  it("gives the router a basename only for English", () => {
+  it("gives the router a basename for every non-default language", () => {
     expect(routerBasename("en")).toBe("/en")
+    expect(routerBasename("ja")).toBe("/ja")
     expect(routerBasename("id")).toBeUndefined()
+  })
+
+  it("handles Japanese the same way, including switching straight between prefixed languages", () => {
+    expect(localeFromPath("/ja/jwt")).toBe("ja")
+    expect(localeFromPath("/japan")).toBe("id")
+    expect(localizePath("/ja/jwt", "en")).toBe("/en/jwt")
+    expect(localizePath("/en/", "ja")).toBe("/ja/")
+    expect(localizePath("/ja/jwt", "id")).toBe("/jwt")
   })
 })

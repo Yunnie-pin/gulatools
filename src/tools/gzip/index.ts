@@ -9,6 +9,7 @@ export const gzip: Tool = {
   description: {
     id: "Kompres teks dengan gzip, zlib, atau raw deflate menjadi Base64, atau dekompres Base64 kembali ke teks dengan deteksi format otomatis.",
     en: "Compress text with gzip, zlib, or raw deflate into Base64, or decompress Base64 back to text with automatic format detection.",
+    ja: "gzip、zlib、raw deflate でテキストを圧縮して Base64 にするか、Base64 を形式の自動判別付きでテキストに展開します。",
   },
   category: "encoder",
   keywords: ["gzip", "deflate", "zlib", "compress", "decompress", "inflate", "base64", "kompres"],

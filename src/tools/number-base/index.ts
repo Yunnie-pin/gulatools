@@ -9,6 +9,7 @@ export const numberBase: Tool = {
   description: {
     id: "Konversi bilangan antara biner, oktal, desimal, dan heksadesimal tanpa batas presisi, lengkap dengan two's complement.",
     en: "Convert numbers between binary, octal, decimal, and hexadecimal with arbitrary precision, including two's complement.",
+    ja: "2 進数、8 進数、10 進数、16 進数を精度の制限なく相互変換します。2 の補数にも対応。",
   },
   category: "converter",
   keywords: ["number", "base", "radix", "binary", "octal", "decimal", "hex", "bilangan", "biner", "basis"],
