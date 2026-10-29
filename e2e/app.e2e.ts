@@ -7,7 +7,28 @@ test("pages set their document title", async ({ page }) => {
   await page.goto("/jwt")
   await expect(page).toHaveTitle("JWT · GulaTools")
   await page.goto("/tidak-ada")
-  await expect(page.getByRole("heading", { name: "Tool tidak ditemukan" })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Halaman tidak ditemukan" })).toBeVisible()
+  await expect(page).toHaveTitle("Halaman tidak ditemukan · GulaTools")
+})
+
+test("404 page suggests the tool a mistyped URL was probably after", async ({ page }) => {
+  await page.goto("/jwtt")
+  await expect(page.getByText("/jwtt", { exact: true })).toBeVisible()
+  const suggestions = page.getByRole("navigation", { name: "Mungkin maksud kamu" })
+  await suggestions.getByRole("link", { name: /^JWT/ }).click()
+  await expect(page).toHaveURL(/\/jwt$/)
+  await expect(page.getByRole("heading", { level: 1, name: "JWT" })).toBeVisible()
+
+  await page.goto("/en/zzzzqqq")
+  await expect(page.getByRole("heading", { name: "Page not found" })).toBeVisible()
+  await expect(page.getByRole("navigation", { name: "Did you mean" })).toHaveCount(0)
+  await page
+    .getByRole("main")
+    .getByRole("button", { name: /Search tools/ })
+    .click()
+  await expect(page.getByRole("dialog", { name: "Search tools" })).toBeVisible()
+  await page.keyboard.press("Escape")
+  await expectAccessible(page)
 })
 
 test("skip link and focus move to the main content", async ({ page }) => {

@@ -1,4 +1,3 @@
-import Fuse from "fuse.js"
 import { Search } from "lucide-react"
 import { type KeyboardEvent, useEffect, useId, useMemo, useRef, useState } from "react"
 import { useNavigate } from "react-router"
@@ -10,8 +9,7 @@ import { onOpenPalette } from "@/lib/palette"
 import { CATEGORIES, type Tool } from "@/lib/tool"
 import { useUsage } from "@/lib/usage"
 import { resolveTools, tools } from "@/tools/registry"
-
-const fuse = new Fuse(tools, { keys: ["name", "keywords", "description.id", "description.en"], threshold: 0.4 })
+import { searchTools } from "@/tools/search"
 
 export function CommandPalette() {
   const id = useId()
@@ -24,7 +22,7 @@ export function CommandPalette() {
 
   const { recent } = useUsage()
   const results = useMemo(() => {
-    if (query.trim()) return fuse.search(query).map((r) => r.item)
+    if (query.trim()) return searchTools(query)
     const first = resolveTools(recent.map((entry) => entry.id))
     return [...first, ...tools.filter((tool) => !first.includes(tool))]
   }, [query, recent])

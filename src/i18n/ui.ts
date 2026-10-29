@@ -89,9 +89,12 @@ export const ui = defineMessages(
       privacy: "Semua proses berjalan di browser kamu. Input tidak pernah dikirim ke server.",
     },
     notFound: {
-      meta: "Tidak ditemukan",
-      title: "Tool tidak ditemukan",
+      meta: "Halaman tidak ditemukan",
+      title: "Halaman tidak ditemukan",
+      lead: "Tidak ada halaman di alamat ini:",
+      suggestions: "Mungkin maksud kamu",
       back: "Kembali ke beranda",
+      search: "Cari tool",
     },
     routeError: {
       title: "Tool gagal dimuat",
@@ -187,9 +190,12 @@ export const ui = defineMessages(
       privacy: "Everything runs in your browser. Your input is never sent to a server.",
     },
     notFound: {
-      meta: "Not found",
-      title: "Tool not found",
+      meta: "Page not found",
+      title: "Page not found",
+      lead: "There is no page at this address:",
+      suggestions: "Did you mean",
       back: "Back to home",
+      search: "Search tools",
     },
     routeError: {
       title: "Tool failed to load",
@@ -285,9 +291,12 @@ export const ui = defineMessages(
       privacy: "すべての処理はブラウザ内で行われ、入力内容がサーバーに送信されることはありません。",
     },
     notFound: {
-      meta: "見つかりません",
-      title: "ツールが見つかりません",
+      meta: "ページが見つかりません",
+      title: "ページが見つかりません",
+      lead: "このアドレスにはページがありません:",
+      suggestions: "もしかして",
       back: "ホームに戻る",
+      search: "ツールを検索",
     },
     routeError: {
       title: "ツールを読み込めませんでした",

@@ -121,7 +121,10 @@ const fileOf = ({ route, locale }: Page) => {
 
 const template = await readFile(join(DIST, "index.html"), "utf8")
 
-await writeFile(join(DIST, "404.html"), template)
+await writeFile(
+  join(DIST, "404.html"),
+  template.replace("</head>", '  <meta name="robots" content="noindex" />\n  </head>'),
+)
 
 for (const page of pages) {
   const file = fileOf(page)
