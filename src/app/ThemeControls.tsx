@@ -1,7 +1,7 @@
 import { Check, type LucideIcon, Monitor, Moon, Sun } from "lucide-react"
 import { useId } from "react"
 import { Segmented, type SegmentedOption } from "@/components/glass/Segmented"
-import { type Locale, setLocale, useLocale, useMessages } from "@/i18n/locale"
+import { type Locale, switchLocale, useLocale, useMessages } from "@/i18n/locale"
 import { ui } from "@/i18n/ui"
 import { BACKGROUND_IDS, backgroundThumbUrl } from "@/lib/backgrounds"
 import { cx } from "@/lib/cx"
@@ -57,7 +57,7 @@ export function LanguageSwitcher() {
       label={ui[locale].shell.language}
       value={locale}
       options={LANGUAGES}
-      onChange={setLocale}
+      onChange={switchLocale}
       className="w-full [&>label]:flex-1 [&>label]:justify-center"
     />
   )

@@ -1,4 +1,4 @@
-import { createPersistentStore } from "@/lib/store"
+import { useSyncExternalStore } from "react"
 
 export const LOCALES = ["id", "en"] as const
 
@@ -10,25 +10,50 @@ export type Text = string | Localized
 
 export const LOCALE_NAMES: Record<Locale, string> = { id: "Bahasa Indonesia", en: "English" }
 
-const isLocale = (value: unknown): value is Locale => LOCALES.some((locale) => locale === value)
+export const DEFAULT_LOCALE: Locale = "id"
 
-const detect = (): Locale => (globalThis.navigator?.language?.toLowerCase().startsWith("id") ? "id" : "en")
+const EN_PREFIX = /^\/en(?=\/|$)/
 
-const store = createPersistentStore<Locale>("gulatools:locale", detect, (raw) => (isLocale(raw) ? raw : undefined))
+export const localeFromPath = (pathname: string): Locale => (EN_PREFIX.test(pathname) ? "en" : DEFAULT_LOCALE)
+
+export const routerBasename = (locale: Locale) => (locale === "en" ? "/en" : undefined)
+
+export function localizePath(pathname: string, locale: Locale): string {
+  const path = pathname.replace(EN_PREFIX, "") || "/"
+  if (locale === DEFAULT_LOCALE) return path
+  return path === "/" ? "/en/" : `/en${path}`
+}
+
+export const browserLocale = (): Locale =>
+  globalThis.navigator?.language?.toLowerCase().startsWith("id") ? "id" : "en"
+
+let current: Locale = typeof location === "undefined" ? DEFAULT_LOCALE : localeFromPath(location.pathname)
+const listeners = new Set<() => void>()
 
 const applyLang = (locale: Locale) => {
   if (typeof document !== "undefined") document.documentElement.lang = locale
 }
 
-applyLang(store.get())
+applyLang(current)
 
-export const useLocale = store.use
+const subscribe = (listener: () => void) => {
+  listeners.add(listener)
+  return () => listeners.delete(listener)
+}
 
-export const getLocale = store.get
+export const getLocale = () => current
+
+export const useLocale = () => useSyncExternalStore(subscribe, getLocale)
 
 export function setLocale(locale: Locale) {
-  store.set(locale)
+  current = locale
   applyLang(locale)
+  for (const listener of listeners) listener()
+}
+
+export function switchLocale(locale: Locale) {
+  const { pathname, search, hash } = window.location
+  window.location.assign(`${localizePath(pathname, locale)}${search}${hash}`)
 }
 
 export const localize = (text: Text, locale: Locale) => (typeof text === "string" ? text : text[locale])

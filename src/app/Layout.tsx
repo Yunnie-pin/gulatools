@@ -8,6 +8,7 @@ import { cx } from "@/lib/cx"
 import { useSidebarPinned } from "@/lib/sidebar"
 import { AboutDialog } from "./AboutDialog"
 import { CommandPalette } from "./CommandPalette"
+import { LanguageHint } from "./LanguageHint"
 import { Sidebar } from "./Sidebar"
 
 function useFocusOnNavigation() {
@@ -47,6 +48,7 @@ export function Layout() {
       >
         <Sidebar />
         <main ref={mainRef} id="content" tabIndex={-1} className="flex min-w-0 flex-1 flex-col outline-none">
+          <LanguageHint />
           <Outlet />
         </main>
       </div>

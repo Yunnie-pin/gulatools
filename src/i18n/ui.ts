@@ -63,6 +63,8 @@ export const ui = defineMessages(
       aboutBody:
         "GulaTools adalah proyek open source berlisensi MIT. Kode sumbernya tersedia di GitHub, silakan lihat, laporkan masalah, atau ikut berkontribusi.",
       viewOnGithub: "Lihat di GitHub",
+      languageHint: "Halaman ini juga tersedia dalam Bahasa Indonesia.",
+      openLanguage: "Buka versi Indonesia",
       close: "Tutup",
     },
     home: {
@@ -159,6 +161,8 @@ export const ui = defineMessages(
       aboutBody:
         "GulaTools is an open source project under the MIT license. The source code is on GitHub, where you can browse it, report issues, or contribute.",
       viewOnGithub: "View on GitHub",
+      languageHint: "This page is also available in English.",
+      openLanguage: "Open the English version",
       close: "Close",
     },
     home: {
