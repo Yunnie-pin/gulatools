@@ -7,6 +7,10 @@ updates:
     cooldown:
       default-days: 14
     open-pull-requests-limit: 5
+    ignore:
+      # ua-parser-js 2.x is AGPL-3.0; stay on the MIT-licensed 1.x line
+      - dependency-name: ua-parser-js
+        update-types: ["version-update:semver-major"]
     groups:
       dev:
         dependency-type: development
