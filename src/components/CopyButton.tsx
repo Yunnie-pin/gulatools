@@ -2,10 +2,12 @@ import { Check, Copy } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useMessages } from "@/i18n/locale"
 import { ui } from "@/i18n/ui"
+import { shortcutTarget } from "@/lib/shortcuts"
 import { toast } from "@/lib/toast"
 import { GlassButton } from "./glass/GlassButton"
 
-export function CopyButton({ text }: { text: string }) {
+/** `shortcut` marks the main output, so Alt+C copies it. */
+export function CopyButton({ text, shortcut = false }: { text: string; shortcut?: boolean }) {
   const [copied, setCopied] = useState(false)
   const t = useMessages(ui).common
 
@@ -28,7 +30,7 @@ export function CopyButton({ text }: { text: string }) {
   const Icon = copied ? Check : Copy
 
   return (
-    <GlassButton onClick={copy} disabled={!text}>
+    <GlassButton onClick={copy} disabled={!text} {...(shortcut ? shortcutTarget("copy", t.copy) : {})}>
       <Icon aria-hidden="true" className="size-4" />
       {t.copy}
     </GlassButton>

@@ -13,6 +13,7 @@ import { useMessages } from "@/i18n/locale"
 import { labeled } from "@/lib/options"
 import { isOption, oneOf, usePersistentState } from "@/lib/persist"
 import { type Result, settle } from "@/lib/result"
+import { shortcutTarget } from "@/lib/shortcuts"
 import { useAsync } from "@/lib/use-async"
 import { convertKey, generateKeys, KEY_TYPES, type KeyConversion, type KeyPairExport, type KeyType } from "./logic"
 import { messages } from "./messages"
@@ -64,7 +65,12 @@ function GeneratePanel() {
     <>
       <GlassPanel className="flex flex-wrap items-center gap-3 px-4 py-3">
         <Dropdown<KeyType> label={t.keyType} value={type} options={KEY_TYPES} onChange={setType} />
-        <GlassButton variant="key" onClick={() => task.run(type)} disabled={task.pending}>
+        <GlassButton
+          variant="key"
+          onClick={() => task.run(type)}
+          disabled={task.pending}
+          {...shortcutTarget("run", t.generate)}
+        >
           <KeyRound aria-hidden="true" className="size-4" />
           {task.pending ? t.generating : t.generate}
         </GlassButton>

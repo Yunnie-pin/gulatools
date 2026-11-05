@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest"
-import { buildShareUrl, decodeShare, encodeShare, sharedFromHash } from "./share"
+import {
+  buildStateShareUrl,
+  decodeShare,
+  decodeSharedState,
+  encodeShare,
+  sharedFromHash,
+  sharedStateFromHash,
+  stateFromQuery,
+} from "./share"
 
 const location = { origin: "https://gulatools.dev", pathname: "/json-formatter" }
 
@@ -18,10 +26,8 @@ describe("share", () => {
     expect(await encodeShare("??>>~~".repeat(50))).toMatch(/^[A-Za-z0-9_-]+$/)
   })
 
-  it("builds a hash url and reads it back", async () => {
-    const url = await buildShareUrl("halo", location)
-    expect(url.startsWith("https://gulatools.dev/json-formatter#s=")).toBe(true)
-    const encoded = sharedFromHash(new URL(url).hash)
+  it("still reads legacy #s= links that carried only the input", async () => {
+    const encoded = sharedFromHash(`#s=${await encodeShare("halo")}`)
     expect(encoded && (await decodeShare(encoded))).toBe("halo")
   })
 
@@ -37,6 +43,30 @@ describe("share", () => {
     const noise = Array.from(crypto.getRandomValues(new Uint8Array(40_000)), (b) =>
       String.fromCharCode(33 + (b % 90)),
     ).join("")
-    await expect(buildShareUrl(noise, location)).rejects.toThrow("terlalu besar")
+    await expect(buildStateShareUrl({ input: noise }, location)).rejects.toThrow("terlalu besar")
+  })
+})
+
+describe("tool state share", () => {
+  it("round-trips a whole tool state through the URL hash", async () => {
+    const state = { mode: "decode", encoding: "hex", input: "gula ünïcödé", options: { wrap: true } }
+    const url = await buildStateShareUrl(state, location)
+    const hash = new URL(url).hash
+    expect(sharedFromHash(hash)).toBeNull()
+    expect(await decodeSharedState(sharedStateFromHash(hash) ?? "")).toEqual(state)
+  })
+
+  it("rejects payloads that are not a state object", async () => {
+    await expect(decodeSharedState(await encodeShare("[1,2]"))).rejects.toThrow()
+  })
+
+  it("reads deep-link options from the query string, keeping non-JSON values as text", () => {
+    expect(stateFromQuery("?mode=decode&count=5&flag=true&name=%22quoted%22&text=gula manis")).toEqual({
+      mode: "decode",
+      count: 5,
+      flag: true,
+      name: "quoted",
+      text: "gula manis",
+    })
   })
 })

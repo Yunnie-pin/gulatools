@@ -1,12 +1,12 @@
 import type { Extension } from "@uiw/react-codemirror"
-import { Download, Share2, Upload } from "lucide-react"
+import { Download, Upload } from "lucide-react"
 import { type ReactNode, useEffect, useState } from "react"
 import { currentMessages, useMessages } from "@/i18n/locale"
 import { ui } from "@/i18n/ui"
 import { downloadText, pickFile } from "@/lib/file"
 import { usePersistentState } from "@/lib/persist"
 import { errorMessage, type Result, settle } from "@/lib/result"
-import { buildShareUrl, decodeShare, sharedFromHash } from "@/lib/share"
+import { decodeShare, sharedFromHash } from "@/lib/share"
 import { toast } from "@/lib/toast"
 import { ClearButton, SampleButton } from "./ActionButtons"
 import { CopyButton } from "./CopyButton"
@@ -72,16 +72,6 @@ export function TransformTool({
     toast(t.fileLoaded(file.name))
   }
 
-  const copyShareLink = async () => {
-    if (!input) return toast(t.inputEmpty, "error")
-    try {
-      await navigator.clipboard.writeText(await buildShareUrl(input, window.location))
-      toast(t.shareCopied)
-    } catch (error) {
-      toast(errorMessage(error), "error")
-    }
-  }
-
   const menuItems = [
     { label: t.openFile, icon: Upload, onSelect: async () => loadFile(await pickFile(accept)) },
     {
@@ -89,7 +79,6 @@ export function TransformTool({
       icon: Download,
       onSelect: () => (output ? downloadText(output, outputFileName) : toast(t.outputEmpty, "error")),
     },
-    { label: t.copyShareLink, icon: Share2, onSelect: copyShareLink },
   ]
 
   return (
@@ -126,7 +115,7 @@ export function TransformTool({
           action={
             <div className="flex items-center gap-2">
               {output && summary?.(input, output)}
-              <CopyButton text={output} />
+              <CopyButton text={output} shortcut />
             </div>
           }
         >

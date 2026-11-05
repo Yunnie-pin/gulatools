@@ -1,4 +1,4 @@
-import { ChevronRight, CodeXml, Lock, Star } from "lucide-react"
+import { ChevronRight, CodeXml, Lock, Share2, Star } from "lucide-react"
 import { lazy, Suspense, useEffect } from "react"
 import { Link } from "react-router"
 import { Badge } from "@/components/Badge"
@@ -9,7 +9,9 @@ import { ui } from "@/i18n/ui"
 import { cx } from "@/lib/cx"
 import { usePageMeta } from "@/lib/meta"
 import { ToolStateProvider } from "@/lib/persist"
+import { shortcutTarget } from "@/lib/shortcuts"
 import { CATEGORIES, type Tool } from "@/lib/tool"
+import { copyToolShareLink, useIncomingToolState } from "@/lib/tool-share"
 import { recordVisit, toggleFavorite, useUsage } from "@/lib/usage"
 import { useAfterFirstPaint } from "@/lib/use-after-paint"
 import { REPO_URL } from "./AboutDialog"
@@ -24,6 +26,7 @@ export function ToolPage({ tool }: { tool: Tool }) {
   useEffect(() => recordVisit(tool.id), [tool.id])
   usePageMeta(tool.name, tool.description)
   const painted = useAfterFirstPaint()
+  const stateReady = useIncomingToolState(tool.id)
 
   return (
     <div className="flex flex-1 flex-col gap-4">
@@ -62,9 +65,18 @@ export function ToolPage({ tool }: { tool: Tool }) {
             </a>
             <button
               type="button"
+              aria-label={t.share}
+              {...shortcutTarget("share", t.share)}
+              onClick={() => copyToolShareLink(tool)}
+              className={glassButtonClass("frost", "w-9 px-0")}
+            >
+              <Share2 aria-hidden="true" className="size-4" />
+            </button>
+            <button
+              type="button"
               aria-pressed={favorite}
               aria-label={favoriteLabel}
-              title={favoriteLabel}
+              {...shortcutTarget("favorite", favoriteLabel)}
               onClick={() => toggleFavorite(tool.id)}
               className={glassButtonClass("frost", "w-9 px-0")}
             >
@@ -82,7 +94,7 @@ export function ToolPage({ tool }: { tool: Tool }) {
         )}
       </GlassPanel>
       <ToolStateProvider value={tool.id}>
-        <Suspense fallback={<ToolSkeleton />}>{painted ? <tool.Component /> : <ToolSkeleton />}</Suspense>
+        <Suspense fallback={<ToolSkeleton />}>{painted && stateReady ? <tool.Component /> : <ToolSkeleton />}</Suspense>
       </ToolStateProvider>
       <Suspense>{painted && <ToolAbout tool={tool} />}</Suspense>
     </div>

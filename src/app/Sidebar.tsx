@@ -1,4 +1,4 @@
-import { Info, Menu, Pin, PinOff, Search, X } from "lucide-react"
+import { Download, Info, type LucideIcon, Menu, Pin, PinOff, Search, Settings, X } from "lucide-react"
 import { type FocusEvent, type PointerEvent, useEffect, useRef, useState } from "react"
 import { NavLink } from "react-router"
 import { glassButtonClass } from "@/components/glass/GlassButton"
@@ -9,11 +9,13 @@ import { ui } from "@/i18n/ui"
 import { cx } from "@/lib/cx"
 import { useLightDismiss } from "@/lib/dialog"
 import { openPalette, PALETTE_SHORTCUT } from "@/lib/palette"
+import { promptInstall, useCanInstall, useInstalled } from "@/lib/pwa"
 import { setSidebarPinned, useSidebarPinned } from "@/lib/sidebar"
 import { CATEGORIES, CATEGORY_IDS, type Tool } from "@/lib/tool"
 import { useUsage } from "@/lib/usage"
 import { resolveTools, toolsByCategory } from "@/tools/registry"
 import { openAbout } from "./AboutDialog"
+import { openSettings } from "./SettingsDialog"
 import { ActiveModeIcon, BackgroundPicker, LanguageSwitcher, ThemeSwitcher } from "./ThemeControls"
 
 const REVEAL = "opacity-0 transition-opacity duration-200 group-data-[expanded]/sidebar:opacity-100"
@@ -71,10 +73,28 @@ function NavSection({ title, tools, reveal, onNavigate }: NavSectionProps) {
   )
 }
 
+type SidebarActionProps = { icon: LucideIcon; label: string; reveal?: string; onClick: () => void }
+
+function SidebarAction({ icon: Icon, label, reveal, onClick }: SidebarActionProps) {
+  return (
+    <button
+      type="button"
+      title={label}
+      onClick={onClick}
+      className="flex cursor-pointer items-center gap-3 rounded-glass-sm px-[13px] py-2 text-sm text-ink-soft transition duration-200 ease-glass hover:bg-glass-hover hover:text-ink"
+    >
+      <Icon aria-hidden="true" className="size-[18px] shrink-0" />
+      <span className={cx("whitespace-nowrap", reveal)}>{label}</span>
+    </button>
+  )
+}
+
 function SidebarContent({ collapsible = false, onNavigate }: SidebarContentProps) {
   const reveal = collapsible ? REVEAL : undefined
   const favorites = resolveTools(useUsage().favorites)
   const t = useMessages(ui).shell
+  const canInstall = useCanInstall()
+  const installed = useInstalled()
 
   return (
     <>
@@ -112,18 +132,27 @@ function SidebarContent({ collapsible = false, onNavigate }: SidebarContentProps
       </nav>
 
       <div className="flex shrink-0 flex-col gap-3">
-        <button
-          type="button"
-          title={t.about}
+        {canInstall && !installed && (
+          <SidebarAction icon={Download} label={t.install} reveal={reveal} onClick={promptInstall} />
+        )}
+        <SidebarAction
+          icon={Settings}
+          label={t.settings}
+          reveal={reveal}
+          onClick={() => {
+            onNavigate?.()
+            openSettings()
+          }}
+        />
+        <SidebarAction
+          icon={Info}
+          label={t.about}
+          reveal={reveal}
           onClick={() => {
             onNavigate?.()
             openAbout()
           }}
-          className="flex cursor-pointer items-center gap-3 rounded-glass-sm px-[13px] py-2 text-sm text-ink-soft transition duration-200 ease-glass hover:bg-glass-hover hover:text-ink"
-        >
-          <Info aria-hidden="true" className="size-[18px] shrink-0" />
-          <span className={cx("whitespace-nowrap", reveal)}>{t.about}</span>
-        </button>
+        />
         <div className="relative">
           {collapsible && (
             <ActiveModeIcon className="transition-opacity duration-200 group-data-[expanded]/sidebar:opacity-0" />

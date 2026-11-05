@@ -6,7 +6,6 @@ const PREFIX = "gulatools:tool:"
 
 const ToolStateContext = createContext<string | null>(null)
 
-/** Memberi namespace localStorage per tool; dipasang oleh ToolPage. */
 export const ToolStateProvider = ToolStateContext.Provider
 
 export const oneOf = (values: readonly unknown[]) => (value: unknown) => values.includes(value)
@@ -16,7 +15,6 @@ export const inRange = (min: number, max: number) => (value: unknown) =>
 
 export const isOption = (options: readonly { value: unknown }[]) => oneOf(options.map((option) => option.value))
 
-/** Ambil `raw` hanya bila bentuknya sama dengan `initial`; field yang hilang/salah tipe jatuh ke nilai awal. */
 function matchShape<T>(initial: T, raw: unknown): T {
   if (isRecord(initial)) {
     if (!isRecord(raw)) return initial
@@ -34,7 +32,7 @@ function load<T>(key: string, initial: T, isValid?: (value: T) => boolean): T {
     if (raw === null) return initial
     const parsed: unknown = JSON.parse(raw)
     if (!isValid) return matchShape(initial, parsed)
-    // Validator menentukan untuk union campuran (mis. 2 | "\t"); objek tetap dilengkapi dulu ke bentuk awalnya.
+
     const value = (isRecord(initial) ? matchShape(initial, parsed) : parsed) as T
     return isValid(value) ? value : initial
   } catch {
@@ -42,10 +40,6 @@ function load<T>(key: string, initial: T, isValid?: (value: T) => boolean): T {
   }
 }
 
-/**
- * Seperti useState, tapi nilainya bertahan di localStorage sehingga tetap ada setelah pindah route atau tab ditutup.
- * Jangan dipakai untuk secret (password, key, token).
- */
 export function usePersistentState<T>(
   name: string,
   initial: T | (() => T),
@@ -63,7 +57,6 @@ export function usePersistentState<T>(
     try {
       localStorage.setItem(key, JSON.stringify(value))
     } catch {
-      // Kuota penuh: buang nilai lama supaya yang dipulihkan nanti tidak basi.
       try {
         localStorage.removeItem(key)
       } catch {}
@@ -71,4 +64,29 @@ export function usePersistentState<T>(
   }, [key, value])
 
   return [value, setValue]
+}
+
+export const useToolId = () => useContext(ToolStateContext)
+
+export type ToolState = Record<string, unknown>
+
+export function readToolState(toolId: string): ToolState {
+  const prefix = `${PREFIX}${toolId}:`
+  const state: ToolState = {}
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i)
+      if (!key?.startsWith(prefix)) continue
+      state[key.slice(prefix.length)] = JSON.parse(localStorage.getItem(key) ?? "null")
+    }
+  } catch {}
+  return state
+}
+
+export function writeToolState(toolId: string, state: ToolState) {
+  try {
+    for (const [name, value] of Object.entries(state)) {
+      localStorage.setItem(`${PREFIX}${toolId}:${name}`, JSON.stringify(value))
+    }
+  } catch {}
 }

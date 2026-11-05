@@ -7,8 +7,11 @@ import { Layout } from "./app/Layout"
 import { NotFound } from "./app/NotFound"
 import { RouteError } from "./app/RouteError"
 import { ToolPage } from "./app/ToolPage"
-import { getLocale, routerBasename } from "./i18n/locale"
+import { currentMessages, getLocale, routerBasename } from "./i18n/locale"
+import { ui } from "./i18n/ui"
+import { consumeUpdated, markUpdated } from "./lib/pwa"
 import { ThemeProvider } from "./lib/theme"
+import { toast } from "./lib/toast"
 import { tools } from "./tools/registry"
 import "./styles/index.css"
 import { registerSW } from "virtual:pwa-register"
@@ -44,9 +47,18 @@ createRoot(document.getElementById("root")!).render(
 
 const UPDATE_CHECK_MS = 60 * 60 * 1000
 
+if (consumeUpdated()) toast(currentMessages(ui).shell.updated)
+
 // autoUpdate: reload otomatis begitu service worker versi baru aktif
 registerSW({
   immediate: true,
+  onNeedReload() {
+    markUpdated()
+    window.location.reload()
+  },
+  onOfflineReady() {
+    toast(currentMessages(ui).shell.offlineReady)
+  },
   onRegisteredSW(_url, registration) {
     if (!registration) return
     const checkForUpdate = () => {

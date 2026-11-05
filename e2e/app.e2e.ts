@@ -148,24 +148,42 @@ test("theme switcher follows the system and remembers choices", async ({ page })
   await expectAccessible(page)
 })
 
-test("share link restores the input", async ({ page, context }) => {
+test("share link restores the whole tool state, but never the input of a sensitive tool", async ({ browser }) => {
+  const page = await browser.newPage({ locale: "id-ID" })
   await page.addInitScript(() => {
     navigator.clipboard.writeText = async (text: string) => {
       document.documentElement.dataset.copied = text
     }
   })
-  await openWithSample(page, "/json-formatter")
-  await page.getByRole("button", { name: "Opsi lain" }).click()
-  await page.getByRole("menuitem", { name: "Salin tautan berbagi" }).click()
-  await expect(page.getByText("Tautan berbagi tersalin")).toBeVisible()
-  const url = (await page.evaluate(() => document.documentElement.dataset.copied)) ?? ""
-  expect(url).toMatch(/\/json-formatter#s=[\w-]+$/)
+  const copied = async () => (await page.evaluate(() => document.documentElement.dataset.copied)) ?? ""
 
-  const shared = await context.newPage()
-  await shared.goto(url)
-  await expect(shared.locator(".cm-content").first()).toContainText('"name":"GulaTools"')
-  await expect(editorOutput(shared)).toContainText('"name": "GulaTools"')
-  expect(new URL(shared.url()).hash).toBe("")
+  await openWithSample(page, "/json-formatter")
+  await page.getByText("Minify", { exact: true }).click()
+  await page.getByRole("button", { name: "Salin tautan berbagi" }).click()
+  await expect(page.getByText("Tautan berbagi tersalin")).toBeVisible()
+  const url = await copied()
+  expect(url).toMatch(/\/json-formatter#t=[\w-]+$/)
+
+  const fresh = await browser.newPage({ locale: "id-ID" })
+  await fresh.goto(url)
+  await expect(fresh.getByText("Pengaturan dari tautan dimuat")).toBeVisible()
+  await expect(fresh.locator(".cm-content").first()).toContainText('"name":"GulaTools"')
+  await expect(editorOutput(fresh)).toHaveText(/^\{"name":"GulaTools","private":true/)
+  expect(new URL(fresh.url()).hash).toBe("")
+
+  await openWithSample(page, "/curl")
+  await page.getByText("Python requests", { exact: true }).click()
+  await page.getByRole("button", { name: "Salin tautan berbagi" }).click()
+  await expect.poll(copied).toMatch(/\/curl#t=/)
+  await fresh.goto(await copied())
+  await expect(fresh.getByText("Python requests", { exact: true })).toBeVisible()
+  await expect(fresh.locator(".cm-placeholder").first()).toBeVisible()
+})
+
+test("legacy #s= links that carried only the input still open", async ({ page }) => {
+  await page.goto("/json-formatter#s=q1ZKzs9JUbJSKi5NTyxSqgUA")
+  await expect(page.getByText("Input dari tautan dimuat")).toBeVisible()
+  await expect(page.locator(".cm-content").first()).toHaveText('{"cold":"sugar"}')
 })
 
 test("works offline once the service worker is installed", async ({ page, context }) => {

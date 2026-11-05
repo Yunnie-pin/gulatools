@@ -2,13 +2,16 @@ import { useEffect, useRef } from "react"
 import { Outlet, useLocation } from "react-router"
 import { Backdrop } from "@/components/glass/Backdrop"
 import { Toaster } from "@/components/glass/Toaster"
-import { useMessages } from "@/i18n/locale"
+import { currentMessages, useMessages } from "@/i18n/locale"
 import { ui } from "@/i18n/ui"
 import { cx } from "@/lib/cx"
+import { useGlobalShortcuts } from "@/lib/shortcuts"
 import { useSidebarPinned } from "@/lib/sidebar"
+import { toast } from "@/lib/toast"
 import { AboutDialog } from "./AboutDialog"
 import { CommandPalette } from "./CommandPalette"
 import { LanguageHint } from "./LanguageHint"
+import { openSettings, SettingsDialog } from "./SettingsDialog"
 import { Sidebar } from "./Sidebar"
 
 function useFocusOnNavigation() {
@@ -26,7 +29,22 @@ function useFocusOnNavigation() {
   return mainRef
 }
 
+function useConnectivityToasts() {
+  useEffect(() => {
+    const offline = () => toast(currentMessages(ui).shell.wentOffline)
+    const online = () => toast(currentMessages(ui).shell.backOnline)
+    window.addEventListener("offline", offline)
+    window.addEventListener("online", online)
+    return () => {
+      window.removeEventListener("offline", offline)
+      window.removeEventListener("online", online)
+    }
+  }, [])
+}
+
 export function Layout() {
+  useGlobalShortcuts(openSettings)
+  useConnectivityToasts()
   const pinned = useSidebarPinned()
   const mainRef = useFocusOnNavigation()
   const t = useMessages(ui).shell
@@ -54,6 +72,7 @@ export function Layout() {
       </div>
       <CommandPalette />
       <AboutDialog />
+      <SettingsDialog />
       <Toaster />
     </>
   )

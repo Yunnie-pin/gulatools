@@ -1,5 +1,6 @@
 import { LocalizedError } from "@/i18n/errors"
 import { base64ToBytes, bytesToBase64 } from "./bytes"
+import { isRecord } from "./guards"
 
 const PREFIX = "#s="
 
@@ -25,8 +26,35 @@ export async function decodeShare(encoded: string): Promise<string> {
 
 export const sharedFromHash = (hash: string) => (hash.startsWith(PREFIX) ? hash.slice(PREFIX.length) : null)
 
-export async function buildShareUrl(text: string, location: Pick<Location, "origin" | "pathname">) {
-  const url = `${location.origin}${location.pathname}${PREFIX}${await encodeShare(text)}`
+const STATE_PREFIX = "#t="
+
+export const sharedStateFromHash = (hash: string) =>
+  hash.startsWith(STATE_PREFIX) ? hash.slice(STATE_PREFIX.length) : null
+
+export async function buildStateShareUrl(
+  state: Record<string, unknown>,
+  location: Pick<Location, "origin" | "pathname">,
+) {
+  const url = `${location.origin}${location.pathname}${STATE_PREFIX}${await encodeShare(JSON.stringify(state))}`
   if (url.length > MAX_SHARE_URL_LENGTH) throw new LocalizedError("shareTooLarge")
   return url
+}
+
+export async function decodeSharedState(encoded: string): Promise<Record<string, unknown>> {
+  const parsed: unknown = JSON.parse(await decodeShare(encoded))
+  if (!isRecord(parsed)) throw new LocalizedError("brokenShareLink")
+  return parsed
+}
+
+/** `?mode=decode&count=5` → { mode: "decode", count: 5 }; nilai yang bukan JSON dibaca sebagai string. */
+export function stateFromQuery(search: string): Record<string, unknown> {
+  const state: Record<string, unknown> = {}
+  for (const [key, raw] of new URLSearchParams(search)) {
+    try {
+      state[key] = JSON.parse(raw)
+    } catch {
+      state[key] = raw
+    }
+  }
+  return state
 }
