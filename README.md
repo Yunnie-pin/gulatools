@@ -19,59 +19,59 @@ Live site: https://devtools.gulagulali.tech
 
 ## Tools
 
-| Category | Tool | Description |
-|---|---|---|
-| Formatter | JSON Formatter | Format, minify, and validate JSON |
-| | Code Formatter | Format JavaScript, TypeScript, CSS, HTML, Markdown, GraphQL, YAML, and XML with Prettier |
-| | JS & CSS Minifier | Minify JavaScript with Terser and CSS with CSSO, with size savings |
-| | SQL Formatter | Format SQL for PostgreSQL, MySQL, SQLite, SQL Server, and more |
-| | Markdown Preview | Live GitHub Flavored Markdown preview with sanitized HTML output |
-| | SVG Optimizer | Shrink SVGs with SVGO, with precision control and a preview |
-| | JSON Schema Validator | Validate JSON against draft-07, 2019-09, or 2020-12 schemas and list every error |
-| Converter | Data Converter | Convert between JSON, YAML, TOML, XML, and CSV |
-| | JSON to TypeScript | Generate TypeScript interfaces or Zod schemas from sample JSON |
-| | cURL Converter | Convert curl commands to JavaScript fetch, Python requests, or Go net/http |
-| | Docker run → Compose | Turn docker run commands into a compose.yaml, reporting flags it cannot convert |
-| | JSONPath | Query JSON with JSONPath expressions |
-| | Timestamp | Convert Unix timestamps to dates and back, compare time zones, and measure the gap between two dates |
-| | Number Base | Convert between binary, octal, decimal, and hex with BigInt precision and two's complement |
-| | Chmod Calculator | Unix permissions in octal and symbolic form, including setuid, setgid, and sticky |
-| | Subnet Calculator | IPv4 and IPv6 network, range, and host count from CIDR or a netmask, with IPv6 type and reverse DNS |
-| | Cron Parser | Explain cron expressions in plain language and list the next runs |
-| | Color Converter | Convert between HEX, RGB, HSL, and OKLCH, with a WCAG contrast check |
-| | Contrast Checker | WCAG AA/AAA contrast between any text and background color, with a preview |
-| | Image Compressor | Resize, compress, and convert images to WebP, JPEG, or PNG |
-| Encoder | Base64 | Encode and decode Base64 (including URL-safe), Base32, Base58, and Hex |
-| | Gzip / Deflate | Compress text to Base64 with gzip, zlib, or raw deflate, and decompress with format detection |
-| | URL Encoder | Percent-encode and decode URLs and query strings |
-| | URL Parser | Split a URL into decoded parts and edit its query params as a table |
-| | HTML Entity | Escape HTML special characters and decode named or numeric entities |
-| | Text Escape | Escape text for JSON strings, regex patterns, shell arguments, or SQL literals |
-| | Image & Base64 | Convert images to data URIs, or preview Base64 as an image |
-| | QR Code | Create QR codes (PNG/SVG) or read one from an image |
-| Crypto | JWT | Decode, verify, and sign JWTs with HMAC, RSA, ECDSA, or EdDSA |
-| | Bcrypt | Create bcrypt hashes and check passwords against them |
-| | Argon2 & scrypt | Hash passwords with Argon2id/i/d or scrypt, and verify Argon2 hashes |
-| | Hash Generator | MD5, SHA-1, SHA-256, SHA-384, and SHA-512 of text or files |
-| | HMAC Generator | HMAC with SHA-1, SHA-256, SHA-384, or SHA-512 |
-| | AES Encrypt | AES-256-GCM encryption with a PBKDF2-derived key |
-| | Key Generator | RSA, ECDSA, or Ed25519 key pairs in PEM and JWK, and PEM ↔ JWK conversion with thumbprints |
-| | X.509 Decoder | Inspect PEM/DER certificates and chains: subject, validity, SAN, key usage, fingerprints |
-| | TOTP / 2FA | RFC 6238 one-time codes from a Base32 secret or otpauth:// URI, with a QR code |
-| Generator | Password Generator | Strong random passwords with an entropy estimate |
-| | UUID / ULID | Bulk UUID v4, UUID v7, or ULID |
-| | Lorem Ipsum | Placeholder text by paragraphs, sentences, or words |
-| | CSS Generator | Gradients, layered box-shadows, and glassmorphism with a live preview |
-| Text | Regex Tester | Test JavaScript regular expressions with live matches and replacements |
-| | Text Diff | Compare two texts and copy the result as a unified patch |
-| | JSON Diff | Structural JSON comparison with paths, ignoring key order and formatting |
-| | Case Converter | camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE, and more |
-| | Slug Generator | Turn titles into URL slugs, transliterating accented letters |
-| | Text Stats | Count characters, words, lines, and bytes, and find hidden characters such as zero-width spaces or bidi controls |
-| | Sort & Dedupe Lines | Natural sort, remove duplicates, reverse, or shuffle lines |
-| | SemVer Checker | Check which versions satisfy an npm-style semver range |
-| | Glob Tester | Test glob patterns with ! exclusions against a list of paths |
-| | User-Agent Parser | Browser, engine, OS, device type, and CPU from a User-Agent string |
+| Category  | Tool                  | Description                                                                                                      |
+| --------- | --------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Formatter | JSON Formatter        | Format, minify, and validate JSON                                                                                |
+|           | Code Formatter        | Format JavaScript, TypeScript, CSS, HTML, Markdown, GraphQL, YAML, and XML with Prettier                         |
+|           | JS & CSS Minifier     | Minify JavaScript with Terser and CSS with CSSO, with size savings                                               |
+|           | SQL Formatter         | Format SQL for PostgreSQL, MySQL, SQLite, SQL Server, and more                                                   |
+|           | Markdown Preview      | Live GitHub Flavored Markdown preview with sanitized HTML output                                                 |
+|           | SVG Optimizer         | Shrink SVGs with SVGO, with precision control and a preview                                                      |
+|           | JSON Schema Validator | Validate JSON against draft-07, 2019-09, or 2020-12 schemas and list every error                                 |
+| Converter | Data Converter        | Convert between JSON, YAML, TOML, XML, and CSV                                                                   |
+|           | JSON to TypeScript    | Generate TypeScript interfaces or Zod schemas from sample JSON                                                   |
+|           | cURL Converter        | Convert curl commands to JavaScript fetch, Python requests, or Go net/http                                       |
+|           | Docker run → Compose  | Turn docker run commands into a compose.yaml, reporting flags it cannot convert                                  |
+|           | JSONPath              | Query JSON with JSONPath expressions                                                                             |
+|           | Timestamp             | Convert Unix timestamps to dates and back, compare time zones, and measure the gap between two dates             |
+|           | Number Base           | Convert between binary, octal, decimal, and hex with BigInt precision and two's complement                       |
+|           | Chmod Calculator      | Unix permissions in octal and symbolic form, including setuid, setgid, and sticky                                |
+|           | Subnet Calculator     | IPv4 and IPv6 network, range, and host count from CIDR or a netmask, with IPv6 type and reverse DNS              |
+|           | Cron Parser           | Explain cron expressions in plain language and list the next runs                                                |
+|           | Color Converter       | Convert between HEX, RGB, HSL, and OKLCH, with a WCAG contrast check                                             |
+|           | Contrast Checker      | WCAG AA/AAA contrast between any text and background color, with a preview                                       |
+|           | Image Compressor      | Resize, compress, and convert images to WebP, JPEG, or PNG                                                       |
+| Encoder   | Base64                | Encode and decode Base64 (including URL-safe), Base32, Base58, and Hex                                           |
+|           | Gzip / Deflate        | Compress text to Base64 with gzip, zlib, or raw deflate, and decompress with format detection                    |
+|           | URL Encoder           | Percent-encode and decode URLs and query strings                                                                 |
+|           | URL Parser            | Split a URL into decoded parts and edit its query params as a table                                              |
+|           | HTML Entity           | Escape HTML special characters and decode named or numeric entities                                              |
+|           | Text Escape           | Escape text for JSON strings, regex patterns, shell arguments, or SQL literals                                   |
+|           | Image & Base64        | Convert images to data URIs, or preview Base64 as an image                                                       |
+|           | QR Code               | Create QR codes (PNG/SVG) or read one from an image                                                              |
+| Crypto    | JWT                   | Decode, verify, and sign JWTs with HMAC, RSA, ECDSA, or EdDSA                                                    |
+|           | Bcrypt                | Create bcrypt hashes and check passwords against them                                                            |
+|           | Argon2 & scrypt       | Hash passwords with Argon2id/i/d or scrypt, and verify Argon2 hashes                                             |
+|           | Hash Generator        | MD5, SHA-1, SHA-256, SHA-384, and SHA-512 of text or files                                                       |
+|           | HMAC Generator        | HMAC with SHA-1, SHA-256, SHA-384, or SHA-512                                                                    |
+|           | AES Encrypt           | AES-256-GCM encryption with a PBKDF2-derived key                                                                 |
+|           | Key Generator         | RSA, ECDSA, or Ed25519 key pairs in PEM and JWK, and PEM ↔ JWK conversion with thumbprints                       |
+|           | X.509 Decoder         | Inspect PEM/DER certificates and chains: subject, validity, SAN, key usage, fingerprints                         |
+|           | TOTP / 2FA            | RFC 6238 one-time codes from a Base32 secret or otpauth:// URI, with a QR code                                   |
+| Generator | Password Generator    | Strong random passwords with an entropy estimate                                                                 |
+|           | UUID / ULID           | Bulk UUID v4, UUID v7, or ULID                                                                                   |
+|           | Lorem Ipsum           | Placeholder text by paragraphs, sentences, or words                                                              |
+|           | CSS Generator         | Gradients, layered box-shadows, and glassmorphism with a live preview                                            |
+| Text      | Regex Tester          | Test JavaScript regular expressions with live matches and replacements                                           |
+|           | Text Diff             | Compare two texts and copy the result as a unified patch                                                         |
+|           | JSON Diff             | Structural JSON comparison with paths, ignoring key order and formatting                                         |
+|           | Case Converter        | camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE, and more                                           |
+|           | Slug Generator        | Turn titles into URL slugs, transliterating accented letters                                                     |
+|           | Text Stats            | Count characters, words, lines, and bytes, and find hidden characters such as zero-width spaces or bidi controls |
+|           | Sort & Dedupe Lines   | Natural sort, remove duplicates, reverse, or shuffle lines                                                       |
+|           | SemVer Checker        | Check which versions satisfy an npm-style semver range                                                           |
+|           | Glob Tester           | Test glob patterns with ! exclusions against a list of paths                                                     |
+|           | User-Agent Parser     | Browser, engine, OS, device type, and CPU from a User-Agent string                                               |
 
 ## Tech stack
 
@@ -97,16 +97,16 @@ The dev server runs at http://localhost:5173.
 
 ## Scripts
 
-| Command | Description |
-|---|---|
-| `npm run dev` | Start the development server |
-| `npm run build` | Type-check, build, and prerender all pages into `dist/` |
-| `npm run preview` | Serve the production build locally |
-| `npm run lint` | Check code with Biome |
-| `npm run format` | Fix lint and formatting issues with Biome |
-| `npm run typecheck` | Run the TypeScript compiler without emitting |
-| `npm test` | Run unit tests with Vitest |
-| `npm run e2e` | Run end-to-end tests with Playwright |
+| Command             | Description                                             |
+| ------------------- | ------------------------------------------------------- |
+| `npm run dev`       | Start the development server                            |
+| `npm run build`     | Type-check, build, and prerender all pages into `dist/` |
+| `npm run preview`   | Serve the production build locally                      |
+| `npm run lint`      | Check code with Biome                                   |
+| `npm run format`    | Fix lint and formatting issues with Biome               |
+| `npm run typecheck` | Run the TypeScript compiler without emitting            |
+| `npm test`          | Run unit tests with Vitest                              |
+| `npm run e2e`       | Run end-to-end tests with Playwright                    |
 
 Before running end-to-end tests for the first time, install the browser:
 
@@ -130,7 +130,6 @@ e2e/           Playwright tests
 ```
 
 Each tool folder usually contains:
-
 - `index.ts`: metadata (id, name, localized description, category, keywords, icon) and a lazily loaded component
 - `Tool.tsx`: the user interface
 - `logic.ts` and `logic.test.ts`: pure logic and its unit tests
@@ -147,7 +146,6 @@ The route, sidebar entry, command palette entry, prerendered page, and sitemap e
 ## Deployment
 
 The site is deployed to GitHub Pages by `.github/workflows/deploy.yml` on every push to `main`. The workflow:
-
 1. Builds with `SITE_URL` set, which enables canonical URLs and `sitemap.xml` in the prerender step.
 2. Copies `index.html` to `404.html` so unknown paths fall back to the app.
 3. Publishes `dist/` to GitHub Pages.
