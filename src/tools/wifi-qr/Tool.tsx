@@ -1,5 +1,6 @@
 import { Download } from "lucide-react"
 import { useMemo, useState } from "react"
+import { ClearButton, SampleButton } from "@/components/ActionButtons"
 import { ErrorText } from "@/components/ErrorText"
 import { Field } from "@/components/Field"
 import { Checkbox } from "@/components/glass/Checkbox"
@@ -28,6 +29,17 @@ export default function WifiQrTool() {
   )
   const matrix = useMemo(() => (payload.ok ? qrMatrix(payload.value, "M") : null), [payload])
   const fileName = `wifi-${ssid.replace(/[^\w-]+/g, "_")}`
+
+  const fill = (nextSsid: string, nextPassword: string) => {
+    setSsid(nextSsid)
+    setPassword(nextPassword)
+  }
+
+  const sample = () => {
+    fill("Kopi Gula", "rahasia123")
+    setSecurity("WPA")
+    setHidden(false)
+  }
 
   return (
     <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]">
@@ -67,7 +79,13 @@ export default function WifiQrTool() {
             )}
           </Field>
         )}
-        <Checkbox label={t.hidden} checked={hidden} onChange={setHidden} />
+        <div className="flex flex-wrap items-center gap-3">
+          <Checkbox label={t.hidden} checked={hidden} onChange={setHidden} />
+          <div className="ml-auto flex gap-2">
+            <SampleButton onClick={sample} />
+            <ClearButton onClick={() => fill("", "")} disabled={!ssid && !password} />
+          </div>
+        </div>
       </GlassPanel>
 
       <GlassPanel variant="solid" className="flex flex-col items-center gap-4 p-5 text-center">

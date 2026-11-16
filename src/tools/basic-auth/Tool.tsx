@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react"
+import { ClearButton, SampleButton } from "@/components/ActionButtons"
 import { ErrorText } from "@/components/ErrorText"
 import { Field } from "@/components/Field"
 import { GlassInput } from "@/components/glass/GlassInput"
@@ -18,8 +19,17 @@ export default function BasicAuthTool() {
     [username, password],
   )
 
+  const fill = (nextUsername: string, nextPassword: string) => {
+    setUsername(nextUsername)
+    setPassword(nextPassword)
+  }
+
   return (
     <div className="flex flex-col gap-4">
+      <GlassPanel className="flex justify-end gap-2 px-4 py-3">
+        <SampleButton onClick={() => fill("Aladdin", "open sesame")} />
+        <ClearButton onClick={() => fill("", "")} disabled={!username && !password} />
+      </GlassPanel>
       <GlassPanel variant="solid" className="grid gap-4 p-5 sm:grid-cols-2">
         <Field label={t.username}>
           {(id) => (

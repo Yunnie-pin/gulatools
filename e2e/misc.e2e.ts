@@ -288,8 +288,7 @@ test("device information reads this browser and follows window resizes", async (
 
 test("basic auth builds the RFC 7617 header and rejects a colon in the username", async ({ page }) => {
   await page.goto("/basic-auth")
-  await page.getByLabel("Username").fill("Aladdin")
-  await page.getByLabel("Password").fill("open sesame")
+  await page.getByRole("button", { name: "Contoh" }).click()
   await expect(page.getByText("Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==")).toBeVisible()
   await page.getByLabel("Username").fill("Alad:din")
   await expect(page.getByRole("alert")).toContainText("titik dua")
@@ -298,11 +297,10 @@ test("basic auth builds the RFC 7617 header and rejects a colon in the username"
 
 test("wifi QR code validates the WPA password before drawing the code", async ({ page }) => {
   await page.goto("/wifi-qr")
-  await page.getByLabel("Nama jaringan (SSID)").fill("Kopi Gula")
+  await page.getByRole("button", { name: "Contoh" }).click()
+  await expect(page.getByRole("img", { name: "QR code Wi-Fi untuk Kopi Gula" })).toBeVisible()
   await page.getByLabel("Password", { exact: true }).fill("short")
   await expect(page.getByRole("alert")).toContainText("8–63")
-  await page.getByLabel("Password", { exact: true }).fill("rahasia123")
-  await expect(page.getByRole("img", { name: "QR code Wi-Fi untuk Kopi Gula" })).toBeVisible()
   await page.getByText("Tanpa password").click()
   await expect(page.getByLabel("Password", { exact: true })).toHaveCount(0)
   await expectAccessible(page)
