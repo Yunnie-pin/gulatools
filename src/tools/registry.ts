@@ -2,6 +2,7 @@ import { CATEGORY_IDS, type CategoryId, type Tool } from "@/lib/tool"
 import { aes } from "./aes"
 import { argon2 } from "./argon2"
 import { base64 } from "./base64"
+import { basicAuth } from "./basic-auth"
 import { bcrypt } from "./bcrypt"
 import { caseConverter } from "./case-converter"
 import { chmod } from "./chmod"
@@ -13,6 +14,7 @@ import { cron } from "./cron"
 import { cssGenerator } from "./css-generator"
 import { curl } from "./curl"
 import { dataConverter } from "./data-converter"
+import { deviceInfo } from "./device-info"
 import { diff } from "./diff"
 import { dockerCompose } from "./docker-compose"
 import { glob } from "./glob"
@@ -49,6 +51,7 @@ import { urlEncoder } from "./url-encoder"
 import { urlParser } from "./url-parser"
 import { userAgent } from "./user-agent"
 import { uuid } from "./uuid"
+import { wifiQr } from "./wifi-qr"
 import { x509 } from "./x509"
 
 export const tools: Tool[] = [
@@ -93,6 +96,8 @@ export const tools: Tool[] = [
   uuid,
   lorem,
   cssGenerator,
+  basicAuth,
+  wifiQr,
   regex,
   diff,
   jsonDiff,
@@ -103,6 +108,7 @@ export const tools: Tool[] = [
   semver,
   glob,
   userAgent,
+  deviceInfo,
 ]
 
 export const toolsByCategory = Object.fromEntries(

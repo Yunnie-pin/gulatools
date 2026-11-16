@@ -276,6 +276,38 @@ test("user-agent parser reads this browser's own User-Agent", async ({ page }) =
   await expectAccessible(page)
 })
 
+test("device information reads this browser and follows window resizes", async ({ page }) => {
+  await page.setViewportSize({ width: 1200, height: 800 })
+  await page.goto("/device-info")
+  const viewport = page.getByText("Ukuran jendela", { exact: true }).locator("..")
+  await expect(viewport).toContainText("1200 × 800")
+  await page.setViewportSize({ width: 1000, height: 700 })
+  await expect(viewport).toContainText("1000 × 700")
+  await expectAccessible(page)
+})
+
+test("basic auth builds the RFC 7617 header and rejects a colon in the username", async ({ page }) => {
+  await page.goto("/basic-auth")
+  await page.getByLabel("Username").fill("Aladdin")
+  await page.getByLabel("Password").fill("open sesame")
+  await expect(page.getByText("Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==")).toBeVisible()
+  await page.getByLabel("Username").fill("Alad:din")
+  await expect(page.getByRole("alert")).toContainText("titik dua")
+  await expectAccessible(page)
+})
+
+test("wifi QR code validates the WPA password before drawing the code", async ({ page }) => {
+  await page.goto("/wifi-qr")
+  await page.getByLabel("Nama jaringan (SSID)").fill("Kopi Gula")
+  await page.getByLabel("Password", { exact: true }).fill("short")
+  await expect(page.getByRole("alert")).toContainText("8–63")
+  await page.getByLabel("Password", { exact: true }).fill("rahasia123")
+  await expect(page.getByRole("img", { name: "QR code Wi-Fi untuk Kopi Gula" })).toBeVisible()
+  await page.getByText("Tanpa password").click()
+  await expect(page.getByLabel("Password", { exact: true })).toHaveCount(0)
+  await expectAccessible(page)
+})
+
 test("subnet calculator handles IPv6 prefixes", async ({ page }) => {
   await page.goto("/cidr")
   await page.getByLabel("Alamat IPv4 atau IPv6 dan prefix").fill("2001:db8:abcd:12::1/48")

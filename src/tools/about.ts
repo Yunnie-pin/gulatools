@@ -1423,6 +1423,93 @@ export const about: Record<string, ToolAbout> = {
       ],
     },
   },
+  "device-info": {
+    id: {
+      intro:
+        "Device Information menampilkan detail perangkat yang sedang dipakai: resolusi layar, ukuran jendela, pixel ratio, kedalaman warna, jumlah inti CPU, RAM, GPU, browser, sistem operasi, bahasa, zona waktu, dan preferensi tema. Nilainya ikut berubah saat jendela diubah ukurannya.",
+      uses: [
+        "Melampirkan info perangkat lengkap di laporan bug dengan satu kali salin.",
+        "Mengecek ukuran viewport dan pixel ratio saat men-debug breakpoint CSS atau gambar yang buram.",
+        "Memastikan pengaturan tema gelap atau reduced motion benar-benar terbaca oleh browser.",
+      ],
+    },
+    en: {
+      intro:
+        "Device Information shows details about the device you are using: screen resolution, window size, pixel ratio, color depth, CPU cores, RAM, GPU, browser, operating system, languages, time zone, and theme preferences. Values update as the window is resized.",
+      uses: [
+        "Attaching complete device details to a bug report with a single copy.",
+        "Checking the viewport size and pixel ratio while debugging CSS breakpoints or blurry images.",
+        "Confirming that dark mode or reduced motion settings actually reach the browser.",
+      ],
+    },
+    ja: {
+      intro:
+        "Device Information は、使用中のデバイスの画面解像度、ウィンドウサイズ、ピクセル比、色深度、CPU コア数、RAM、GPU、ブラウザ、OS、言語、タイムゾーン、テーマ設定を表示します。ウィンドウサイズを変えると値も更新されます。",
+      uses: [
+        "バグ報告にデバイス情報をまとめて 1 回のコピーで添付するとき。",
+        "CSS のブレークポイントや画像のぼやけをデバッグしながら、ビューポートとピクセル比を確認するとき。",
+        "ダークモードや視差効果を減らす設定がブラウザに届いているか確かめるとき。",
+      ],
+    },
+  },
+  "basic-auth": {
+    id: {
+      intro:
+        "Basic Auth Generator mengubah username dan password menjadi header Authorization: Basic sesuai RFC 7617. Kredensial dienkode UTF-8 lalu Base64, dan tersedia juga contoh perintah curl yang siap dijalankan.",
+      uses: [
+        "Menguji endpoint yang dilindungi Basic Auth dari Postman, HTTPie, atau kode.",
+        "Mengisi header Authorization di konfigurasi proxy, webhook, atau CI.",
+        "Mengecek apakah token Basic yang dikirim aplikasi sudah sesuai kredensialnya.",
+      ],
+    },
+    en: {
+      intro:
+        "Basic Auth Generator turns a username and password into an Authorization: Basic header as defined in RFC 7617. Credentials are UTF-8 encoded and then Base64 encoded, and a ready-to-run curl command is included.",
+      uses: [
+        "Testing endpoints protected by Basic Auth from Postman, HTTPie, or code.",
+        "Filling in the Authorization header in proxy, webhook, or CI configuration.",
+        "Checking that the Basic token an app sends matches its credentials.",
+      ],
+    },
+    ja: {
+      intro:
+        "Basic Auth Generator は、ユーザー名とパスワードから RFC 7617 に沿った Authorization: Basic ヘッダーを生成します。認証情報を UTF-8 でエンコードしてから Base64 に変換し、そのまま実行できる curl コマンドも表示します。",
+      uses: [
+        "Basic 認証で保護されたエンドポイントを Postman、HTTPie、コードから試すとき。",
+        "プロキシ、Webhook、CI の設定に Authorization ヘッダーを書くとき。",
+        "アプリが送る Basic トークンが認証情報と一致しているか確かめるとき。",
+      ],
+    },
+  },
+  "wifi-qr": {
+    id: {
+      intro:
+        "Wi-Fi QR Code membuat QR code berisi nama jaringan, password, dan jenis keamanan Wi-Fi. Kamera bawaan Android dan iPhone bisa langsung tersambung saat memindainya, tanpa perlu mengetik password.",
+      uses: [
+        "Mencetak QR code Wi-Fi untuk tamu di kafe, kantor, atau rumah.",
+        "Membagikan jaringan dengan password panjang tanpa salah ketik.",
+        "Menyiapkan akses Wi-Fi untuk acara atau ruang rapat.",
+      ],
+    },
+    en: {
+      intro:
+        "Wi-Fi QR Code creates a QR code holding a network name, password, and security type. The built-in camera on Android and iPhone joins the network when it scans the code, with no password to type.",
+      uses: [
+        "Printing a guest Wi-Fi code for a cafe, office, or home.",
+        "Sharing a network with a long password without typos.",
+        "Setting up Wi-Fi access for an event or meeting room.",
+      ],
+    },
+    ja: {
+      intro:
+        "Wi-Fi QR Code は、ネットワーク名、パスワード、セキュリティの種類を含む QR コードを作成します。Android や iPhone の標準カメラで読み取るだけで、パスワードを入力せずに接続できます。",
+      uses: [
+        "カフェ、オフィス、自宅のゲスト用 Wi-Fi の QR コードを印刷するとき。",
+        "長いパスワードのネットワークを打ち間違いなく共有するとき。",
+        "イベントや会議室の Wi-Fi 接続を用意するとき。",
+      ],
+    },
+  },
   minifier: {
     id: {
       intro:

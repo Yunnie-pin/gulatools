@@ -77,6 +77,10 @@ const catalogs = defineMessages(
       "Kunci tidak dikenali. Tempel PEM (PUBLIC KEY, PRIVATE KEY, atau CERTIFICATE) atau JWK RSA, EC P-256/384/521, atau Ed25519",
     legacyPem: () =>
       "Format PKCS#1/SEC1 belum didukung. Ubah dulu ke PKCS#8: openssl pkcs8 -topk8 -nocrypt -in key.pem",
+    basicAuthColon: () =>
+      "Username tidak boleh mengandung titik dua (:), karena dipakai sebagai pemisah dengan password",
+    emptySsid: () => "Isi nama jaringan (SSID)",
+    wpaPasswordLength: () => "Password WPA harus 8–63 karakter",
   },
   {
     invalidBase64: () => "Input is not valid Base64",
@@ -153,6 +157,9 @@ const catalogs = defineMessages(
       "Unrecognized key. Paste a PEM (PUBLIC KEY, PRIVATE KEY, or CERTIFICATE) or an RSA, EC P-256/384/521, or Ed25519 JWK",
     legacyPem: () =>
       "PKCS#1/SEC1 keys are not supported yet. Convert to PKCS#8 first: openssl pkcs8 -topk8 -nocrypt -in key.pem",
+    basicAuthColon: () => "Username cannot contain a colon (:), because it separates the username from the password",
+    emptySsid: () => "Enter the network name (SSID)",
+    wpaPasswordLength: () => "WPA passwords must be 8–63 characters",
   },
   {
     invalidBase64: () => "有効な Base64 ではありません",
@@ -230,6 +237,9 @@ const catalogs = defineMessages(
       "鍵を認識できません。PEM（PUBLIC KEY、PRIVATE KEY、CERTIFICATE）か、RSA・EC P-256/384/521・Ed25519 の JWK を貼り付けてください",
     legacyPem: () =>
       "PKCS#1/SEC1 形式の鍵にはまだ対応していません。先に PKCS#8 に変換してください: openssl pkcs8 -topk8 -nocrypt -in key.pem",
+    basicAuthColon: () => "ユーザー名にコロン（:）は使えません。ユーザー名とパスワードの区切りに使われるためです",
+    emptySsid: () => "ネットワーク名（SSID）を入力してください",
+    wpaPasswordLength: () => "WPA のパスワードは 8〜63 文字にしてください",
   },
 )
 

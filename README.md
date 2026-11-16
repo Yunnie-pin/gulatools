@@ -62,6 +62,8 @@ Live site: https://devtools.gulagulali.tech
 |           | UUID / ULID           | Bulk UUID v4, UUID v7, or ULID                                                                                   |
 |           | Lorem Ipsum           | Placeholder text by paragraphs, sentences, or words                                                              |
 |           | CSS Generator         | Gradients, layered box-shadows, and glassmorphism with a live preview                                            |
+|           | Basic Auth Generator  | Authorization: Basic header, Base64 token, and curl example from a username and password                         |
+|           | Wi-Fi QR Code         | QR code (PNG/SVG) that joins a Wi-Fi network when scanned with a phone camera                                    |
 | Text      | Regex Tester          | Test JavaScript regular expressions with live matches and replacements                                           |
 |           | Text Diff             | Compare two texts and copy the result as a unified patch                                                         |
 |           | JSON Diff             | Structural JSON comparison with paths, ignoring key order and formatting                                         |
@@ -72,6 +74,7 @@ Live site: https://devtools.gulagulali.tech
 |           | SemVer Checker        | Check which versions satisfy an npm-style semver range                                                           |
 |           | Glob Tester           | Test glob patterns with ! exclusions against a list of paths                                                     |
 |           | User-Agent Parser     | Browser, engine, OS, device type, and CPU from a User-Agent string                                               |
+|           | Device Information    | Screen, viewport, pixel ratio, CPU, RAM, GPU, browser, OS, languages, and time zone of this device               |
 
 ## Tech stack
 
