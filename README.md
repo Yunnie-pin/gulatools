@@ -133,6 +133,7 @@ e2e/           Playwright tests
 ```
 
 Each tool folder usually contains:
+
 - `index.ts`: metadata (id, name, localized description, category, keywords, icon) and a lazily loaded component
 - `Tool.tsx`: the user interface
 - `logic.ts` and `logic.test.ts`: pure logic and its unit tests
@@ -149,6 +150,7 @@ The route, sidebar entry, command palette entry, prerendered page, and sitemap e
 ## Deployment
 
 The site is deployed to GitHub Pages by `.github/workflows/deploy.yml` on every push to `main`. The workflow:
+
 1. Builds with `SITE_URL` set, which enables canonical URLs and `sitemap.xml` in the prerender step.
 2. Copies `index.html` to `404.html` so unknown paths fall back to the app.
 3. Publishes `dist/` to GitHub Pages.
